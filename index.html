@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Blue Door Architects | Architecture &amp; Turnkey Design | A Palm Group Company</title>
-<meta name="description" content="Blue Door Architects — a design-led architecture practice delivering considered design and turnkey execution. Residential, commercial, hospitality. A Palm Group company."/>
+<title>Blue Door Architects | Architecture &amp; Turnkey Design</title>
+<meta name="description" content="Blue Door Architects — a design-led architecture practice delivering considered design and turnkey execution. A Palm Group company."/>
 <link rel="canonical" href="https://www.bluedoorarchitects.com/"/>
 <meta property="og:title" content="Blue Door Architects | Architecture &amp; Turnkey Design"/>
 <meta property="og:description" content="A design-led architecture practice. From first sketch to final key."/>
@@ -13,6 +13,26 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet"/>
+
+<!-- Netlify Identity -->
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  window.netlifyIdentity && window.netlifyIdentity.init({
+    APIUrl: "https://bespoke-semifreddo-3a72e0.netlify.app/.netlify/identity"
+  });
+  document.addEventListener("DOMContentLoaded", function() {
+    if (window.location.hash) {
+      var h = window.location.hash;
+      if (h.includes("recovery_token") || h.includes("invite_token") || h.includes("confirmation_token")) {
+        window.netlifyIdentity && window.netlifyIdentity.open();
+      }
+    }
+    window.netlifyIdentity && window.netlifyIdentity.on("login", function() {
+      document.location.href = "/admin/";
+    });
+  });
+</script>
+
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -29,31 +49,15 @@ body{font-family:var(--sans);color:var(--ink);background:var(--warm);-webkit-fon
 a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
 
-/* ── MOBILE MENU (pure CSS checkbox) ── */
+/* ── MOBILE MENU ── */
 #nav-toggle{position:fixed;opacity:0;pointer-events:none;width:0;height:0;}
-.nav-overlay{
-  position:fixed;top:0;left:0;right:0;bottom:0;
-  background:#0C0C0A;z-index:8000;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:36px;
-  transform:translateX(-100%);
-  transition:transform 0.38s cubic-bezier(0.4,0,0.2,1);
-}
+.nav-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:#0C0C0A;z-index:8000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:36px;transform:translateX(-100%);transition:transform 0.38s cubic-bezier(0.4,0,0.2,1);}
 #nav-toggle:checked ~ .nav-overlay{transform:translateX(0);}
-.nav-overlay-close{
-  position:absolute;top:24px;right:24px;
-  font-family:var(--sans);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;
-  color:rgba(255,255,255,0.4);cursor:pointer;padding:12px;background:none;border:none;
-}
+.nav-overlay-close{position:absolute;top:24px;right:24px;font-family:var(--sans);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.4);cursor:pointer;padding:12px;background:none;border:none;}
 .nav-overlay-close:hover{color:white}
-.nav-overlay a{
-  font-family:var(--serif);font-size:2.4rem;font-weight:300;
-  color:rgba(255,255,255,0.85);letter-spacing:0.06em;transition:color 0.2s;
-}
+.nav-overlay a{font-family:var(--serif);font-size:2.4rem;font-weight:300;color:rgba(255,255,255,0.85);letter-spacing:0.06em;transition:color 0.2s;}
 .nav-overlay a:hover,.nav-overlay a.accent{color:var(--gold)}
-.nav-burger{
-  display:none;flex-direction:column;gap:5px;padding:8px;
-  cursor:pointer;background:none;border:none;user-select:none;
-}
+.nav-burger{display:none;flex-direction:column;gap:5px;padding:8px;cursor:pointer;background:none;border:none;user-select:none;}
 .nav-burger span{display:block;height:1px;background:white;transition:background 0.4s}
 .nav-burger span:first-child{width:24px}
 .nav-burger span:last-child{width:14px}
@@ -65,13 +69,8 @@ nav#mainnav.nav-scrolled{background:rgba(253,252,250,0.96);backdrop-filter:blur(
 .nav-inner{display:flex;align-items:center;justify-content:space-between;width:100%;padding:0 48px}
 .nav-logo{display:flex;align-items:center}
 .logo-img{height:48px;width:auto;object-fit:contain;transition:filter 0.4s}
-/* Scrolled (light bg): logo is dark on white — show as-is */
 nav#mainnav.nav-scrolled .logo-img{filter:none;mix-blend-mode:multiply}
-/* Dark bg (hero): logo is dark on white JPG — use screen blend to knock out white bg */
 nav#mainnav:not(.nav-scrolled) .logo-img{mix-blend-mode:screen;filter:brightness(10) invert(1)}
-.nav-logo-txt{display:none}
-.nav-logo-name{display:none}
-.nav-logo-sub{display:none}
 .nav-links{display:flex;align-items:center;gap:32px}
 .nav-links a{font-size:0.7rem;font-weight:300;letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.8);transition:opacity 0.2s}
 .nav-links a:hover{opacity:0.5}
@@ -83,7 +82,7 @@ nav#mainnav.nav-scrolled .nav-links a{color:var(--ink-soft)}
 .wrap-n{max-width:960px;margin:0 auto;padding:0 48px}
 
 /* ── HERO ── */
-#hero{height:100vh;min-height:640px;position:relative;overflow:hidden;display:flex;align-items:flex-end}
+#hero{height:100vh;min-height:640px;position:relative;overflow:hidden;display:flex;align-items:flex-end;background:var(--ink)}
 .hero-img{position:absolute;inset:0;object-fit:cover;width:100%;height:100%;filter:brightness(0.45)}
 .h-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(12,12,10,0.92) 0%,rgba(12,12,10,0.2) 55%,transparent 100%)}
 .h-body{position:relative;z-index:2;width:100%;padding:0 48px 88px;display:grid;grid-template-columns:1fr auto;align-items:flex-end;gap:32px}
@@ -92,7 +91,6 @@ nav#mainnav.nav-scrolled .nav-links a{color:var(--ink-soft)}
 .h-title{font-family:var(--serif);font-weight:300;font-size:clamp(3.2rem,6.5vw,6.2rem);color:white;line-height:1.02;letter-spacing:-0.01em}
 .h-title em{font-style:italic;color:var(--gold-lt)}
 .h-meta{margin-top:36px;display:flex;align-items:center;gap:40px}
-.h-meta-item{text-align:left}
 .h-meta-num{font-family:var(--serif);font-size:1.8rem;color:white;line-height:1}
 .h-meta-lbl{font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-top:4px}
 .h-meta-div{width:1px;height:36px;background:rgba(255,255,255,0.12)}
@@ -106,21 +104,21 @@ nav#mainnav.nav-scrolled .nav-links a{color:var(--ink-soft)}
 #intro{background:var(--warm);padding:128px 0}
 .intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:120px;align-items:center}
 .intro-lbl{font-size:0.6rem;letter-spacing:0.24em;text-transform:uppercase;color:var(--gold);margin-bottom:24px}
-.intro-left h2{font-family:var(--serif);font-weight:300;font-size:clamp(2rem,3.5vw,3rem);line-height:1.2;margin-bottom:0}
+.intro-left h2{font-family:var(--serif);font-weight:300;font-size:clamp(2rem,3.5vw,3rem);line-height:1.2}
 .intro-left h2 em{font-style:italic;color:var(--gold)}
 .intro-right p{font-size:0.9rem;font-weight:300;line-height:1.95;color:var(--ink-soft)}
 .intro-right p+p{margin-top:16px}
 .txt-link{display:inline-flex;align-items:center;gap:12px;margin-top:32px;font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink);border-bottom:1px solid currentColor;padding-bottom:2px;transition:color 0.3s}
 .txt-link:hover{color:var(--gold)}.txt-link:hover svg{transform:translateX(5px)}.txt-link svg{transition:transform 0.3s}
 
-/* ── PROJECTS (masonry-style) ── */
+/* ── PROJECTS ── */
 #projects{background:var(--cream);padding:120px 0 0}
 .proj-hdr{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:52px}
 .proj-hdr h2{font-family:var(--serif);font-weight:300;font-size:clamp(2rem,3.8vw,3rem)}
-.proj-hdr-right{text-align:right}
-.proj-hdr-right p{font-size:0.75rem;font-weight:300;color:var(--ink-muted);margin-bottom:8px}
+.proj-hdr-right p{font-size:0.75rem;font-weight:300;color:var(--ink-muted);margin-bottom:8px;text-align:right}
 .proj-see-all{font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;border-bottom:1px solid var(--ink);padding-bottom:2px;transition:color 0.3s,border-color 0.3s}
 .proj-see-all:hover{color:var(--gold);border-color:var(--gold)}
+/* Dynamic project grid */
 .mosaic{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:72px;gap:16px}
 .pj{position:relative;overflow:hidden;cursor:pointer;border-radius:1px}
 .pj:nth-child(1){grid-column:1/8;grid-row:1/8}
@@ -139,6 +137,14 @@ nav#mainnav.nav-scrolled .nav-links a{color:var(--ink-soft)}
 .pj-name{font-family:var(--serif);font-size:1.05rem;color:white;font-weight:300}
 .pj-always{position:absolute;bottom:18px;left:24px;font-size:0.58rem;letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.25);transition:opacity 0.3s}
 .pj:hover .pj-always{opacity:0}
+/* Fallback gradient colours for projects without images */
+.pj:nth-child(1) .pj-fallback{background:linear-gradient(155deg,#1C2B3A,#0A1520)}
+.pj:nth-child(2) .pj-fallback{background:linear-gradient(155deg,#2A1F14,#3D2B18)}
+.pj:nth-child(3) .pj-fallback{background:linear-gradient(155deg,#1A2518,#243320)}
+.pj:nth-child(4) .pj-fallback{background:linear-gradient(155deg,#1F1A2A,#2B2438)}
+.pj:nth-child(5) .pj-fallback{background:linear-gradient(155deg,#2A1414,#3D1C1C)}
+.pj:nth-child(6) .pj-fallback{background:linear-gradient(155deg,#12201F,#1A302E)}
+.pj-fallback{position:absolute;inset:0}
 .proj-cta-bar{padding:52px 0;border-top:1px solid var(--border);margin-top:16px;display:flex;justify-content:center}
 .proj-cta-bar a{font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;border-bottom:1px solid var(--ink);padding-bottom:2px;transition:color 0.3s,border-color 0.3s}
 .proj-cta-bar a:hover{color:var(--gold);border-color:var(--gold)}
@@ -157,7 +163,7 @@ nav#mainnav.nav-scrolled .nav-links a{color:var(--ink-soft)}
 .svc-card h3{font-family:var(--serif);font-weight:400;font-size:1.5rem;margin-bottom:14px}
 .svc-card p{font-size:0.82rem;font-weight:300;line-height:1.9;color:var(--ink-soft)}
 
-/* ── UNIKRAFT SECTION ── */
+/* ── UNIKRAFT ── */
 #unikraft{background:var(--ink);padding:0}
 .uk-inner{display:grid;grid-template-columns:1fr 1fr;min-height:520px}
 .uk-img-side{position:relative;overflow:hidden}
@@ -184,12 +190,36 @@ nav#mainnav.nav-scrolled .nav-links a{color:var(--ink-soft)}
 .phil-num{font-family:var(--serif);font-style:italic;font-size:0.9rem;color:var(--gold);min-width:22px;padding-top:2px}
 .phil-title{font-size:0.7rem;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink);margin-bottom:3px}
 .phil-text{font-size:0.8rem;font-weight:300;line-height:1.85;color:var(--ink-soft)}
+.palm-card{margin-top:32px}
+.palm-card-inner{background:white;border:1px solid var(--border);padding:28px 32px;border-radius:2px;border-left:3px solid var(--gold)}
+.palm-card-label{font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.palm-card-name{font-family:var(--serif);font-weight:400;font-size:1.3rem;color:var(--ink);margin-bottom:12px}
+.palm-card-text{font-size:0.8rem;font-weight:300;line-height:1.85;color:var(--ink-soft);margin-bottom:16px}
+.palm-card-tags{display:flex;flex-wrap:wrap;gap:8px}
+.palm-card-tags span{font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);background:rgba(184,150,90,0.08);padding:4px 10px;border-radius:1px}
 .phil-img-side{position:relative}
 .phil-img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:1px}
 .phil-img-cap{position:absolute;bottom:24px;right:24px;background:white;padding:18px 22px;border-radius:1px}
 .phil-img-cap-n{font-family:var(--serif);font-style:italic;font-size:2.2rem;color:var(--gold);line-height:1}
 .phil-img-cap-l{font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-muted);margin-top:3px}
 .phil-img-cap-sub{font-size:0.58rem;color:var(--ink-muted);margin-top:1px}
+
+/* ── PRODUCTION ── */
+#production{background:var(--ink);padding:0}
+.prod-inner{display:grid;grid-template-columns:1fr 1fr;min-height:560px}
+.prod-content{display:flex;align-items:center;padding:88px 0}
+.prod-lbl{font-size:0.6rem;letter-spacing:0.26em;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
+.prod-h{font-family:var(--serif);font-weight:300;font-size:clamp(2.2rem,4vw,3.4rem);color:white;line-height:1.1;margin-bottom:28px}
+.prod-h em{font-style:italic;color:var(--gold-lt)}
+.prod-p{font-size:0.85rem;font-weight:200;line-height:1.9;color:rgba(255,255,255,0.45);max-width:480px}
+.prod-p+.prod-p{margin-top:14px}
+.prod-stats{display:flex;align-items:center;gap:32px;margin-top:44px;padding-top:36px;border-top:1px solid rgba(255,255,255,0.08)}
+.prod-stat-n{font-family:var(--serif);font-size:1.6rem;color:white;line-height:1;margin-bottom:4px}
+.prod-stat-l{font-size:0.6rem;letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.3)}
+.prod-stat-div{width:1px;height:40px;background:rgba(255,255,255,0.1);flex-shrink:0}
+.prod-img-side{position:relative;overflow:hidden}
+.prod-img-side img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(0.45)}
+.prod-img-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(12,12,10,0.6) 0%,transparent 60%)}
 
 /* ── PROCESS ── */
 #process{background:var(--ink);padding:120px 0}
@@ -206,8 +236,7 @@ nav#mainnav.nav-scrolled .nav-links a{color:var(--ink-soft)}
 /* ── TESTIMONIAL ── */
 #testimonial{background:var(--warm);padding:120px 0}
 .tst-inner{display:grid;grid-template-columns:200px 1fr;gap:80px;align-items:start}
-.tst-lbl-col{padding-top:12px}
-.tst-lbl{font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold)}
+.tst-lbl{font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);padding-top:12px}
 .tst-quote{font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(1.4rem,2.5vw,2rem);line-height:1.55;color:var(--ink);margin-bottom:36px}
 .tst-auth{display:flex;align-items:center;gap:18px}
 .tst-line{width:32px;height:1px;background:var(--gold)}
@@ -227,7 +256,7 @@ nav#mainnav.nav-scrolled .nav-links a{color:var(--ink-soft)}
 .ct-soc-lbl{font-size:0.56rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.18)}
 .ct-social a{font-size:0.65rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.35);transition:color 0.2s}.ct-social a:hover{color:var(--gold-lt)}
 .ct-form h3{font-family:var(--serif);font-weight:300;font-size:1.5rem;color:white;margin-bottom:6px}
-.ct-form>p{font-size:0.78rem;font-weight:200;color:rgba(255,255,255,0.25);margin-bottom:36px;letter-spacing:0.03em}
+.ct-form>p{font-size:0.78rem;font-weight:200;color:rgba(255,255,255,0.25);margin-bottom:36px}
 .frow{display:grid;grid-template-columns:1fr 1fr;gap:18px}
 .fld{margin-bottom:18px}
 .fld label{display:block;font-size:0.56rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:7px}
@@ -259,47 +288,25 @@ footer{background:#080806;border-top:1px solid rgba(255,255,255,0.05);padding:56
 .ft-legal{display:flex;gap:20px}
 .ft-legal a{font-size:0.6rem;font-weight:200;color:rgba(255,255,255,0.12);transition:color 0.2s}.ft-legal a:hover{color:rgba(255,255,255,0.4)}
 
+/* ── LOADING STATE ── */
+.cms-loading{opacity:0;transition:opacity 0.4s}
+.cms-ready{opacity:1}
+
 /* ── REVEAL ── */
 .rv{opacity:0;transform:translateY(24px);transition:opacity 0.9s var(--ease),transform 0.9s var(--ease)}
 .rv.in{opacity:1;transform:none}
 .rv.d1{transition-delay:0.12s}.rv.d2{transition-delay:0.24s}.rv.d3{transition-delay:0.36s}
 
-/* ── PALM GROUP CARD ── */
-.palm-card{margin-top:32px}
-.palm-card-inner{background:white;border:1px solid var(--border);padding:28px 32px;border-radius:2px;border-left:3px solid var(--gold)}
-.palm-card-label{font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
-.palm-card-name{font-family:var(--serif);font-weight:400;font-size:1.3rem;color:var(--ink);margin-bottom:12px}
-.palm-card-text{font-size:0.8rem;font-weight:300;line-height:1.85;color:var(--ink-soft);margin-bottom:16px}
-.palm-card-tags{display:flex;flex-wrap:wrap;gap:8px}
-.palm-card-tags span{font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);background:rgba(184,150,90,0.08);padding:4px 10px;border-radius:1px}
-
-/* ── PRODUCTION UNIT ── */
-#production{background:var(--ink);padding:0}
-.prod-inner{display:grid;grid-template-columns:1fr 1fr;min-height:560px}
-.prod-content{display:flex;align-items:center;padding:88px 0}
-.prod-lbl{font-size:0.6rem;letter-spacing:0.26em;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
-.prod-h{font-family:var(--serif);font-weight:300;font-size:clamp(2.2rem,4vw,3.4rem);color:white;line-height:1.1;margin-bottom:28px}
-.prod-h em{font-style:italic;color:var(--gold-lt)}
-.prod-p{font-size:0.85rem;font-weight:200;line-height:1.9;color:rgba(255,255,255,0.45);max-width:480px}
-.prod-p+.prod-p{margin-top:14px}
-.prod-stats{display:flex;align-items:center;gap:32px;margin-top:44px;padding-top:36px;border-top:1px solid rgba(255,255,255,0.08)}
-.prod-stat-n{font-family:var(--serif);font-size:1.6rem;color:white;line-height:1;margin-bottom:4px}
-.prod-stat-l{font-size:0.6rem;letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.3)}
-.prod-stat-div{width:1px;height:40px;background:rgba(255,255,255,0.1);flex-shrink:0}
-.prod-img-side{position:relative;overflow:hidden}
-.prod-img-side img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(0.45)}
-.prod-img-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(12,12,10,0.6) 0%,transparent 60%)}
-
 /* ── RESPONSIVE ── */
 @media(max-width:1024px){
-  .prod-inner{grid-template-columns:1fr}.prod-img-side{height:320px;position:relative}.prod-img-side img{position:absolute}
-  .prod-content{padding:72px 0}
   .intro-grid{grid-template-columns:1fr;gap:40px}
   .phil-grid{grid-template-columns:1fr;gap:56px}.phil-img-side{display:none}
   .svc-top{flex-direction:column;align-items:flex-start;gap:16px}
   .proc-steps{grid-template-columns:1fr 1fr;gap:2px}
   .uk-inner{grid-template-columns:1fr}.uk-img-side{height:320px;position:relative}.uk-img-side img{position:absolute}
   .uk-content{padding:56px 48px}
+  .prod-inner{grid-template-columns:1fr}.prod-img-side{height:320px;position:relative}.prod-img-side img{position:absolute}
+  .prod-content{padding:72px 0}
   .proc-top{flex-direction:column;align-items:flex-start;gap:16px}.proc-top p{text-align:left}
 }
 @media(max-width:768px){
@@ -308,54 +315,25 @@ footer{background:#080806;border-top:1px solid rgba(255,255,255,0.05);padding:56
   .nav-inner,.wrap,.wrap-n{padding-left:24px;padding-right:24px}
   .h-body{padding:0 24px 52px;grid-template-columns:1fr}.h-right{display:none}
   .h-meta{flex-wrap:wrap;gap:24px}
-  .intro-grid{grid-template-columns:1fr;gap:32px}
   .mosaic{grid-template-columns:1fr 1fr;grid-auto-rows:160px}.pj:nth-child(n){grid-column:span 1;grid-row:span 1}
   .svc-grid{grid-template-columns:1fr}.svc-card{border-right:none!important}
-  .proc-steps{grid-template-columns:1fr}
-  .proc-step{border-bottom:1px solid rgba(255,255,255,0.05)}
+  .proc-steps{grid-template-columns:1fr}.proc-step{border-bottom:1px solid rgba(255,255,255,0.05)}
   .tst-inner{grid-template-columns:1fr;gap:24px}
   .ct-grid{grid-template-columns:1fr;gap:56px}.frow{grid-template-columns:1fr}
   .uk-content{padding:48px 24px}
+  .prod-stats{flex-wrap:wrap;gap:24px}
   .ft-inner{flex-direction:column;gap:36px}.ft-nav{flex-direction:column;gap:28px}
   .ft-bottom{flex-direction:column;gap:10px;text-align:center}
   .proj-hdr{flex-direction:column;align-items:flex-start;gap:14px}
   .proc-top{flex-direction:column;gap:16px}.proc-top p{text-align:left}
-  .prod-inner{grid-template-columns:1fr}.prod-img-side{height:280px;position:relative}.prod-img-side img{position:absolute}
-  .prod-content{padding:72px 0}
-  .prod-stats{flex-wrap:wrap;gap:24px}
-  .palm-card-inner{padding:22px 24px}
   #intro,#services,#philosophy,#testimonial,#contact{padding:88px 0}
   #projects{padding-top:88px}
-  .phil-grid{grid-template-columns:1fr}
 }
 </style>
-<!-- Netlify Identity — required for Decap CMS login redirect -->
-<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-<script>
-  window.netlifyIdentity && window.netlifyIdentity.init({
-    APIUrl: "https://bespoke-semifreddo-3a72e0.netlify.app/.netlify/identity"
-  });
-
-  // Auto-open identity modal on recovery/invite/confirmation tokens
-  document.addEventListener("DOMContentLoaded", function() {
-    if (window.location.hash) {
-      var hash = window.location.hash;
-      if (hash.includes("recovery_token") ||
-          hash.includes("invite_token") ||
-          hash.includes("confirmation_token")) {
-        window.netlifyIdentity && window.netlifyIdentity.open();
-      }
-    }
-    // Redirect to admin after login
-    window.netlifyIdentity && window.netlifyIdentity.on("login", function() {
-      document.location.href = "/admin/";
-    });
-  });
-</script>
 </head>
 <body>
 
-<!-- CHECKBOX: first child of body — required for CSS sibling selector -->
+<!-- CHECKBOX: must be first child of body -->
 <input type="checkbox" id="nav-toggle" style="position:fixed;opacity:0;pointer-events:none;width:0;height:0;"/>
 
 <!-- MOBILE NAV OVERLAY -->
@@ -370,16 +348,17 @@ footer{background:#080806;border-top:1px solid rgba(255,255,255,0.05);padding:56
   <a href="#contact" class="accent" onclick="document.getElementById('nav-toggle').checked=false;">Begin a Project</a>
 </nav>
 
-<!-- DESKTOP NAV -->
+<!-- NAV -->
 <nav id="mainnav" role="navigation" aria-label="Main navigation">
   <div class="nav-inner">
-    <a href="#" class="nav-logo" aria-label="Blue Door Architects — Home">
-      <img src="blue_door_logo.jpg" alt="Blue Door Architects" class="logo-img" id="logo-img"/>
+    <a href="#" class="nav-logo" aria-label="Blue Door Architects">
+      <img src="blue_door_logo.jpg" alt="Blue Door Architects" class="logo-img"/>
     </a>
     <div class="nav-links">
       <a href="#projects">Work</a>
       <a href="#services">Services</a>
       <a href="#unikraft">Unikraft</a>
+      <a href="#production">Manufacturing</a>
       <a href="#philosophy">Studio</a>
       <a href="#process">Process</a>
       <a href="#contact" class="nav-cta">Begin a Project</a>
@@ -390,23 +369,31 @@ footer{background:#080806;border-top:1px solid rgba(255,255,255,0.05);padding:56
   </div>
 </nav>
 
-<!-- ═══════════════════ HERO ═══════════════════ -->
+<!-- ═══ HERO ═══ -->
 <section id="hero" aria-label="Hero">
-  <!-- STOCK IMAGE: Replace src with your hero project photograph -->
-  <img class="hero-img" src="https://images.unsplash.com/photo-1613977257592-4871e5fcd7c4?w=1800&q=80" alt="Blue Door Architects — architectural hero"/>
+  <img class="hero-img cms-loading" id="hero-img" src="https://images.unsplash.com/photo-1613977257592-4871e5fcd7c4?w=1800&q=80" alt="Blue Door Architects"/>
   <div class="h-ov" aria-hidden="true"></div>
   <div class="h-body">
     <div class="h-left">
       <div class="h-eye">Architecture &amp; Turnkey Design</div>
-      <h1 class="h-title">
+      <h1 class="h-title" id="hero-title">
         Space is not<br>merely built.<br>It is <em>authored.</em>
       </h1>
       <div class="h-meta">
-        <div class="h-meta-item"><div class="h-meta-num">120+</div><div class="h-meta-lbl">Projects</div></div>
-        <div class="h-meta-div" aria-hidden="true"></div>
-        <div class="h-meta-item"><div class="h-meta-num">15+</div><div class="h-meta-lbl">Years</div></div>
-        <div class="h-meta-div" aria-hidden="true"></div>
-        <div class="h-meta-item"><div class="h-meta-num">100%</div><div class="h-meta-lbl">Turnkey</div></div>
+        <div class="h-meta-item">
+          <div class="h-meta-num" id="hero-count-projects">120+</div>
+          <div class="h-meta-lbl">Projects</div>
+        </div>
+        <div class="h-meta-div"></div>
+        <div class="h-meta-item">
+          <div class="h-meta-num" id="hero-count-years">15+</div>
+          <div class="h-meta-lbl">Years</div>
+        </div>
+        <div class="h-meta-div"></div>
+        <div class="h-meta-item">
+          <div class="h-meta-num">100%</div>
+          <div class="h-meta-lbl">Turnkey</div>
+        </div>
       </div>
     </div>
     <div class="h-right" aria-hidden="true">
@@ -416,26 +403,24 @@ footer{background:#080806;border-top:1px solid rgba(255,255,255,0.05);padding:56
   </div>
 </section>
 
-<!-- ═══════════════════ INTRO ═══════════════════ -->
+<!-- ═══ INTRO ═══ -->
 <section id="intro">
   <div class="wrap">
     <div class="intro-grid">
       <div>
         <p class="intro-lbl rv">The Practice</p>
-        <h2 class="rv d1">
-          A studio that designs with conviction<br>and builds with <em>equal care.</em>
-        </h2>
+        <h2 class="rv d1">A studio that designs with conviction<br>and builds with <em>equal care.</em></h2>
       </div>
       <div class="intro-right">
         <p class="rv d1">Blue Door Architects is a design-led practice where the architect stays with the project from the first line drawn to the last fitting placed. We do not separate design from delivery &mdash; they are one continuous act of craft.</p>
         <p class="rv d2">We are a sub-brand of <strong style="color:var(--ink);font-weight:400">The Palm Group</strong> &mdash; a diversified organisation with integrated capabilities across architecture, construction, and manufacturing. This means our clients benefit from resources, speed, and quality that an independent studio simply cannot offer.</p>
-        <a href="#philosophy" class="txt-link rv d3">About the Studio <svg width="18" height="12" viewBox="0 0 18 12" fill="none" aria-hidden="true"><path d="M1 6h16M11 1l6 5-6 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></a>
+        <a href="#philosophy" class="txt-link rv d3">About the Studio <svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h16M11 1l6 5-6 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════ PROJECTS ═══════════════════ -->
+<!-- ═══ PROJECTS ═══ -->
 <section id="projects">
   <div class="wrap">
     <div class="proj-hdr">
@@ -445,50 +430,13 @@ footer{background:#080806;border-top:1px solid rgba(255,255,255,0.05);padding:56
         <a href="#contact" class="proj-see-all">View All Projects &rarr;</a>
       </div>
     </div>
-    <!-- ⬇ STOCK IMAGES: Replace each src with your project photography -->
-    <div class="mosaic rv d1">
-      <article class="pj" aria-label="The Meridian Residences">
-        <img class="pj-img" src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=900&q=75" alt="The Meridian Residences"/>
-        <div class="pj-ov" aria-hidden="true"></div>
-        <p class="pj-always" aria-hidden="true">Residential</p>
-        <div class="pj-info"><p class="pj-cat">Residential &middot; Dubai</p><h3 class="pj-name">The Meridian Residences</h3></div>
-      </article>
-      <article class="pj" aria-label="Skyline Corporate Hub">
-        <img class="pj-img" src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=700&q=75" alt="Skyline Corporate Hub"/>
-        <div class="pj-ov" aria-hidden="true"></div>
-        <p class="pj-always" aria-hidden="true">Commercial</p>
-        <div class="pj-info"><p class="pj-cat">Commercial &middot; Abu Dhabi</p><h3 class="pj-name">Skyline Corporate Hub</h3></div>
-      </article>
-      <article class="pj" aria-label="Greenview District">
-        <img class="pj-img" src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=75" alt="Greenview District"/>
-        <div class="pj-ov" aria-hidden="true"></div>
-        <p class="pj-always" aria-hidden="true">Mixed-Use</p>
-        <div class="pj-info"><p class="pj-cat">Mixed-Use &middot; Riyadh</p><h3 class="pj-name">Greenview District</h3></div>
-      </article>
-      <article class="pj" aria-label="Velora Boutique Hotel">
-        <img class="pj-img" src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=500&q=75" alt="Velora Boutique Hotel"/>
-        <div class="pj-ov" aria-hidden="true"></div>
-        <p class="pj-always" aria-hidden="true">Hospitality</p>
-        <div class="pj-info"><p class="pj-cat">Hospitality &middot; Muscat</p><h3 class="pj-name">Velora Boutique Hotel</h3></div>
-      </article>
-      <article class="pj" aria-label="Casa Palmera Villa">
-        <img class="pj-img" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=700&q=75" alt="Casa Palmera Villa"/>
-        <div class="pj-ov" aria-hidden="true"></div>
-        <p class="pj-always" aria-hidden="true">Residential</p>
-        <div class="pj-info"><p class="pj-cat">Residential &middot; Dubai</p><h3 class="pj-name">Casa Palmera Villa</h3></div>
-      </article>
-      <article class="pj" aria-label="The Atrium Arts Centre">
-        <img class="pj-img" src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=900&q=75" alt="The Atrium Arts Centre"/>
-        <div class="pj-ov" aria-hidden="true"></div>
-        <p class="pj-always" aria-hidden="true">Cultural</p>
-        <div class="pj-info"><p class="pj-cat">Cultural &middot; Sharjah</p><h3 class="pj-name">The Atrium Arts Centre</h3></div>
-      </article>
-    </div>
+    <!-- Projects injected dynamically by JS from _data/projects/*.json -->
+    <div class="mosaic rv d1" id="projects-grid"></div>
     <div class="proj-cta-bar rv"><a href="#contact">Enquire About Our Complete Portfolio &rarr;</a></div>
   </div>
 </section>
 
-<!-- ═══════════════════ SERVICES ═══════════════════ -->
+<!-- ═══ SERVICES ═══ -->
 <section id="services">
   <div class="wrap">
     <div class="svc-top">
@@ -509,164 +457,119 @@ footer{background:#080806;border-top:1px solid rgba(255,255,255,0.05);padding:56
       <article class="svc-card">
         <span class="svc-n">03.</span>
         <h3>Turnkey Execution</h3>
-        <p>Full construction and fit-out management, delivered by the same team that drew the plans. The result: complete continuity of intent from concept to handover.</p>
+        <p>Full construction and fit-out management, delivered by the same team that drew the plans. Complete continuity of intent from concept to handover.</p>
       </article>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════ UNIKRAFT ═══════════════════ -->
-<section id="unikraft" aria-label="Unikraft — Custom Solid Wood Furniture">
+<!-- ═══ UNIKRAFT ═══ -->
+<section id="unikraft" aria-label="Unikraft">
   <div class="uk-inner">
     <div class="uk-img-side">
-      <!-- STOCK IMAGE: Replace with Unikraft product photography -->
-      <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=900&q=80" alt="Unikraft custom solid wood furniture"/>
-      <div class="uk-img-overlay" aria-hidden="true"></div>
+      <img id="uk-img" src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=900&q=80" alt="Unikraft custom solid wood furniture" class="cms-loading"/>
+      <div class="uk-img-overlay"></div>
     </div>
     <div class="uk-content rv">
       <p class="uk-eyeline">An Extension of Our Practice</p>
       <img src="unikraft_logo.jpg" alt="Unikraft — Crafted in India" class="uk-logo"/>
-      <h2>Custom solid wood furniture, born from the projects we love.</h2>
-      <p>While designing and executing spaces for our clients, we became so absorbed in the character of solid wood that we began crafting bespoke loose furniture to complete them. Unikraft is that obsession, formalised.</p>
-      <p>Every piece is custom-designed, solid wood, and made in India. Blue Door clients have direct access to Unikraft &mdash; the furniture conceived alongside the space it lives in.</p>
-      <a href="#contact" class="uk-link">Explore Unikraft <svg width="18" height="12" viewBox="0 0 18 12" fill="none" aria-hidden="true"><path d="M1 6h16M11 1l6 5-6 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></a>
+      <h2 id="uk-headline">Custom solid wood furniture, born from the projects we love.</h2>
+      <p id="uk-body1">While designing and executing spaces for our clients, we became so absorbed in the character of solid wood that we began crafting bespoke loose furniture to complete them. Unikraft is that obsession, formalised.</p>
+      <p id="uk-body2">Every piece is custom-designed, solid wood, and made in India. Blue Door clients have direct access to Unikraft &mdash; the furniture conceived alongside the space it lives in.</p>
+      <a href="#contact" class="uk-link">Explore Unikraft <svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h16M11 1l6 5-6 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></a>
       <p class="uk-tag">Crafted in India</p>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════ PHILOSOPHY ═══════════════════ -->
+<!-- ═══ PHILOSOPHY ═══ -->
 <section id="philosophy">
   <div class="wrap">
     <div class="phil-grid">
       <div>
         <p class="phil-lbl rv">The Studio</p>
-        <blockquote class="phil-quote rv d1">
-          &ldquo;A building is a gift to the world. It must be worthy of the ground it occupies, the people who use it, and the time that will outlast it.&rdquo;
-        </blockquote>
+        <blockquote class="phil-quote rv d1">&ldquo;A building is a gift to the world. It must be worthy of the ground it occupies, the people who use it, and the time that will outlast it.&rdquo;</blockquote>
         <div class="phil-attrs rv d2">
-          <div class="phil-attr">
-            <span class="phil-num">I.</span>
-            <div><p class="phil-title">The Architect Stays</p><p class="phil-text">The principal who designs is the same person accountable for delivery. No handoffs, no dilution of intent.</p></div>
-          </div>
-          <div class="phil-attr">
-            <span class="phil-num">II.</span>
-            <div><p class="phil-title">Selective by Principle</p><p class="phil-text">A limited number of commissions each year. Each project receives our undivided attention &mdash; from brief to the day we hand you the key.</p></div>
-          </div>
-          <div class="phil-attr">
-            <span class="phil-num">III.</span>
-            <div><p class="phil-title">One Roof, Full Journey</p><p class="phil-text">Architecture, interior, turnkey execution, and furniture. Every dimension of your space, designed and delivered in concert.</p></div>
-          </div>
+          <div class="phil-attr"><span class="phil-num">I.</span><div><p class="phil-title">The Architect Stays</p><p class="phil-text">The principal who designs is the same person accountable for delivery. No handoffs, no dilution of intent.</p></div></div>
+          <div class="phil-attr"><span class="phil-num">II.</span><div><p class="phil-title">Selective by Principle</p><p class="phil-text">A limited number of commissions each year. Each project receives our undivided attention &mdash; from brief to the day we hand you the key.</p></div></div>
+          <div class="phil-attr"><span class="phil-num">III.</span><div><p class="phil-title">One Roof, Full Journey</p><p class="phil-text">Architecture, interior, turnkey execution, and furniture. Every dimension of your space, designed and delivered in concert.</p></div></div>
         </div>
-        <!-- Palm Group Badge -->
         <div class="palm-card rv d3">
           <div class="palm-card-inner">
             <div class="palm-card-label">Backed by</div>
             <div class="palm-card-name">The Palm Group</div>
-            <p class="palm-card-text">A diversified organisation with integrated capabilities across architecture, construction, manufacturing, and real estate. Blue Door clients access the full weight of this ecosystem &mdash; from concept design to a 50,000 sq.ft. modular production facility &mdash; delivering quality and speed that no independent studio can match.</p>
+            <p class="palm-card-text" id="palm-desc">A diversified organisation with integrated capabilities across architecture, construction, manufacturing, and real estate. Blue Door clients access the full weight of this ecosystem &mdash; delivering quality and speed that no independent studio can match.</p>
             <div class="palm-card-tags">
-              <span>Architecture</span>
-              <span>Construction</span>
-              <span>Manufacturing</span>
-              <span>Real Estate</span>
+              <span>Architecture</span><span>Construction</span><span>Manufacturing</span><span>Real Estate</span>
             </div>
           </div>
         </div>
       </div>
       <div class="phil-img-side rv d2">
-        <!-- STOCK IMAGE: Replace with studio or project photograph -->
-        <img class="phil-img" src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=80" alt="Blue Door Architects studio"/>
+        <img class="phil-img cms-loading" id="phil-img" src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=80" alt="Blue Door Architects studio"/>
         <div class="phil-img-cap">
           <div class="phil-img-cap-n">120+</div>
           <div class="phil-img-cap-l">Projects delivered</div>
-          <div class="phil-img-cap-sub">Across residential, commercial &amp; hospitality</div>
+          <div class="phil-img-cap-sub">Residential, commercial &amp; hospitality</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════ PRODUCTION UNIT ═══════════════════ -->
-<section id="production" aria-label="50,000 sq.ft. Modular Furniture Production Unit">
+<!-- ═══ PRODUCTION ═══ -->
+<section id="production">
   <div class="prod-inner">
     <div class="prod-content">
       <div class="wrap">
         <p class="prod-lbl rv">In-House Manufacturing</p>
-        <h2 class="prod-h rv d1">50,000 sq.ft.<br><em>Production Unit</em></h2>
-        <p class="prod-p rv d2">Most architects specify furniture and then hope for the best. We manufacture it. Our integrated 50,000 sq.ft. modular furniture production facility means every cabinet, every panel, every fitted element is engineered to the exact tolerances the design demands &mdash; not approximated by a third-party vendor.</p>
-        <p class="prod-p rv d2">This is the difference between a space that looks right on paper and one that feels right when you walk in.</p>
+        <h2 class="prod-h rv d1"><span id="prod-size">50,000</span> sq.ft.<br><em>Production Unit</em></h2>
+        <p class="prod-p rv d2" id="prod-body1">Most architects specify furniture and then hope for the best. We manufacture it. Our integrated modular furniture production facility means every element is engineered to the exact tolerances the design demands.</p>
+        <p class="prod-p rv d2" id="prod-body2">This is the difference between a space that looks right on paper and one that feels right when you walk in.</p>
         <div class="prod-stats rv d3">
-          <div class="prod-stat">
-            <div class="prod-stat-n">50,000</div>
-            <div class="prod-stat-l">Sq.ft. facility</div>
-          </div>
-          <div class="prod-stat-div" aria-hidden="true"></div>
-          <div class="prod-stat">
-            <div class="prod-stat-n">In-house</div>
-            <div class="prod-stat-l">Design &amp; production</div>
-          </div>
-          <div class="prod-stat-div" aria-hidden="true"></div>
-          <div class="prod-stat">
-            <div class="prod-stat-n">Zero</div>
-            <div class="prod-stat-l">Third-party tolerance loss</div>
-          </div>
+          <div class="prod-stat"><div class="prod-stat-n">50,000</div><div class="prod-stat-l">Sq.ft. facility</div></div>
+          <div class="prod-stat-div"></div>
+          <div class="prod-stat"><div class="prod-stat-n">In-house</div><div class="prod-stat-l">Design &amp; production</div></div>
+          <div class="prod-stat-div"></div>
+          <div class="prod-stat"><div class="prod-stat-n">Zero</div><div class="prod-stat-l">Third-party tolerance loss</div></div>
         </div>
       </div>
     </div>
     <div class="prod-img-side">
-      <!-- STOCK IMAGE: Replace with production facility photography -->
-      <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=900&q=80" alt="Modular furniture production facility"/>
-      <div class="prod-img-overlay" aria-hidden="true"></div>
+      <img id="prod-img" src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=900&q=80" alt="Production facility" class="cms-loading"/>
+      <div class="prod-img-overlay"></div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════ PROCESS ═══════════════════ -->
+<!-- ═══ PROCESS ═══ -->
 <section id="process">
   <div class="wrap">
     <div class="proc-top rv">
-      <h2>How a project<br><em style="font-family:var(--serif);font-style:italic">unfolds</em></h2>
+      <h2>How a project <em style="font-family:var(--serif);font-style:italic">unfolds</em></h2>
       <p>A clear, disciplined process that keeps the design intent alive from the first meeting to the final walkthrough.</p>
     </div>
     <div class="proc-steps rv d1">
-      <div class="proc-step">
-        <span class="step-n">01</span>
-        <h3>Discover</h3>
-        <p>We begin by listening. Site, brief, budget, aspiration &mdash; understood in full before a single line is drawn.</p>
-      </div>
-      <div class="proc-step">
-        <span class="step-n">02</span>
-        <h3>Design</h3>
-        <p>Concept sketches evolve into detailed drawings and spatial studies &mdash; refined iteratively until the design earns its place.</p>
-      </div>
-      <div class="proc-step">
-        <span class="step-n">03</span>
-        <h3>Approve</h3>
-        <p>Regulatory submissions, planning approvals, and permits &mdash; navigated entirely by our team.</p>
-      </div>
-      <div class="proc-step">
-        <span class="step-n">04</span>
-        <h3>Build &amp; Hand Over</h3>
-        <p>Construction, fit-out, and quality sign-off managed by the same studio. The space you receive is the space we designed.</p>
-      </div>
+      <div class="proc-step"><span class="step-n">01</span><h3>Discover</h3><p>We begin by listening. Site, brief, budget, aspiration &mdash; understood in full before a single line is drawn.</p></div>
+      <div class="proc-step"><span class="step-n">02</span><h3>Design</h3><p>Concept sketches evolve into detailed drawings and spatial studies &mdash; refined iteratively until the design earns its place.</p></div>
+      <div class="proc-step"><span class="step-n">03</span><h3>Approve</h3><p>Regulatory submissions, planning approvals, and permits &mdash; navigated entirely by our team.</p></div>
+      <div class="proc-step"><span class="step-n">04</span><h3>Build &amp; Hand Over</h3><p>Construction, fit-out, and quality sign-off managed by the same studio. The space you receive is the space we designed.</p></div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════ TESTIMONIAL ═══════════════════ -->
+<!-- ═══ TESTIMONIAL ═══ -->
 <section id="testimonial">
   <div class="wrap-n">
     <div class="tst-inner">
-      <div class="tst-lbl-col"><p class="tst-lbl rv">In Their Words</p></div>
+      <div><p class="tst-lbl rv">In Their Words</p></div>
       <div>
-        <blockquote class="tst-quote rv d1">
-          &ldquo;What surprised us most was how seamlessly design and construction flowed into one experience. There was never a moment where we felt handed off to someone who didn't understand the vision. We simply walked in.&rdquo;
-        </blockquote>
+        <blockquote class="tst-quote rv d1" id="tst-quote">&ldquo;What surprised us most was how seamlessly design and construction flowed into one experience. There was never a moment where we felt handed off. We simply walked in.&rdquo;</blockquote>
         <div class="tst-auth rv d2">
-          <div class="tst-line" aria-hidden="true"></div>
+          <div class="tst-line"></div>
           <div>
-            <p class="tst-name">Shivaji Walunj</p>
-            <p class="tst-role">Residential Client &middot; Gandhinagar</p>
+            <p class="tst-name" id="tst-name">Shivaji Walunj</p>
+            <p class="tst-role" id="tst-role">Residential Client &middot; Gandhinagar</p>
           </div>
         </div>
       </div>
@@ -674,22 +577,22 @@ footer{background:#080806;border-top:1px solid rgba(255,255,255,0.05);padding:56
   </div>
 </section>
 
-<!-- ═══════════════════ CONTACT ═══════════════════ -->
+<!-- ═══ CONTACT ═══ -->
 <section id="contact">
   <div class="wrap">
     <div class="ct-grid">
       <div class="ct-left">
         <p class="ct-lbl rv">Begin a Commission</p>
         <h2 class="rv d1">Tell us about<br>your project.</h2>
-        <p class="rv d2">We respond to every enquiry personally within one business day. No templates, no junior team &mdash; a direct conversation with the people who will design your space.</p>
+        <p class="rv d2">We respond to every enquiry personally within one business day. A direct conversation with the people who will design your space.</p>
         <div class="ct-details rv d2">
-          <div><p class="ct-d-lbl">Email</p><p class="ct-d-val"><a href="mailto:info@bluedoorarchitects.com">info@bluedoorarchitects.com</a></p></div>
-          <div><p class="ct-d-lbl">Studio</p><p class="ct-d-val">India</p></div>
-          <div><p class="ct-d-lbl">Phone</p><p class="ct-d-val"><a href="tel:+917434006001">+91 74340 06001</a></p></div>
+          <div><p class="ct-d-lbl">Email</p><p class="ct-d-val"><a id="ct-email" href="mailto:info@bluedoorarchitects.com">info@bluedoorarchitects.com</a></p></div>
+          <div><p class="ct-d-lbl">Studio</p><p class="ct-d-val" id="ct-location">India</p></div>
+          <div><p class="ct-d-lbl">Phone</p><p class="ct-d-val"><a id="ct-phone" href="tel:+917434006001">+91 74340 06001</a></p></div>
         </div>
         <div class="ct-social rv d3">
           <span class="ct-soc-lbl">Follow</span>
-          <a href="https://www.instagram.com/bluedoor_architects/" target="_blank" rel="noopener noreferrer">Instagram</a>
+          <a id="ct-instagram" href="https://www.instagram.com/bluedoor_architects/" target="_blank" rel="noopener noreferrer">Instagram</a>
         </div>
       </div>
       <div class="ct-form rv d2">
@@ -701,7 +604,7 @@ footer{background:#080806;border-top:1px solid rgba(255,255,255,0.05);padding:56
             <div class="fld"><label for="ln">Last Name *</label><input type="text" id="ln" placeholder="Your last name" required autocomplete="family-name"/></div>
           </div>
           <div class="fld"><label for="em">Email *</label><input type="email" id="em" placeholder="your@email.com" required autocomplete="email"/></div>
-          <div class="fld"><label for="ph">Phone</label><input type="tel" id="ph" placeholder="+971 50 000 0000" autocomplete="tel"/></div>
+          <div class="fld"><label for="ph">Phone</label><input type="tel" id="ph" placeholder="+91 00000 00000" autocomplete="tel"/></div>
           <div class="fld"><label for="pt">Project Type *</label>
             <select id="pt" required>
               <option value="" disabled selected>Select a type</option>
@@ -711,11 +614,11 @@ footer{background:#080806;border-top:1px solid rgba(255,255,255,0.05);padding:56
           </div>
           <div class="fld"><label for="msg">About Your Project</label><textarea id="msg" placeholder="Location, scale, timeline, and what matters most to you..."></textarea></div>
           <div class="fsubrow">
-            <button class="fbtn" onclick="submitForm()">Send Enquiry <svg width="18" height="12" viewBox="0 0 18 12" fill="none" aria-hidden="true"><path d="M1 6h16M11 1l6 5-6 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></button>
+            <button class="fbtn" onclick="submitForm()">Send Enquiry <svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h16M11 1l6 5-6 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></button>
             <span class="fnote">Private &amp; confidential</span>
           </div>
         </div>
-        <div id="fsuccess" role="status" aria-live="polite">
+        <div id="fsuccess" role="status">
           <p class="fsuc-msg">&ldquo;Thank you for reaching out.&rdquo;</p>
           <p>You'll hear from us directly within one business day.</p>
         </div>
@@ -724,7 +627,7 @@ footer{background:#080806;border-top:1px solid rgba(255,255,255,0.05);padding:56
   </div>
 </section>
 
-<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<!-- ═══ FOOTER ═══ -->
 <footer role="contentinfo">
   <div class="wrap">
     <div class="ft-inner">
@@ -734,32 +637,9 @@ footer{background:#080806;border-top:1px solid rgba(255,255,255,0.05);padding:56
         <p class="ft-palm">A sub-brand of <a href="#">The Palm Group</a></p>
       </div>
       <nav class="ft-nav" aria-label="Footer navigation">
-        <div class="ft-col">
-          <h5>Work</h5>
-          <ul>
-            <li><a href="#projects">Residential</a></li>
-            <li><a href="#projects">Commercial</a></li>
-            <li><a href="#projects">Hospitality</a></li>
-            <li><a href="#projects">Mixed-Use</a></li>
-          </ul>
-        </div>
-        <div class="ft-col">
-          <h5>Studio</h5>
-          <ul>
-            <li><a href="#philosophy">About</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#process">Process</a></li>
-            <li><a href="#unikraft">Unikraft</a></li>
-          </ul>
-        </div>
-        <div class="ft-col">
-          <h5>Connect</h5>
-          <ul>
-            <li><a href="https://www.instagram.com/bluedoor_architects/" target="_blank" rel="noopener">Instagram</a></li>
-            <li><a href="mailto:info@bluedoorarchitects.com">Email</a></li>
-            <li><a href="#contact">Begin a Project</a></li>
-          </ul>
-        </div>
+        <div class="ft-col"><h5>Work</h5><ul><li><a href="#projects">Residential</a></li><li><a href="#projects">Commercial</a></li><li><a href="#projects">Hospitality</a></li><li><a href="#projects">Mixed-Use</a></li></ul></div>
+        <div class="ft-col"><h5>Studio</h5><ul><li><a href="#philosophy">About</a></li><li><a href="#services">Services</a></li><li><a href="#process">Process</a></li><li><a href="#unikraft">Unikraft</a></li></ul></div>
+        <div class="ft-col"><h5>Connect</h5><ul><li><a href="https://www.instagram.com/bluedoor_architects/" target="_blank" rel="noopener">Instagram</a></li><li><a id="footer-email" href="mailto:info@bluedoorarchitects.com">Email</a></li><li><a href="#contact">Begin a Project</a></li></ul></div>
       </nav>
     </div>
     <div class="ft-bottom">
@@ -770,32 +650,200 @@ footer{background:#080806;border-top:1px solid rgba(255,255,255,0.05);padding:56
 </footer>
 
 <script>
-  /* NAV scroll */
-  var nav=document.getElementById('mainnav');
-  function updateNav(){nav.classList.toggle('nav-scrolled',window.scrollY>40);}
-  window.addEventListener('scroll',updateNav,{passive:true});
-  updateNav();
+// ═══════════════════════════════════════════════
+// CMS DATA LOADER
+// Fetches JSON files saved by Decap CMS and
+// injects content into the page dynamically.
+// Falls back to hardcoded defaults if fetch fails.
+// ═══════════════════════════════════════════════
 
-  /* REVEAL on scroll */
-  if('IntersectionObserver' in window){
-    var ro=new IntersectionObserver(function(e){
-      e.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');ro.unobserve(x.target);}});
-    },{threshold:0.1,rootMargin:'0px 0px -48px 0px'});
-    document.querySelectorAll('.rv').forEach(function(el){ro.observe(el);});
-  } else {
-    document.querySelectorAll('.rv').forEach(function(el){el.classList.add('in');});
-  }
+function loadJSON(path, callback) {
+  fetch(path + '?v=' + Date.now())
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(d){ if(d) callback(d); })
+    .catch(function(){});
+}
 
-  /* FORM */
-  function submitForm(){
-    var fn=document.getElementById('fn').value.trim();
-    var em=document.getElementById('em').value.trim();
-    var pt=document.getElementById('pt').value;
-    if(!fn||!em||!pt){alert('Please fill in your name, email, and project type.');return;}
-    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){alert('Please enter a valid email address.');return;}
-    document.getElementById('form-inner').style.display='none';
-    document.getElementById('fsuccess').style.display='block';
+function setImg(id, src) {
+  var el = document.getElementById(id);
+  if (el && src) { el.src = src; el.classList.add('cms-ready'); el.classList.remove('cms-loading'); }
+}
+function setText(id, text) {
+  var el = document.getElementById(id);
+  if (el && text) el.textContent = text;
+}
+function setHref(id, href, text) {
+  var el = document.getElementById(id);
+  if (el) { if(href) el.href = href; if(text) el.textContent = text; }
+}
+
+// Load Hero
+loadJSON('/_data/hero.json', function(d) {
+  setImg('hero-img', d.hero_image);
+  if (d.line1 || d.line2 || d.line3) {
+    var t = document.getElementById('hero-title');
+    if (t) t.innerHTML = (d.line1||'') + '<br>' + (d.line2||'') + '<br>It is <em>' + (d.line3 ? d.line3.replace('It is ','').replace('.','') : 'authored.') + '</em>';
   }
+  setText('hero-count-projects', d.count_projects);
+  setText('hero-count-years', d.count_years);
+});
+
+// Load Settings
+loadJSON('/_data/settings.json', function(d) {
+  var email = d.email || 'info@bluedoorarchitects.com';
+  var phone = d.phone || '+91 74340 06001';
+  var ig    = d.instagram || 'https://www.instagram.com/bluedoor_architects/';
+  setHref('ct-email',  'mailto:' + email, email);
+  setHref('footer-email', 'mailto:' + email);
+  setHref('ct-phone',  'tel:' + phone.replace(/\s/g,''), phone);
+  setHref('ct-instagram', ig);
+  setText('ct-location', d.location);
+  setText('palm-desc', d.palm_group_desc);
+});
+
+// Load Unikraft
+loadJSON('/_data/unikraft.json', function(d) {
+  setImg('uk-img', d.image);
+  setText('uk-headline', d.headline);
+  setText('uk-body1', d.body1);
+  setText('uk-body2', d.body2);
+});
+
+// Load Production
+loadJSON('/_data/production.json', function(d) {
+  setImg('prod-img', d.image);
+  setText('prod-size', d.size);
+  setText('prod-body1', d.body1);
+  setText('prod-body2', d.body2);
+});
+
+// Load Testimonials — show first active one
+loadJSON('/_data/testimonials/shivaji-walunj.json', function(d) {
+  if (d.active !== false) {
+    var q = document.getElementById('tst-quote');
+    if (q && d.quote) q.innerHTML = '\u201c' + d.quote + '\u201d';
+    setText('tst-name', d.client_name);
+    setText('tst-role', d.client_role);
+  }
+});
+
+// Load Projects — fetch all known project files
+// When you add a new project via CMS, add its filename to this array
+var projectFiles = [
+  'the-meridian-residences',
+  // ADD NEW PROJECT FILENAMES HERE — e.g. 'casa-palmera-villa'
+];
+
+var allProjects = [];
+
+function renderProjects() {
+  allProjects.sort(function(a,b){ return (a.order||99) - (b.order||99); });
+  var grid = document.getElementById('projects-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  var featured = allProjects.filter(function(p){ return p.featured !== false; }).slice(0,6);
+
+  // Fallback gradient colours
+  var gradients = [
+    'linear-gradient(155deg,#1C2B3A,#0A1520)',
+    'linear-gradient(155deg,#2A1F14,#3D2B18)',
+    'linear-gradient(155deg,#1A2518,#243320)',
+    'linear-gradient(155deg,#1F1A2A,#2B2438)',
+    'linear-gradient(155deg,#2A1414,#3D1C1C)',
+    'linear-gradient(155deg,#12201F,#1A302E)'
+  ];
+
+  featured.forEach(function(p, i) {
+    var article = document.createElement('article');
+    article.className = 'pj';
+    article.setAttribute('aria-label', p.name);
+
+    if (p.cover_image) {
+      var img = document.createElement('img');
+      img.className = 'pj-img';
+      img.src = p.cover_image;
+      img.alt = p.name;
+      article.appendChild(img);
+    } else {
+      var fb = document.createElement('div');
+      fb.className = 'pj-fallback';
+      fb.style.background = gradients[i] || gradients[0];
+      article.appendChild(fb);
+    }
+
+    var ov = document.createElement('div');
+    ov.className = 'pj-ov';
+    article.appendChild(ov);
+
+    var always = document.createElement('p');
+    always.className = 'pj-always';
+    always.textContent = p.category || '';
+    article.appendChild(always);
+
+    var info = document.createElement('div');
+    info.className = 'pj-info';
+    info.innerHTML = '<p class="pj-cat">' + (p.category||'') + ' &middot; ' + (p.location||'') + '</p>' +
+                     '<h3 class="pj-name">' + p.name + '</h3>';
+    article.appendChild(info);
+
+    grid.appendChild(article);
+  });
+
+  // Re-observe new elements for reveal animation
+  if (window._ro) {
+    grid.querySelectorAll('.pj').forEach(function(el){ window._ro.observe(el); });
+  }
+}
+
+var loadedCount = 0;
+if (projectFiles.length === 0) {
+  // No projects yet — show placeholder message
+  var grid = document.getElementById('projects-grid');
+  if (grid) grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--ink-muted);padding:80px 0;font-size:0.85rem;letter-spacing:0.1em;text-transform:uppercase;">Projects coming soon</p>';
+} else {
+  projectFiles.forEach(function(filename) {
+    loadJSON('/_data/projects/' + filename + '.json', function(d) {
+      allProjects.push(d);
+      loadedCount++;
+      if (loadedCount === projectFiles.length) renderProjects();
+    });
+  });
+}
+
+// ═══════════════════════════════════════════════
+// NAV
+// ═══════════════════════════════════════════════
+var nav = document.getElementById('mainnav');
+function updateNav(){ nav.classList.toggle('nav-scrolled', window.scrollY > 40); }
+window.addEventListener('scroll', updateNav, {passive:true});
+updateNav();
+
+// ═══════════════════════════════════════════════
+// SCROLL REVEAL
+// ═══════════════════════════════════════════════
+if ('IntersectionObserver' in window) {
+  window._ro = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); window._ro.unobserve(e.target); }
+    });
+  }, {threshold:0.1, rootMargin:'0px 0px -48px 0px'});
+  document.querySelectorAll('.rv').forEach(function(el){ window._ro.observe(el); });
+} else {
+  document.querySelectorAll('.rv').forEach(function(el){ el.classList.add('in'); });
+}
+
+// ═══════════════════════════════════════════════
+// CONTACT FORM
+// ═══════════════════════════════════════════════
+function submitForm(){
+  var fn=document.getElementById('fn').value.trim();
+  var em=document.getElementById('em').value.trim();
+  var pt=document.getElementById('pt').value;
+  if(!fn||!em||!pt){alert('Please fill in your name, email, and project type.');return;}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){alert('Please enter a valid email address.');return;}
+  document.getElementById('form-inner').style.display='none';
+  document.getElementById('fsuccess').style.display='block';
+}
 </script>
 </body>
 </html>
