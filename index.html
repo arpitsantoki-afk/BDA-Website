@@ -170,7 +170,13 @@ nav#mainnav.nav-scrolled .nav-links a{color:var(--ink-soft)}
 .uk-img-side img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(0.6)}
 .uk-img-overlay{position:absolute;inset:0;background:linear-gradient(to right,transparent 60%,rgba(12,12,10,0.5) 100%)}
 .uk-content{padding:80px 72px;display:flex;flex-direction:column;justify-content:center}
-.uk-eyeline{font-size:0.6rem;letter-spacing:0.26em;text-transform:uppercase;color:var(--gold);margin-bottom:28px}
+.uk-collection{
+  font-size:0.6rem;letter-spacing:0.32em;text-transform:uppercase;
+  color:rgba(255,255,255,0.35);margin-bottom:20px;
+  border:1px solid rgba(255,255,255,0.12);
+  display:inline-block;padding:5px 12px;
+}
+.uk-eyeline{font-size:0.6rem;letter-spacing:0.26em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
 .uk-logo{height:80px;width:auto;object-fit:contain;object-position:left;margin-bottom:32px;mix-blend-mode:screen;filter:brightness(1.8) contrast(0.9)}
 .uk-content h2{font-family:var(--serif);font-weight:300;font-size:clamp(1.8rem,2.8vw,2.5rem);color:white;line-height:1.2;margin-bottom:24px}
 .uk-content p{font-size:0.85rem;font-weight:200;line-height:1.9;color:rgba(255,255,255,0.5);max-width:440px}
@@ -467,12 +473,13 @@ footer{background:#080806;border-top:1px solid rgba(255,255,255,0.05);padding:56
 <section id="unikraft" aria-label="Unikraft">
   <div class="uk-inner">
     <div class="uk-img-side">
-      <img id="uk-img" src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=900&q=80" alt="Unikraft custom solid wood furniture" class="cms-loading"/>
+      <img id="uk-img" src="/images/uploads/unikraft-solid-wood-living-room-sofa-armchair-coffee-table-set.jpg" alt="OBLIQUE collection — bespoke solid wood sofa, armchair and coffee table by Unikraft, crafted in India" class="cms-loading"/>
       <div class="uk-img-overlay"></div>
     </div>
     <div class="uk-content rv">
       <p class="uk-eyeline">An Extension of Our Practice</p>
       <img src="unikraft_logo.jpg" alt="Unikraft — Crafted in India" class="uk-logo"/>
+      <p class="uk-collection" id="uk-collection">OBLIQUE Collection</p>
       <h2 id="uk-headline">Custom solid wood furniture, born from the projects we love.</h2>
       <p id="uk-body1">While designing and executing spaces for our clients, we became so absorbed in the character of solid wood that we began crafting bespoke loose furniture to complete them. Unikraft is that obsession, formalised.</p>
       <p id="uk-body2">Every piece is custom-designed, solid wood, and made in India. Blue Door clients have direct access to Unikraft &mdash; the furniture conceived alongside the space it lives in.</p>
@@ -707,6 +714,7 @@ loadJSON('/_data/unikraft.json', function(d) {
   setText('uk-headline', d.headline);
   setText('uk-body1', d.body1);
   setText('uk-body2', d.body2);
+  if (d.collection) setText('uk-collection', d.collection + ' Collection');
 });
 
 // Load Production
