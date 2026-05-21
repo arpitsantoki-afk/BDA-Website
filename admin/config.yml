@@ -1,14 +1,12 @@
 # ================================================================
 # DECAP CMS — Blue Door Architects
-# This file controls what appears in your /admin dashboard.
 # ================================================================
 
 backend:
-  backend:
   name: git-gateway
   branch: main
 
-# Where uploaded images get stored in your repo
+# Where uploaded images get stored
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
 
@@ -18,18 +16,33 @@ collections:
   - name: "settings"
     label: "Site Settings"
     files:
-
       - name: "general"
         label: "General Info"
         file: "_data/settings.json"
         fields:
-          - { label: "Studio Name", name: "studio_name", widget: "string", default: "Blue Door Architects" }
-          - { label: "Tagline", name: "tagline", widget: "string", default: "Architecture & Turnkey Design" }
-          - { label: "Phone", name: "phone", widget: "string", default: "+91 74340 06001" }
-          - { label: "Email", name: "email", widget: "string", default: "info@bluedoorarchitects.com" }
-          - { label: "Studio Location", name: "location", widget: "string", default: "India" }
-          - { label: "Instagram URL", name: "instagram", widget: "string", default: "https://www.instagram.com/bluedoor_architects/" }
+          - { label: "Studio Name", name: "studio_name", widget: "string" }
+          - { label: "Tagline", name: "tagline", widget: "string" }
+          - { label: "Phone", name: "phone", widget: "string" }
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "Studio Location", name: "location", widget: "string" }
+          - { label: "Instagram URL", name: "instagram", widget: "string" }
           - { label: "Palm Group Description", name: "palm_group_desc", widget: "text" }
+
+  # ── HERO SECTION ───────────────────────────────────────────
+  - name: "hero"
+    label: "Hero Section"
+    files:
+      - name: "hero_content"
+        label: "Hero Content"
+        file: "_data/hero.json"
+        fields:
+          - { label: "Hero Image", name: "hero_image", widget: "image" }
+          - { label: "Headline Line 1", name: "line1", widget: "string" }
+          - { label: "Headline Line 2", name: "line2", widget: "string" }
+          - { label: "Headline Line 3 (italic gold)", name: "line3", widget: "string" }
+          - { label: "Subtext", name: "subtext", widget: "text" }
+          - { label: "Projects Count", name: "count_projects", widget: "string" }
+          - { label: "Years Count", name: "count_years", widget: "string" }
 
   # ── PROJECTS ───────────────────────────────────────────────
   - name: "projects"
@@ -45,19 +58,12 @@ collections:
         name: "category"
         widget: "select"
         options: ["Residential", "Commercial", "Hospitality", "Mixed-Use", "Cultural", "Interior"]
-      - { label: "Location", name: "location", widget: "string", hint: "e.g. Dubai, UAE" }
+      - { label: "Location", name: "location", widget: "string", hint: "e.g. Gandhinagar, India" }
       - { label: "Year", name: "year", widget: "string", hint: "e.g. 2024" }
       - { label: "Cover Image", name: "cover_image", widget: "image" }
       - { label: "Short Description", name: "description", widget: "text", required: false }
-      - label: "Featured on Homepage"
-        name: "featured"
-        widget: "boolean"
-        default: true
-      - label: "Display Order"
-        name: "order"
-        widget: "number"
-        default: 1
-        hint: "Lower number = shown first"
+      - { label: "Featured on Homepage", name: "featured", widget: "boolean", default: true }
+      - { label: "Display Order", name: "order", widget: "number", default: 1, hint: "Lower = shown first" }
 
   # ── TESTIMONIALS ───────────────────────────────────────────
   - name: "testimonials"
@@ -69,28 +75,9 @@ collections:
     identifier_field: client_name
     fields:
       - { label: "Client Name", name: "client_name", widget: "string" }
-      - { label: "Client Role", name: "client_role", widget: "string", hint: "e.g. Residential Client · Gandhinagar" }
+      - { label: "Client Role / Location", name: "client_role", widget: "string" }
       - { label: "Quote", name: "quote", widget: "text" }
-      - label: "Show on Website"
-        name: "active"
-        widget: "boolean"
-        default: true
-
-  # ── HERO SECTION ───────────────────────────────────────────
-  - name: "hero"
-    label: "Hero Section"
-    files:
-      - name: "hero_content"
-        label: "Hero Content"
-        file: "_data/hero.json"
-        fields:
-          - { label: "Hero Image", name: "hero_image", widget: "image" }
-          - { label: "Headline Line 1", name: "line1", widget: "string", default: "Space is not" }
-          - { label: "Headline Line 2", name: "line2", widget: "string", default: "merely built." }
-          - { label: "Headline Line 3 (italic)", name: "line3", widget: "string", default: "It is authored." }
-          - { label: "Subtext", name: "subtext", widget: "text" }
-          - { label: "Projects Count", name: "count_projects", widget: "string", default: "120+" }
-          - { label: "Years Count", name: "count_years", widget: "string", default: "15+" }
+      - { label: "Show on Website", name: "active", widget: "boolean", default: true }
 
   # ── UNIKRAFT ───────────────────────────────────────────────
   - name: "unikraft"
@@ -114,6 +101,6 @@ collections:
         file: "_data/production.json"
         fields:
           - { label: "Section Image", name: "image", widget: "image" }
-          - { label: "Facility Size", name: "size", widget: "string", default: "50,000" }
+          - { label: "Facility Size", name: "size", widget: "string" }
           - { label: "Body Text 1", name: "body1", widget: "text" }
           - { label: "Body Text 2", name: "body2", widget: "text" }

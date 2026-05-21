@@ -329,6 +329,29 @@ footer{background:#080806;border-top:1px solid rgba(255,255,255,0.05);padding:56
   .phil-grid{grid-template-columns:1fr}
 }
 </style>
+<!-- Netlify Identity — required for Decap CMS login redirect -->
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  window.netlifyIdentity && window.netlifyIdentity.init({
+    APIUrl: "https://bespoke-semifreddo-3a72e0.netlify.app/.netlify/identity"
+  });
+
+  // Auto-open identity modal on recovery/invite/confirmation tokens
+  document.addEventListener("DOMContentLoaded", function() {
+    if (window.location.hash) {
+      var hash = window.location.hash;
+      if (hash.includes("recovery_token") ||
+          hash.includes("invite_token") ||
+          hash.includes("confirmation_token")) {
+        window.netlifyIdentity && window.netlifyIdentity.open();
+      }
+    }
+    // Redirect to admin after login
+    window.netlifyIdentity && window.netlifyIdentity.on("login", function() {
+      document.location.href = "/admin/";
+    });
+  });
+</script>
 </head>
 <body>
 
