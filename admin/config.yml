@@ -1,0 +1,120 @@
+# ================================================================
+# DECAP CMS — Blue Door Architects
+# This file controls what appears in your /admin dashboard.
+# ================================================================
+
+backend:
+  name: github
+  repo: YOUR_GITHUB_USERNAME/bluedoorarchitects   # ← REPLACE with your GitHub username
+  branch: main
+  base_url: https://bluedoorarchitects.com         # ← REPLACE once domain is pointed
+
+# Where uploaded images get stored in your repo
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+
+  # ── SITE SETTINGS ──────────────────────────────────────────
+  - name: "settings"
+    label: "Site Settings"
+    files:
+
+      - name: "general"
+        label: "General Info"
+        file: "_data/settings.json"
+        fields:
+          - { label: "Studio Name", name: "studio_name", widget: "string", default: "Blue Door Architects" }
+          - { label: "Tagline", name: "tagline", widget: "string", default: "Architecture & Turnkey Design" }
+          - { label: "Phone", name: "phone", widget: "string", default: "+91 74340 06001" }
+          - { label: "Email", name: "email", widget: "string", default: "info@bluedoorarchitects.com" }
+          - { label: "Studio Location", name: "location", widget: "string", default: "India" }
+          - { label: "Instagram URL", name: "instagram", widget: "string", default: "https://www.instagram.com/bluedoor_architects/" }
+          - { label: "Palm Group Description", name: "palm_group_desc", widget: "text" }
+
+  # ── PROJECTS ───────────────────────────────────────────────
+  - name: "projects"
+    label: "Projects"
+    label_singular: "Project"
+    folder: "_data/projects"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: name
+    fields:
+      - { label: "Project Name", name: "name", widget: "string" }
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options: ["Residential", "Commercial", "Hospitality", "Mixed-Use", "Cultural", "Interior"]
+      - { label: "Location", name: "location", widget: "string", hint: "e.g. Dubai, UAE" }
+      - { label: "Year", name: "year", widget: "string", hint: "e.g. 2024" }
+      - { label: "Cover Image", name: "cover_image", widget: "image" }
+      - { label: "Short Description", name: "description", widget: "text", required: false }
+      - label: "Featured on Homepage"
+        name: "featured"
+        widget: "boolean"
+        default: true
+      - label: "Display Order"
+        name: "order"
+        widget: "number"
+        default: 1
+        hint: "Lower number = shown first"
+
+  # ── TESTIMONIALS ───────────────────────────────────────────
+  - name: "testimonials"
+    label: "Testimonials"
+    label_singular: "Testimonial"
+    folder: "_data/testimonials"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: client_name
+    fields:
+      - { label: "Client Name", name: "client_name", widget: "string" }
+      - { label: "Client Role", name: "client_role", widget: "string", hint: "e.g. Residential Client · Gandhinagar" }
+      - { label: "Quote", name: "quote", widget: "text" }
+      - label: "Show on Website"
+        name: "active"
+        widget: "boolean"
+        default: true
+
+  # ── HERO SECTION ───────────────────────────────────────────
+  - name: "hero"
+    label: "Hero Section"
+    files:
+      - name: "hero_content"
+        label: "Hero Content"
+        file: "_data/hero.json"
+        fields:
+          - { label: "Hero Image", name: "hero_image", widget: "image" }
+          - { label: "Headline Line 1", name: "line1", widget: "string", default: "Space is not" }
+          - { label: "Headline Line 2", name: "line2", widget: "string", default: "merely built." }
+          - { label: "Headline Line 3 (italic)", name: "line3", widget: "string", default: "It is authored." }
+          - { label: "Subtext", name: "subtext", widget: "text" }
+          - { label: "Projects Count", name: "count_projects", widget: "string", default: "120+" }
+          - { label: "Years Count", name: "count_years", widget: "string", default: "15+" }
+
+  # ── UNIKRAFT ───────────────────────────────────────────────
+  - name: "unikraft"
+    label: "Unikraft Section"
+    files:
+      - name: "unikraft_content"
+        label: "Unikraft Content"
+        file: "_data/unikraft.json"
+        fields:
+          - { label: "Section Image", name: "image", widget: "image" }
+          - { label: "Headline", name: "headline", widget: "string" }
+          - { label: "Body Text 1", name: "body1", widget: "text" }
+          - { label: "Body Text 2", name: "body2", widget: "text" }
+
+  # ── PRODUCTION UNIT ────────────────────────────────────────
+  - name: "production"
+    label: "Production Unit Section"
+    files:
+      - name: "production_content"
+        label: "Production Content"
+        file: "_data/production.json"
+        fields:
+          - { label: "Section Image", name: "image", widget: "image" }
+          - { label: "Facility Size", name: "size", widget: "string", default: "50,000" }
+          - { label: "Body Text 1", name: "body1", widget: "text" }
+          - { label: "Body Text 2", name: "body2", widget: "text" }

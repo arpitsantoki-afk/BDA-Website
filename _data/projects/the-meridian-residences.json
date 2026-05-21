@@ -1,0 +1,10 @@
+{
+  "name": "The Meridian Residences",
+  "category": "Residential",
+  "location": "Dubai, UAE",
+  "year": "2024",
+  "cover_image": "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=900&q=75",
+  "description": "A luxury residential complex delivered turnkey.",
+  "featured": true,
+  "order": 1
+}
