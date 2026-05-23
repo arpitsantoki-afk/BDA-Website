@@ -789,49 +789,29 @@ function renderProjects() {
   if (window._ro) { grid.querySelectorAll('.pj').forEach(function(el){ window._ro.observe(el); }); }
 }
 
-// Load project manifest first, then load each project JSON
-loadJSON('/_data/projects-index.json', function(manifest) {
-  var slugs = manifest.projects || [];
-  if (slugs.length === 0) { renderProjects(); return; }
-  var loaded = 0;
-  slugs.forEach(function(slug) {
-    // Try .json first, fall back to .md
-    fetch('/_data/projects/' + slug + '.json?v=' + Date.now())
-      .then(function(r) {
-        if (r.ok) return r.json();
-        // Try .md as fallback (older CMS entries)
-        return fetch('/_data/projects/' + slug + '.md?v=' + Date.now())
-          .then(function(r2) {
-            if (!r2.ok) return null;
-            return r2.text().then(function(text) {
-              // Parse frontmatter from .md file
-              var fm = {};
-              var match = text.match(/^---\n([\s\S]*?)\n---/);
-              if (match) {
-                match[1].split('\n').forEach(function(line) {
-                  var parts = line.split(': ');
-                  if (parts.length >= 2) {
-                    var key = parts[0].trim();
-                    var val = parts.slice(1).join(': ').trim().replace(/^["']|["']$/g,'');
-                    fm[key] = val;
-                  }
-                });
-              }
-              return fm;
-            });
-          });
-      })
-      .then(function(d) {
-        if (d && d.name) allProjects.push(d);
-        loaded++;
-        if (loaded === slugs.length) renderProjects();
-      })
-      .catch(function() {
-        loaded++;
-        if (loaded === slugs.length) renderProjects();
-      });
-  });
-});
+// Load projects dynamically — no manifest needed
+// /api/projects automatically lists all .json files in _data/projects/
+fetch('/api/projects?v=' + Date.now())
+  .then(function(r) { return r.ok ? r.json() : { projects: [] }; })
+  .then(function(manifest) {
+    var slugs = manifest.projects || [];
+    if (slugs.length === 0) { renderProjects(); return; }
+    var loaded = 0;
+    slugs.forEach(function(slug) {
+      fetch('/_data/projects/' + slug + '.json?v=' + Date.now())
+        .then(function(r) { return r.ok ? r.json() : null; })
+        .then(function(d) {
+          if (d && d.name) allProjects.push(d);
+          loaded++;
+          if (loaded === slugs.length) renderProjects();
+        })
+        .catch(function() {
+          loaded++;
+          if (loaded === slugs.length) renderProjects();
+        });
+    });
+  })
+  .catch(function() { renderProjects(); });
 
 // ═══════════════════════════════════════════════
 // NAV
