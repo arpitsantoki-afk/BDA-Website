@@ -1,5 +1,5 @@
 ---
-name: Sample House
+name: Altezza Sample House
 category: Interior
 location: Sargasan, Gandhinagar
 year: "2024"
