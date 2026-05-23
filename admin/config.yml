@@ -6,7 +6,6 @@ backend:
   name: git-gateway
   branch: main
 
-# Where uploaded images get stored
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
 
@@ -28,6 +27,43 @@ collections:
           - { label: "Instagram URL", name: "instagram", widget: "string" }
           - { label: "Palm Group Description", name: "palm_group_desc", widget: "text" }
 
+  # ── PROJECTS INDEX — update this when adding a new project ──
+  - name: "projects_index"
+    label: "Projects Index"
+    files:
+      - name: "index"
+        label: "Project List (controls what appears on website)"
+        file: "_data/projects-index.json"
+        fields:
+          - label: "Project Slugs"
+            name: "projects"
+            widget: "list"
+            hint: "Add the slug of each project here. The slug is the filename without .json — e.g. shades-of-white"
+            field: { label: "Slug", name: "slug", widget: "string" }
+
+  # ── PROJECTS ───────────────────────────────────────────────
+  - name: "projects"
+    label: "Projects"
+    label_singular: "Project"
+    folder: "_data/projects"
+    create: true
+    slug: "{{slug}}"
+    format: "json"
+    extension: "json"
+    identifier_field: name
+    fields:
+      - { label: "Project Name", name: "name", widget: "string" }
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options: ["Residential", "Commercial", "Hospitality", "Mixed-Use", "Cultural", "Interior"]
+      - { label: "Location", name: "location", widget: "string", hint: "e.g. Gandhinagar, India" }
+      - { label: "Year", name: "year", widget: "string", hint: "e.g. 2024" }
+      - { label: "Cover Image", name: "cover_image", widget: "image" }
+      - { label: "Short Description", name: "description", widget: "text", required: false }
+      - { label: "Featured on Homepage", name: "featured", widget: "boolean", default: true }
+      - { label: "Display Order", name: "order", widget: "number", default: 1, hint: "Lower = shown first" }
+
   # ── HERO SECTION ───────────────────────────────────────────
   - name: "hero"
     label: "Hero Section"
@@ -44,27 +80,6 @@ collections:
           - { label: "Projects Count", name: "count_projects", widget: "string" }
           - { label: "Years Count", name: "count_years", widget: "string" }
 
-  # ── PROJECTS ───────────────────────────────────────────────
-  - name: "projects"
-    label: "Projects"
-    label_singular: "Project"
-    folder: "_data/projects"
-    create: true
-    slug: "{{slug}}"
-    identifier_field: name
-    fields:
-      - { label: "Project Name", name: "name", widget: "string" }
-      - label: "Category"
-        name: "category"
-        widget: "select"
-        options: ["Residential", "Commercial", "Hospitality", "Mixed-Use", "Cultural", "Interior"]
-      - { label: "Location", name: "location", widget: "string", hint: "e.g. Gandhinagar, India" }
-      - { label: "Year", name: "year", widget: "string", hint: "e.g. 2024" }
-      - { label: "Cover Image", name: "cover_image", widget: "image" }
-      - { label: "Short Description", name: "description", widget: "text", required: false }
-      - { label: "Featured on Homepage", name: "featured", widget: "boolean", default: true }
-      - { label: "Display Order", name: "order", widget: "number", default: 1, hint: "Lower = shown first" }
-
   # ── TESTIMONIALS ───────────────────────────────────────────
   - name: "testimonials"
     label: "Testimonials"
@@ -72,6 +87,8 @@ collections:
     folder: "_data/testimonials"
     create: true
     slug: "{{slug}}"
+    format: "json"
+    extension: "json"
     identifier_field: client_name
     fields:
       - { label: "Client Name", name: "client_name", widget: "string" }
@@ -88,16 +105,17 @@ collections:
         file: "_data/unikraft.json"
         fields:
           - { label: "Section Image", name: "image", widget: "image" }
+          - { label: "Collection Name", name: "collection", widget: "string" }
           - { label: "Headline", name: "headline", widget: "string" }
           - { label: "Body Text 1", name: "body1", widget: "text" }
           - { label: "Body Text 2", name: "body2", widget: "text" }
 
   # ── PRODUCTION UNIT ────────────────────────────────────────
   - name: "production"
-    label: "Production Unit Section"
+    label: "The Manufactory Section"
     files:
       - name: "production_content"
-        label: "Production Content"
+        label: "Manufactory Content"
         file: "_data/production.json"
         fields:
           - { label: "Section Image", name: "image", widget: "image" }
