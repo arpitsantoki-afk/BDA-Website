@@ -1,75 +1,75 @@
-// Cloudflare Pages Function — GitHub OAuth handler for Decap CMS
-// Handles both /api/auth and /api/auth/callback
+// Cloudflare Pages Function — GitHub OAuth for Decap CMS
+// Handles /api/auth (initial) and /api/auth/callback
 
 const CLIENT_ID = "Ov23lit8gNRJzxceLwmY";
 const CLIENT_SECRET = "211802d026a4a620779939b840d151f8270e28a8";
+const ORIGIN = "https://bda-website.info-unikraft.workers.dev";
 
 export async function onRequest(context) {
   const url = new URL(context.request.url);
-  const path = url.pathname;
+  const isCallback = url.searchParams.has("code");
 
-  // Step 1: Redirect to GitHub OAuth
-  if (!path.includes("callback")) {
+  // ── STEP 1: Initial auth request → redirect to GitHub ──
+  if (!isCallback) {
     const params = new URLSearchParams({
       client_id: CLIENT_ID,
-      redirect_uri: `${url.origin}/api/auth/callback`,
+      redirect_uri: `${ORIGIN}/api/auth`,
       scope: "repo,user",
-      state: Math.random().toString(36).substring(7),
+      state: crypto.randomUUID(),
     });
     return Response.redirect(
-      `https://github.com/login/oauth/authorize?${params}`,
-      302
+      `https://github.com/login/oauth/authorize?${params}`, 302
     );
   }
 
-  // Step 2: Handle callback — exchange code for token
+  // ── STEP 2: Callback with code → exchange for token ──
   const code = url.searchParams.get("code");
-  if (!code) {
-    return new Response("Missing code", { status: 400 });
-  }
 
   const tokenRes = await fetch("https://github.com/login/oauth/access_token", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Accept: "application/json",
+      "Accept": "application/json",
     },
     body: JSON.stringify({
       client_id: CLIENT_ID,
       client_secret: CLIENT_SECRET,
       code,
-      redirect_uri: `${url.origin}/api/auth/callback`,
+      redirect_uri: `${ORIGIN}/api/auth`,
     }),
   });
 
-  const tokenData = await tokenRes.json();
+  const data = await tokenRes.json();
 
-  if (tokenData.error) {
-    return new Response(`OAuth error: ${tokenData.error_description}`, { status: 400 });
+  if (data.error) {
+    return new Response(`Auth error: ${data.error_description}`, { status: 400 });
   }
 
-  const token = tokenData.access_token;
-  const provider = "github";
+  const token = data.access_token;
 
-  // Return HTML that passes token back to Decap CMS
+  // ── STEP 3: Post token back to Decap CMS opener window ──
   const html = `<!DOCTYPE html>
 <html>
-<head><title>Authorizing...</title></head>
+<head><title>Authenticating...</title></head>
 <body>
 <script>
-  (function() {
-    function receiveMessage(e) {
-      console.log("receiveMessage", e);
-      window.opener.postMessage(
-        'authorization:${provider}:success:${JSON.stringify({ token, provider })}',
-        e.origin
-      );
-    }
-    window.addEventListener("message", receiveMessage, false);
-    window.opener.postMessage("authorizing:${provider}", "*");
-  })();
+(function() {
+  function receiveMessage(e) {
+    window.opener.postMessage(
+      'authorization:github:success:' + JSON.stringify({
+        token: "${token}",
+        provider: "github"
+      }),
+      e.origin
+    );
+  }
+  window.addEventListener("message", receiveMessage, false);
+  window.opener.postMessage("authorizing:github", "*");
+})();
 </script>
-<p>Authorizing... You can close this window.</p>
+<p style="font-family:sans-serif;text-align:center;margin-top:40px">
+  Authenticating with GitHub...<br>You can close this window.
+</p>
 </body>
 </html>`;
 
