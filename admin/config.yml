@@ -7,8 +7,8 @@ backend:
   name: github
   repo: arpitsantoki-afk/BDA-Website
   branch: main
-  base_url: https://bda-website.info-unikraft.workers.dev
-  auth_endpoint: /api/auth
+  base_url: https://cms-oauth.info-unikraft.workers.dev
+  auth_endpoint: /
 
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
