@@ -10,7 +10,7 @@
 <meta property="og:title" content="Blue Door Architects | Architecture &amp; Turnkey Design"/>
 <meta property="og:description" content="A design-led architecture practice. From first sketch to final key."/>
 <meta name="twitter:card" content="summary_large_image"/>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"ArchitectFirm","name":"Blue Door Architects","url":"https://www.bluedoorarchitects.com","sameAs":["https://www.instagram.com/bluedoor_architects/"],"parentOrganization":{"@type":"Organization","name":"The Palm Group"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ArchitectFirm","name":"Blue Door Architects","url":"https://www.bluedoorarchitects.com","sameAs":["https://www.instagram.com/bluedoor_architects/","https://in.pinterest.com/bluedoorarchitects/"],"parentOrganization":{"@type":"Organization","name":"The Palm Group"}}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet"/>
@@ -229,6 +229,20 @@ nav#mainnav.nav-scrolled .nav-links a{color:var(--ink-soft)}
 .proc-step h3{font-family:var(--serif);font-weight:300;font-size:1.2rem;color:rgba(255,255,255,0.85);margin-bottom:12px}
 .proc-step p{font-size:0.78rem;font-weight:200;line-height:1.9;color:rgba(255,255,255,0.35)}
 
+/* ── PUBLICATIONS ── */
+#publications{background:var(--cream);padding:120px 0}
+.pub-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px}
+.pub-lbl{font-size:0.6rem;letter-spacing:0.24em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.pub-header h2{font-family:var(--serif);font-weight:300;font-size:clamp(2rem,3.8vw,3rem)}
+.pub-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.pub-card{display:block;background:white;padding:36px;border-radius:2px;border:1px solid var(--border);transition:box-shadow 0.3s,transform 0.3s;text-decoration:none}
+.pub-card:hover{box-shadow:0 8px 32px rgba(0,0,0,0.08);transform:translateY(-3px)}
+.pub-card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.pub-outlet{font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);font-weight:400}
+.pub-card-top svg{color:var(--ink-muted);flex-shrink:0}
+.pub-title{font-family:var(--serif);font-weight:300;font-size:1.15rem;line-height:1.5;color:var(--ink);margin-bottom:16px}
+.pub-meta{font-size:0.72rem;font-weight:200;color:var(--ink-muted);letter-spacing:0.06em}
+
 /* ── TESTIMONIAL ── */
 #testimonial{background:var(--warm);padding:120px 0}
 .tst-inner{display:grid;grid-template-columns:200px 1fr;gap:80px;align-items:start}
@@ -322,7 +336,9 @@ footer{background:#080806;border-top:1px solid rgba(255,255,255,0.05);padding:56
   .ft-bottom{flex-direction:column;gap:10px;text-align:center}
   .proj-hdr{flex-direction:column;align-items:flex-start;gap:14px}
   .proc-top{flex-direction:column;gap:16px}.proc-top p{text-align:left}
-  #intro,#services,#philosophy,#testimonial,#contact{padding:88px 0}
+  .pub-grid{grid-template-columns:1fr}
+  .pub-header{flex-direction:column;align-items:flex-start;gap:8px}
+  #publications{padding:88px 0}
   #projects{padding-top:88px}
 }
 </style>
@@ -340,6 +356,7 @@ footer{background:#080806;border-top:1px solid rgba(255,255,255,0.05);padding:56
   <a href="#unikraft" onclick="document.getElementById('nav-toggle').checked=false;">Unikraft</a>
   <a href="#production" onclick="document.getElementById('nav-toggle').checked=false;">Manufacturing</a>
   <a href="#philosophy" onclick="document.getElementById('nav-toggle').checked=false;">Studio</a>
+  <a href="#publications" onclick="document.getElementById('nav-toggle').checked=false;">Press</a>
   <a href="#process" onclick="document.getElementById('nav-toggle').checked=false;">Process</a>
   <a href="#contact" class="accent" onclick="document.getElementById('nav-toggle').checked=false;">Begin a Project</a>
 </nav>
@@ -358,6 +375,7 @@ footer{background:#080806;border-top:1px solid rgba(255,255,255,0.05);padding:56
       <a href="#unikraft">Unikraft</a>
       <a href="#production">Manufacturing</a>
       <a href="#philosophy">Studio</a>
+      <a href="#publications">Press</a>
       <a href="#process">Process</a>
       <a href="#contact" class="nav-cta">Begin a Project</a>
     </div>
@@ -557,6 +575,20 @@ footer{background:#080806;border-top:1px solid rgba(255,255,255,0.05);padding:56
   </div>
 </section>
 
+<!-- ═══ PUBLICATIONS ═══ -->
+<section id="publications">
+  <div class="wrap">
+    <div class="pub-header rv">
+      <div>
+        <p class="pub-lbl">As Seen In</p>
+        <h2>Press &amp; <em style="font-family:var(--serif);font-style:italic">Publications</em></h2>
+      </div>
+    </div>
+    <!-- Injected dynamically from _data/publications/*.json -->
+    <div class="pub-grid rv d1" id="pub-grid"></div>
+  </div>
+</section>
+
 <!-- ═══ TESTIMONIAL ═══ -->
 <section id="testimonial">
   <div class="wrap-n">
@@ -592,6 +624,7 @@ footer{background:#080806;border-top:1px solid rgba(255,255,255,0.05);padding:56
         <div class="ct-social rv d3">
           <span class="ct-soc-lbl">Follow</span>
           <a id="ct-instagram" href="https://www.instagram.com/bluedoor_architects/" target="_blank" rel="noopener noreferrer">Instagram</a>
+          <a href="https://in.pinterest.com/bluedoorarchitects/" target="_blank" rel="noopener noreferrer">Pinterest</a>
         </div>
       </div>
       <div class="ct-form rv d2">
@@ -643,7 +676,7 @@ footer{background:#080806;border-top:1px solid rgba(255,255,255,0.05);padding:56
       <nav class="ft-nav" aria-label="Footer navigation">
         <div class="ft-col"><h5>Work</h5><ul><li><a href="#projects">Residential</a></li><li><a href="#projects">Commercial</a></li><li><a href="#projects">Hospitality</a></li><li><a href="#projects">Mixed-Use</a></li></ul></div>
         <div class="ft-col"><h5>Studio</h5><ul><li><a href="#philosophy">About</a></li><li><a href="#services">Services</a></li><li><a href="#process">Process</a></li><li><a href="#unikraft">Unikraft</a></li></ul></div>
-        <div class="ft-col"><h5>Connect</h5><ul><li><a href="https://www.instagram.com/bluedoor_architects/" target="_blank" rel="noopener">Instagram</a></li><li><a id="footer-email" href="mailto:info@bluedoorarchitects.com">Email</a></li><li><a href="#contact">Begin a Project</a></li></ul></div>
+        <div class="ft-col"><h5>Connect</h5><ul><li><a href="https://www.instagram.com/bluedoor_architects/" target="_blank" rel="noopener">Instagram</a></li><li><a href="https://in.pinterest.com/bluedoorarchitects/" target="_blank" rel="noopener">Pinterest</a></li><li><a id="footer-email" href="mailto:info@bluedoorarchitects.com">Email</a></li><li><a href="#contact">Begin a Project</a></li></ul></div>
       </nav>
     </div>
     <div class="ft-bottom">
@@ -723,14 +756,36 @@ loadJSON('/_data/production.json', function(d) {
 });
 
 // Load Testimonials — show first active one
-loadJSON('/_data/testimonials/shivaji-walunj.json', function(d) {
-  if (d.active !== false) {
-    var q = document.getElementById('tst-quote');
-    if (q && d.quote) q.innerHTML = '\u201c' + d.quote + '\u201d';
-    setText('tst-name', d.client_name);
-    setText('tst-role', d.client_role);
-  }
-});
+// Load testimonials dynamically via GitHub API
+fetch('https://api.github.com/repos/arpitsantoki-afk/BDA-Website/contents/_data/testimonials', {
+  headers: { 'Accept': 'application/vnd.github.v3+json' }
+})
+  .then(function(r) { return r.ok ? r.json() : []; })
+  .then(function(files) {
+    var jsonFiles = Array.isArray(files)
+      ? files.filter(function(f) { return f.name.endsWith('.json'); })
+      : [];
+    if (jsonFiles.length === 0) return;
+    // Load first active testimonial
+    var loaded = 0;
+    var found = false;
+    jsonFiles.forEach(function(file) {
+      fetch('/_data/testimonials/' + file.name + '?v=' + Date.now())
+        .then(function(r) { return r.ok ? r.json() : null; })
+        .then(function(d) {
+          loaded++;
+          if (d && d.active !== false && !found) {
+            found = true;
+            var q = document.getElementById('tst-quote');
+            if (q && d.quote) q.innerHTML = '\u201c' + d.quote + '\u201d';
+            setText('tst-name', d.client_name);
+            setText('tst-role', d.client_role);
+          }
+        })
+        .catch(function() { loaded++; });
+    });
+  })
+  .catch(function() {});
 
 // Load Projects — fetch all known project files
 // When you add a new project via CMS, add its filename to this array
@@ -816,8 +871,53 @@ fetch('https://api.github.com/repos/arpitsantoki-afk/BDA-Website/contents/_data/
   })
   .catch(function() { renderProjects(); });
 
-// ═══════════════════════════════════════════════
-// NAV
+// Load publications dynamically via GitHub API
+fetch('https://api.github.com/repos/arpitsantoki-afk/BDA-Website/contents/_data/publications', {
+  headers: { 'Accept': 'application/vnd.github.v3+json' }
+})
+  .then(function(r) { return r.ok ? r.json() : []; })
+  .then(function(files) {
+    var jsonFiles = Array.isArray(files)
+      ? files.filter(function(f) { return f.name.endsWith('.json'); })
+      : [];
+    if (jsonFiles.length === 0) return;
+    var pubs = [];
+    var loaded = 0;
+    jsonFiles.forEach(function(file) {
+      fetch('/_data/publications/' + file.name + '?v=' + Date.now())
+        .then(function(r) { return r.ok ? r.json() : null; })
+        .then(function(d) {
+          if (d && d.active !== false) pubs.push(d);
+          loaded++;
+          if (loaded === jsonFiles.length) renderPublications(pubs);
+        })
+        .catch(function() { loaded++; });
+    });
+  })
+  .catch(function() {});
+
+function renderPublications(pubs) {
+  var grid = document.getElementById('pub-grid');
+  if (!grid || pubs.length === 0) return;
+  pubs.sort(function(a,b){ return (a.order||99) - (b.order||99); });
+  grid.innerHTML = '';
+  pubs.forEach(function(p) {
+    var card = document.createElement('a');
+    card.className = 'pub-card';
+    card.href = p.url || '#';
+    card.target = '_blank';
+    card.rel = 'noopener noreferrer';
+    card.innerHTML =
+      '<div class="pub-card-top">' +
+        '<p class="pub-outlet">' + (p.outlet||'') + '</p>' +
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>' +
+      '</div>' +
+      '<h3 class="pub-title">\u201c' + (p.title||'') + '\u201d</h3>' +
+      '<p class="pub-meta">' + (p.date||'') + '</p>';
+    grid.appendChild(card);
+  });
+  if (window._ro) { grid.querySelectorAll('.pub-card').forEach(function(el){ window._ro.observe(el); }); }
+}
 // ═══════════════════════════════════════════════
 var nav = document.getElementById('mainnav');
 function updateNav(){ nav.classList.toggle('nav-scrolled', window.scrollY > 40); }
