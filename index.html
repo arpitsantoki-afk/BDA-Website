@@ -15,23 +15,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet"/>
 
-<!-- Netlify Identity -->
-<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<!-- CMS auth redirect handler -->
 <script>
-  window.netlifyIdentity && window.netlifyIdentity.init({
-    APIUrl: "https://bespoke-semifreddo-3a72e0.netlify.app/.netlify/identity"
-  });
-  document.addEventListener("DOMContentLoaded", function() {
-    if (window.location.hash) {
-      var h = window.location.hash;
-      if (h.includes("recovery_token") || h.includes("invite_token") || h.includes("confirmation_token")) {
-        window.netlifyIdentity && window.netlifyIdentity.open();
-      }
-    }
-    window.netlifyIdentity && window.netlifyIdentity.on("login", function() {
-      document.location.href = "/admin/";
-    });
-  });
+  if (window.location.hash && window.location.hash.includes('access_token')) {
+    document.location.href = '/admin/';
+  }
 </script>
 
 <style>
