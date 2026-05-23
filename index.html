@@ -68,10 +68,8 @@ nav#mainnav{position:fixed;top:0;left:0;right:0;z-index:500;height:var(--nav-h);
 nav#mainnav.nav-scrolled{background:rgba(253,252,250,0.96);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-color:var(--border)}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;width:100%;padding:0 48px}
 .nav-logo{display:flex;align-items:center}
-/* White logo: visible on dark nav (hero/dark sections) */
-.logo-white{height:56px;width:auto;object-fit:contain;display:block;transition:opacity 0.4s}
-.logo-black{height:56px;width:auto;object-fit:contain;display:none;transition:opacity 0.4s}
-/* Scrolled (light bg): show black, hide white */
+.logo-white{height:56px;width:auto;object-fit:contain;display:block}
+.logo-black{height:56px;width:auto;object-fit:contain;display:none}
 nav#mainnav.nav-scrolled .logo-white{display:none}
 nav#mainnav.nav-scrolled .logo-black{display:block}
 .nav-links{display:flex;align-items:center;gap:32px}
@@ -180,7 +178,7 @@ nav#mainnav.nav-scrolled .nav-links a{color:var(--ink-soft)}
   display:inline-block;padding:5px 12px;
 }
 .uk-eyeline{font-size:0.6rem;letter-spacing:0.26em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
-.uk-logo{height:80px;width:auto;object-fit:contain;object-position:left;margin-bottom:32px;mix-blend-mode:screen;filter:brightness(1.8) contrast(0.9)}
+.uk-logo{height:80px;width:auto;object-fit:contain;object-position:left;margin-bottom:32px}
 .uk-content h2{font-family:var(--serif);font-weight:300;font-size:clamp(1.8rem,2.8vw,2.5rem);color:white;line-height:1.2;margin-bottom:24px}
 .uk-content p{font-size:0.85rem;font-weight:200;line-height:1.9;color:rgba(255,255,255,0.5);max-width:440px}
 .uk-content p+p{margin-top:14px}
@@ -483,7 +481,7 @@ footer{background:#080806;border-top:1px solid rgba(255,255,255,0.05);padding:56
     </div>
     <div class="uk-content rv">
       <p class="uk-eyeline">An Extension of Our Practice</p>
-      <img src="unikraft_logo.jpg" alt="Unikraft — Crafted in India" class="uk-logo"/>
+      <img src="unikraft_logo.png" alt="Unikraft — Crafted in India" class="uk-logo"/>
       <p class="uk-collection" id="uk-collection">OBLIQUE Collection</p>
       <h2 id="uk-headline">Custom solid wood furniture, born from the projects we love.</h2>
       <p id="uk-body1">While designing and executing spaces for our clients, we became so absorbed in the character of solid wood that we began crafting bespoke loose furniture to complete them. Unikraft is that obsession, formalised.</p>
