@@ -52,6 +52,29 @@ collections:
       - { label: "Featured on Homepage", name: "featured", widget: "boolean", default: true }
       - { label: "Display Order", name: "order", widget: "number", default: 1, hint: "Lower = shown first" }
 
+  # ── PROJECTS (legacy .md files) ────────────────────────────
+  - name: "projects_md"
+    label: "Projects (legacy)"
+    label_singular: "Project"
+    folder: "_data/projects"
+    create: false
+    slug: "{{slug}}"
+    format: "frontmatter"
+    extension: "md"
+    identifier_field: name
+    fields:
+      - { label: "Project Name", name: "name", widget: "string" }
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options: ["Residential", "Commercial", "Hospitality", "Mixed-Use", "Cultural", "Interior"]
+      - { label: "Location", name: "location", widget: "string" }
+      - { label: "Year", name: "year", widget: "string" }
+      - { label: "Cover Image", name: "cover_image", widget: "image" }
+      - { label: "Short Description", name: "description", widget: "text", required: false }
+      - { label: "Featured on Homepage", name: "featured", widget: "boolean", default: true }
+      - { label: "Display Order", name: "order", widget: "number", default: 1 }
+
   # ── HERO SECTION ───────────────────────────────────────────
   - name: "hero"
     label: "Hero Section"
@@ -124,3 +147,21 @@ collections:
           - { label: "Facility Size", name: "size", widget: "string" }
           - { label: "Body Text 1", name: "body1", widget: "text" }
           - { label: "Body Text 2", name: "body2", widget: "text" }
+
+  # ── PUBLICATIONS ───────────────────────────────────────────
+  - name: "publications"
+    label: "Publications"
+    label_singular: "Publication"
+    folder: "_data/publications"
+    create: true
+    slug: "{{slug}}"
+    format: "json"
+    extension: "json"
+    identifier_field: title
+    fields:
+      - { label: "Article Title", name: "title", widget: "string" }
+      - { label: "Publication / Outlet", name: "outlet", widget: "string", hint: "e.g. Architect & Interiors India" }
+      - { label: "Article URL", name: "url", widget: "string" }
+      - { label: "Date", name: "date", widget: "string", hint: "e.g. December 2025" }
+      - { label: "Show on Website", name: "active", widget: "boolean", default: true }
+      - { label: "Display Order", name: "order", widget: "number", default: 1, hint: "Lower = shown first" }
