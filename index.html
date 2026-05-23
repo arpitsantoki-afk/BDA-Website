@@ -789,25 +789,28 @@ function renderProjects() {
   if (window._ro) { grid.querySelectorAll('.pj').forEach(function(el){ window._ro.observe(el); }); }
 }
 
-// Load projects dynamically — no manifest needed
-// /api/projects automatically lists all .json files in _data/projects/
-fetch('/api/projects?v=' + Date.now())
-  .then(function(r) { return r.ok ? r.json() : { projects: [] }; })
-  .then(function(manifest) {
-    var slugs = manifest.projects || [];
-    if (slugs.length === 0) { renderProjects(); return; }
+// Auto-discover all projects via GitHub API — no manifest needed
+fetch('https://api.github.com/repos/arpitsantoki-afk/BDA-Website/contents/_data/projects', {
+  headers: { 'Accept': 'application/vnd.github.v3+json' }
+})
+  .then(function(r) { return r.ok ? r.json() : []; })
+  .then(function(files) {
+    var jsonFiles = Array.isArray(files)
+      ? files.filter(function(f) { return f.name.endsWith('.json'); })
+      : [];
+    if (jsonFiles.length === 0) { renderProjects(); return; }
     var loaded = 0;
-    slugs.forEach(function(slug) {
-      fetch('/_data/projects/' + slug + '.json?v=' + Date.now())
+    jsonFiles.forEach(function(file) {
+      fetch('/_data/projects/' + file.name + '?v=' + Date.now())
         .then(function(r) { return r.ok ? r.json() : null; })
         .then(function(d) {
           if (d && d.name) allProjects.push(d);
           loaded++;
-          if (loaded === slugs.length) renderProjects();
+          if (loaded === jsonFiles.length) renderProjects();
         })
         .catch(function() {
           loaded++;
-          if (loaded === slugs.length) renderProjects();
+          if (loaded === jsonFiles.length) renderProjects();
         });
     });
   })
