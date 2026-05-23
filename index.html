@@ -746,11 +746,11 @@ loadJSON('/_data/testimonials/shivaji-walunj.json', function(d) {
 
 // Load Projects — fetch all known project files
 // When you add a new project via CMS, add its filename to this array
-var projectFiles = [
-  'shades-of-white',
-  // ADD NEW PROJECT FILENAMES HERE — e.g. 'casa-palmera-villa'
-];
-
+// ═══════════════════════════════════════════════
+// PROJECT LOADER — reads manifest then loads each project
+// To add a new project: add its slug to _data/projects-index.json
+// The CMS admin panel handles this automatically via config
+// ═══════════════════════════════════════════════
 var allProjects = [];
 
 function renderProjects() {
@@ -760,7 +760,6 @@ function renderProjects() {
   grid.innerHTML = '';
   var featured = allProjects.filter(function(p){ return p.featured !== false; }).slice(0,6);
 
-  // Fallback gradient colours
   var gradients = [
     'linear-gradient(155deg,#1C2B3A,#0A1520)',
     'linear-gradient(155deg,#2A1F14,#3D2B18)',
@@ -770,11 +769,15 @@ function renderProjects() {
     'linear-gradient(155deg,#12201F,#1A302E)'
   ];
 
+  if (featured.length === 0) {
+    grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--ink-muted);padding:80px 0;font-size:0.85rem;letter-spacing:0.1em;text-transform:uppercase;">Projects coming soon</p>';
+    return;
+  }
+
   featured.forEach(function(p, i) {
     var article = document.createElement('article');
     article.className = 'pj';
     article.setAttribute('aria-label', p.name);
-
     if (p.cover_image) {
       var img = document.createElement('img');
       img.className = 'pj-img';
@@ -787,45 +790,60 @@ function renderProjects() {
       fb.style.background = gradients[i] || gradients[0];
       article.appendChild(fb);
     }
-
-    var ov = document.createElement('div');
-    ov.className = 'pj-ov';
-    article.appendChild(ov);
-
-    var always = document.createElement('p');
-    always.className = 'pj-always';
-    always.textContent = p.category || '';
-    article.appendChild(always);
-
+    var ov = document.createElement('div'); ov.className = 'pj-ov'; article.appendChild(ov);
+    var always = document.createElement('p'); always.className = 'pj-always'; always.textContent = p.category || ''; article.appendChild(always);
     var info = document.createElement('div');
     info.className = 'pj-info';
-    info.innerHTML = '<p class="pj-cat">' + (p.category||'') + ' &middot; ' + (p.location||'') + '</p>' +
-                     '<h3 class="pj-name">' + p.name + '</h3>';
+    info.innerHTML = '<p class="pj-cat">' + (p.category||'') + ' &middot; ' + (p.location||'') + '</p><h3 class="pj-name">' + p.name + '</h3>';
     article.appendChild(info);
-
     grid.appendChild(article);
   });
-
-  // Re-observe new elements for reveal animation
-  if (window._ro) {
-    grid.querySelectorAll('.pj').forEach(function(el){ window._ro.observe(el); });
-  }
+  if (window._ro) { grid.querySelectorAll('.pj').forEach(function(el){ window._ro.observe(el); }); }
 }
 
-var loadedCount = 0;
-if (projectFiles.length === 0) {
-  // No projects yet — show placeholder message
-  var grid = document.getElementById('projects-grid');
-  if (grid) grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--ink-muted);padding:80px 0;font-size:0.85rem;letter-spacing:0.1em;text-transform:uppercase;">Projects coming soon</p>';
-} else {
-  projectFiles.forEach(function(filename) {
-    loadJSON('/_data/projects/' + filename + '.json', function(d) {
-      allProjects.push(d);
-      loadedCount++;
-      if (loadedCount === projectFiles.length) renderProjects();
-    });
+// Load project manifest first, then load each project JSON
+loadJSON('/_data/projects-index.json', function(manifest) {
+  var slugs = manifest.projects || [];
+  if (slugs.length === 0) { renderProjects(); return; }
+  var loaded = 0;
+  slugs.forEach(function(slug) {
+    // Try .json first, fall back to .md
+    fetch('/_data/projects/' + slug + '.json?v=' + Date.now())
+      .then(function(r) {
+        if (r.ok) return r.json();
+        // Try .md as fallback (older CMS entries)
+        return fetch('/_data/projects/' + slug + '.md?v=' + Date.now())
+          .then(function(r2) {
+            if (!r2.ok) return null;
+            return r2.text().then(function(text) {
+              // Parse frontmatter from .md file
+              var fm = {};
+              var match = text.match(/^---\n([\s\S]*?)\n---/);
+              if (match) {
+                match[1].split('\n').forEach(function(line) {
+                  var parts = line.split(': ');
+                  if (parts.length >= 2) {
+                    var key = parts[0].trim();
+                    var val = parts.slice(1).join(': ').trim().replace(/^["']|["']$/g,'');
+                    fm[key] = val;
+                  }
+                });
+              }
+              return fm;
+            });
+          });
+      })
+      .then(function(d) {
+        if (d && d.name) allProjects.push(d);
+        loaded++;
+        if (loaded === slugs.length) renderProjects();
+      })
+      .catch(function() {
+        loaded++;
+        if (loaded === slugs.length) renderProjects();
+      });
   });
-}
+});
 
 // ═══════════════════════════════════════════════
 // NAV
