@@ -1,33 +1,21 @@
 # ================================================================
 # DECAP CMS — Blue Door Architects
+# GitHub OAuth via Cloudflare Worker
 # ================================================================
 
 backend:
-  name: git-gateway
+  name: github
+  repo: arpitsantoki-afk/BDA-Website
   branch: main
+  base_url: https://bda-website.info-unikraft.workers.dev
+  auth_endpoint: /api/auth
 
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
 
 collections:
 
-  # ── SITE SETTINGS ──────────────────────────────────────────
-  - name: "settings"
-    label: "Site Settings"
-    files:
-      - name: "general"
-        label: "General Info"
-        file: "_data/settings.json"
-        fields:
-          - { label: "Studio Name", name: "studio_name", widget: "string" }
-          - { label: "Tagline", name: "tagline", widget: "string" }
-          - { label: "Phone", name: "phone", widget: "string" }
-          - { label: "Email", name: "email", widget: "string" }
-          - { label: "Studio Location", name: "location", widget: "string" }
-          - { label: "Instagram URL", name: "instagram", widget: "string" }
-          - { label: "Palm Group Description", name: "palm_group_desc", widget: "text" }
-
-  # ── PROJECTS INDEX — update this when adding a new project ──
+  # ── PROJECTS INDEX ─────────────────────────────────────────
   - name: "projects_index"
     label: "Projects Index"
     files:
@@ -38,7 +26,7 @@ collections:
           - label: "Project Slugs"
             name: "projects"
             widget: "list"
-            hint: "Add the slug of each project here. The slug is the filename without .json — e.g. shades-of-white"
+            hint: "Add the slug of each project. The slug is the filename without .json"
             field: { label: "Slug", name: "slug", widget: "string" }
 
   # ── PROJECTS ───────────────────────────────────────────────
@@ -58,7 +46,7 @@ collections:
         widget: "select"
         options: ["Residential", "Commercial", "Hospitality", "Mixed-Use", "Cultural", "Interior"]
       - { label: "Location", name: "location", widget: "string", hint: "e.g. Gandhinagar, India" }
-      - { label: "Year", name: "year", widget: "string", hint: "e.g. 2024" }
+      - { label: "Year", name: "year", widget: "string" }
       - { label: "Cover Image", name: "cover_image", widget: "image" }
       - { label: "Short Description", name: "description", widget: "text", required: false }
       - { label: "Featured on Homepage", name: "featured", widget: "boolean", default: true }
@@ -79,6 +67,20 @@ collections:
           - { label: "Subtext", name: "subtext", widget: "text" }
           - { label: "Projects Count", name: "count_projects", widget: "string" }
           - { label: "Years Count", name: "count_years", widget: "string" }
+
+  # ── SITE SETTINGS ──────────────────────────────────────────
+  - name: "settings"
+    label: "Site Settings"
+    files:
+      - name: "general"
+        label: "General Info"
+        file: "_data/settings.json"
+        fields:
+          - { label: "Phone", name: "phone", widget: "string" }
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "Studio Location", name: "location", widget: "string" }
+          - { label: "Instagram URL", name: "instagram", widget: "string" }
+          - { label: "Palm Group Description", name: "palm_group_desc", widget: "text" }
 
   # ── TESTIMONIALS ───────────────────────────────────────────
   - name: "testimonials"
@@ -110,7 +112,7 @@ collections:
           - { label: "Body Text 1", name: "body1", widget: "text" }
           - { label: "Body Text 2", name: "body2", widget: "text" }
 
-  # ── PRODUCTION UNIT ────────────────────────────────────────
+  # ── THE MANUFACTORY ────────────────────────────────────────
   - name: "production"
     label: "The Manufactory Section"
     files:
