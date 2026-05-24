@@ -13,7 +13,12 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"ArchitectFirm","name":"Blue Door Architects","url":"https://www.bluedoorarchitects.com","sameAs":["https://www.instagram.com/bluedoor_architects/","https://in.pinterest.com/bluedoorarchitects/"],"parentOrganization":{"@type":"Organization","name":"The Palm Group"}}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet"/>
+<link rel="dns-prefetch" href="https://api.github.com"/>
+<link rel="preconnect" href="https://api.github.com"/>
+<!-- Non-render-blocking font loading -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap" media="print" onload="this.media='all'"/>
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap"/></noscript>
 
 <!-- CMS auth redirect handler -->
 <script>
@@ -30,8 +35,8 @@ html{scroll-behavior:smooth}
   --gold:#B8965A;--gold-lt:#D4B07A;
   --cream:#F5F2EC;--warm:#FDFCFA;
   --border:rgba(0,0,0,0.08);
-  --serif:'Cormorant Garamond',Georgia,serif;
-  --sans:'Jost',system-ui,sans-serif;
+  --serif:'Cormorant Garamond',Georgia,'Times New Roman',serif;
+  --sans:'Jost',system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
   --nav-h:88px;--ease:cubic-bezier(0.4,0,0.2,1);
 }
 body{font-family:var(--sans);color:var(--ink);background:var(--warm);-webkit-font-smoothing:antialiased;overflow-x:hidden}
@@ -342,6 +347,8 @@ footer{background:#080806;border-top:1px solid rgba(255,255,255,0.05);padding:56
   #projects{padding-top:88px}
 }
 </style>
+<!-- Preload hero image for fastest LCP -->
+<link rel="preload" as="image" href="/images/uploads/shades-of-white-foyer-ganesha-artwork-blue-door-architects.jpg"/>
 </head>
 <body>
 
@@ -365,8 +372,8 @@ footer{background:#080806;border-top:1px solid rgba(255,255,255,0.05);padding:56
 <nav id="mainnav" role="navigation" aria-label="Main navigation">
   <div class="nav-inner">
     <a href="#" class="nav-logo" aria-label="Blue Door Architects — Home">
-      <img src="logo-white.png" alt="Blue Door Architects" class="logo-white"/>
-      <img src="logo-black.png" alt="" class="logo-black" aria-hidden="true"/>
+      <img src="logo-white.png" alt="Blue Door Architects" class="logo-white" width="300" height="300"/>
+      <img src="logo-black.png" alt="" class="logo-black" aria-hidden="true" width="300" height="300"/>
     </a>
     </a>
     <div class="nav-links">
@@ -387,7 +394,7 @@ footer{background:#080806;border-top:1px solid rgba(255,255,255,0.05);padding:56
 
 <!-- ═══ HERO ═══ -->
 <section id="hero" aria-label="Hero">
-  <img class="hero-img cms-loading" id="hero-img" src="https://images.unsplash.com/photo-1613977257592-4871e5fcd7c4?w=1800&q=80" alt="Blue Door Architects"/>
+  <img class="hero-img" id="hero-img" src="/images/uploads/shades-of-white-foyer-ganesha-artwork-blue-door-architects.jpg" alt="Blue Door Architects — Shades of White interior project, Sargasan Gandhinagar" fetchpriority="high" width="1800" height="1200"/>
   <div class="h-ov" aria-hidden="true"></div>
   <div class="h-body">
     <div class="h-left">
@@ -483,12 +490,12 @@ footer{background:#080806;border-top:1px solid rgba(255,255,255,0.05);padding:56
 <section id="unikraft" aria-label="Unikraft">
   <div class="uk-inner">
     <div class="uk-img-side">
-      <img id="uk-img" src="/images/uploads/unikraft-solid-wood-living-room-sofa-armchair-coffee-table-set.jpg" alt="OBLIQUE collection — bespoke solid wood sofa, armchair and coffee table by Unikraft, crafted in India" class="cms-loading"/>
+      <img id="uk-img" src="/images/uploads/unikraft-solid-wood-living-room-sofa-armchair-coffee-table-set.jpg" alt="OBLIQUE collection — bespoke solid wood sofa, armchair and coffee table by Unikraft, crafted in India" loading="lazy" width="900" height="600"/>
       <div class="uk-img-overlay"></div>
     </div>
     <div class="uk-content rv">
       <p class="uk-eyeline">An Extension of Our Practice</p>
-      <img src="unikraft_logo.png" alt="Unikraft — Crafted in India" class="uk-logo"/>
+      <img src="unikraft_logo.png" alt="Unikraft — Crafted in India" class="uk-logo" loading="lazy" width="600" height="600"/>
       <p class="uk-collection" id="uk-collection">OBLIQUE Collection</p>
       <h2 id="uk-headline">Custom solid wood furniture, born from the projects we love.</h2>
       <p id="uk-body1">While designing and executing spaces for our clients, we became so absorbed in the character of solid wood that we began crafting bespoke loose furniture to complete them. Unikraft is that obsession, formalised.</p>
@@ -523,7 +530,7 @@ footer{background:#080806;border-top:1px solid rgba(255,255,255,0.05);padding:56
         </div>
       </div>
       <div class="phil-img-side rv d2">
-        <img class="phil-img cms-loading" id="phil-img" src="/images/uploads/shades-of-white-open-plan-living-room-blue-door-architects.jpg" alt="Blue Door Architects — Shades of White interior project, Gandhinagar"/>
+        <img class="phil-img" id="phil-img" src="/images/uploads/shades-of-white-open-plan-living-room-blue-door-architects.jpg" alt="Blue Door Architects — Shades of White interior project, Gandhinagar" loading="lazy" width="800" height="1067"/>
         <div class="phil-img-cap">
           <div class="phil-img-cap-n">120+</div>
           <div class="phil-img-cap-l">Projects delivered</div>
@@ -553,7 +560,7 @@ footer{background:#080806;border-top:1px solid rgba(255,255,255,0.05);padding:56
       </div>
     </div>
     <div class="prod-img-side">
-      <img id="prod-img" src="/images/uploads/blue-door-architects-modular-furniture-production-facility-50000sqft-india.jpg" alt="Blue Door Architects 50,000 sq.ft. modular furniture production facility, India" class="cms-loading"/>
+      <img id="prod-img" src="/images/uploads/blue-door-architects-modular-furniture-production-facility-50000sqft-india.jpg" alt="Blue Door Architects 50,000 sq.ft. modular furniture production facility, India" loading="lazy" width="1800" height="1012"/>
       <div class="prod-img-overlay"></div>
     </div>
   </div>
@@ -757,6 +764,7 @@ loadJSON('/_data/production.json', function(d) {
 
 // Load Testimonials — show first active one
 // Load testimonials dynamically via GitHub API
+// Hardcoded fallback stays visible if API fails
 fetch('https://api.github.com/repos/arpitsantoki-afk/BDA-Website/contents/_data/testimonials', {
   headers: { 'Accept': 'application/vnd.github.v3+json' }
 })
@@ -765,8 +773,7 @@ fetch('https://api.github.com/repos/arpitsantoki-afk/BDA-Website/contents/_data/
     var jsonFiles = Array.isArray(files)
       ? files.filter(function(f) { return f.name.endsWith('.json'); })
       : [];
-    if (jsonFiles.length === 0) return;
-    // Load first active testimonial
+    if (jsonFiles.length === 0) return; // keep fallback
     var loaded = 0;
     var found = false;
     jsonFiles.forEach(function(file) {
@@ -774,18 +781,24 @@ fetch('https://api.github.com/repos/arpitsantoki-afk/BDA-Website/contents/_data/
         .then(function(r) { return r.ok ? r.json() : null; })
         .then(function(d) {
           loaded++;
-          if (d && d.active !== false && !found) {
+          if (!d) return;
+          // Support both field name conventions
+          var active = d.active !== false;
+          var quote  = d.quote || d.testimonial || '';
+          var name   = d.client_name || d.name || '';
+          var role   = d.client_role || d.role || '';
+          if (active && quote && !found) {
             found = true;
             var q = document.getElementById('tst-quote');
-            if (q && d.quote) q.innerHTML = '\u201c' + d.quote + '\u201d';
-            setText('tst-name', d.client_name);
-            setText('tst-role', d.client_role);
+            if (q) q.innerHTML = '\u201c' + quote + '\u201d';
+            setText('tst-name', name);
+            setText('tst-role', role);
           }
         })
         .catch(function() { loaded++; });
     });
   })
-  .catch(function() {});
+  .catch(function() {}); // silently keep fallback
 
 // Load Projects — fetch all known project files
 // When you add a new project via CMS, add its filename to this array
@@ -826,6 +839,9 @@ function renderProjects() {
       img.className = 'pj-img';
       img.src = p.cover_image;
       img.alt = p.name;
+      img.loading = 'lazy';
+      img.width = 800;
+      img.height = 600;
       article.appendChild(img);
     } else {
       var fb = document.createElement('div');
