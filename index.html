@@ -303,7 +303,21 @@ footer{background:#080806;border-top:1px solid rgba(255,255,255,0.05);padding:56
 .ft-legal{display:flex;gap:20px}
 .ft-legal a{font-size:0.6rem;font-weight:200;color:rgba(255,255,255,0.12);transition:color 0.2s}.ft-legal a:hover{color:rgba(255,255,255,0.4)}
 
+/* Skip link for accessibility */
+.skip-link{position:absolute;top:-40px;left:0;background:var(--gold);color:white;padding:8px 16px;font-size:0.8rem;z-index:9999;transition:top 0.2s}
+.skip-link:focus{top:0}
+
 /* ── LOADING STATE ── */
+.intro-right p,.svc-card p,.phil-text,.prod-p,.uk-content p{color:var(--ink-soft)}
+.nav-links a{color:rgba(255,255,255,0.9)}
+nav#mainnav.nav-scrolled .nav-links a{color:var(--ink)}
+.ft-col ul li a{color:rgba(255,255,255,0.5)}
+.ft-copy{color:rgba(255,255,255,0.4)}
+.h-meta-lbl{color:rgba(255,255,255,0.6)}
+.h-eye{color:var(--gold)}
+.step-n{color:rgba(184,150,90,0.6)}
+.proc-step p{color:rgba(255,255,255,0.55)}
+.proc-step h3{color:rgba(255,255,255,0.95)}
 .cms-loading{opacity:0;transition:opacity 0.4s}
 .cms-ready{opacity:1}
 
@@ -352,6 +366,9 @@ footer{background:#080806;border-top:1px solid rgba(255,255,255,0.05);padding:56
 </head>
 <body>
 
+<!-- Skip to main content for keyboard users -->
+<a href="#hero" class="skip-link">Skip to main content</a>
+
 <!-- CHECKBOX: must be first child of body -->
 <input type="checkbox" id="nav-toggle" style="position:fixed;opacity:0;pointer-events:none;width:0;height:0;"/>
 
@@ -393,7 +410,7 @@ footer{background:#080806;border-top:1px solid rgba(255,255,255,0.05);padding:56
 </nav>
 
 <!-- ═══ HERO ═══ -->
-<section id="hero" aria-label="Hero">
+<section id="hero" aria-label="Hero" role="banner">
   <img class="hero-img" id="hero-img" src="/images/uploads/shades-of-white-foyer-ganesha-artwork-blue-door-architects.jpg" alt="Blue Door Architects — Shades of White interior project, Sargasan Gandhinagar" fetchpriority="high" width="1800" height="1200"/>
   <div class="h-ov" aria-hidden="true"></div>
   <div class="h-body">
@@ -636,7 +653,7 @@ footer{background:#080806;border-top:1px solid rgba(255,255,255,0.05);padding:56
       </div>
       <div class="ct-form rv d2">
         <div id="form-inner">
-          <h3>Start the Conversation</h3>
+          <h3 role="heading" aria-level="3">Start the Conversation</h3>
           <p>The more context you share, the better we can prepare for our first meeting.</p>
           <!-- netlify attribute enables Netlify Forms — submissions emailed to you -->
           <form name="enquiry" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="enquiry-form">
