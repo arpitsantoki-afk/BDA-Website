@@ -1,9 +1,10 @@
 {
   "featured": true,
   "order": 6,
-  "name": "Where Stone Breathes",
+  "name": "The Verdant",
   "category": "Residential",
   "location": "Gandhinagar, Gujarat",
   "year": "2026",
-  "cover_image": "/images/uploads/palm-altezza-residential-complex-courtyard-landscaping-aerial-gandhinagar-blue-door-architects.webp"
+  "cover_image": "/images/uploads/palm-altezza-residential-complex-courtyard-landscaping-aerial-gandhinagar-blue-door-architects.webp",
+  "description": ""
 }
