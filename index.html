@@ -122,6 +122,17 @@ nav#mainnav.nav-scrolled .nav-links a{color:var(--ink-soft)}
 .pj:nth-child(4){grid-column:11/13;grid-row:5/9}
 .pj:nth-child(5){grid-column:1/5;grid-row:8/14}
 .pj:nth-child(6){grid-column:5/13;grid-row:9/14}
+.pj:nth-child(n+7){display:none}
+.mosaic.expanded .pj:nth-child(n+7){display:block}
+.mosaic.expanded .pj:nth-child(7){grid-column:1/5;grid-row:15/21}
+.mosaic.expanded .pj:nth-child(8){grid-column:5/9;grid-row:15/21}
+.mosaic.expanded .pj:nth-child(9){grid-column:9/13;grid-row:15/21}
+.mosaic.expanded .pj:nth-child(10){grid-column:1/5;grid-row:21/27}
+.mosaic.expanded .pj:nth-child(11){grid-column:5/9;grid-row:21/27}
+.mosaic.expanded .pj:nth-child(12){grid-column:9/13;grid-row:21/27}
+.mosaic.expanded .pj:nth-child(13){grid-column:1/5;grid-row:27/33}
+.mosaic.expanded .pj:nth-child(14){grid-column:5/9;grid-row:27/33}
+.mosaic.expanded .pj:nth-child(15){grid-column:9/13;grid-row:27/33}
 .pj-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.8s var(--ease)}
 .pj:hover .pj-img{transform:scale(1.06)}
 .pj-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(12,12,10,0.82) 0%,transparent 55%);opacity:0;transition:opacity 0.4s}
@@ -140,9 +151,42 @@ nav#mainnav.nav-scrolled .nav-links a{color:var(--ink-soft)}
 .pj:nth-child(5) .pj-fallback{background:linear-gradient(155deg,#2A1414,#3D1C1C)}
 .pj:nth-child(6) .pj-fallback{background:linear-gradient(155deg,#12201F,#1A302E)}
 .pj-fallback{position:absolute;inset:0}
-.proj-cta-bar{padding:52px 0;border-top:1px solid var(--border);margin-top:16px;display:flex;justify-content:center}
+.proj-cta-bar{padding:52px 0;border-top:1px solid var(--border);margin-top:16px;display:flex;justify-content:center;align-items:center;gap:40px}
 .proj-cta-bar a{font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;border-bottom:1px solid var(--ink);padding-bottom:2px;transition:color 0.3s,border-color 0.3s}
 .proj-cta-bar a:hover{color:var(--gold);border-color:var(--gold)}
+.proj-expand-btn{background:none;border:none;cursor:pointer;font-family:var(--sans);font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink);border-bottom:1px solid var(--ink);padding-bottom:2px;transition:color 0.3s,border-color 0.3s;display:none;align-items:center;gap:8px}
+.proj-expand-btn:hover{color:var(--gold);border-color:var(--gold)}
+.proj-expand-btn .btn-arrow{display:inline-block;transition:transform 0.4s var(--ease)}
+.proj-expand-btn.active .btn-arrow{transform:rotate(180deg)}
+/* ── PROJECT MODAL ── */
+#proj-modal{position:fixed;inset:0;z-index:9000;display:flex;align-items:flex-start;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.35s var(--ease)}
+#proj-modal.open{opacity:1;pointer-events:all}
+.pm-backdrop{position:absolute;inset:0;background:rgba(8,8,6,0.88);backdrop-filter:blur(8px)}
+.pm-panel{position:relative;z-index:1;background:var(--warm);width:100%;max-width:1100px;max-height:100vh;overflow-y:auto;transform:translateY(48px);transition:transform 0.45s var(--ease);scrollbar-width:thin;margin:0 auto}
+#proj-modal.open .pm-panel{transform:translateY(0)}
+.pm-close{position:sticky;top:0;z-index:10;display:flex;justify-content:flex-end;padding:20px 28px 0;background:var(--warm)}
+.pm-close-btn{background:none;border:1px solid var(--border);width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1.1rem;color:var(--ink);transition:all 0.2s;line-height:1;display:flex;align-items:center;justify-content:center}
+.pm-close-btn:hover{background:var(--ink);color:var(--warm);border-color:var(--ink)}
+.pm-head{padding:28px 56px 24px}
+.pm-eyebrow{font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.pm-title{font-family:var(--serif);font-weight:300;font-size:clamp(2rem,4vw,3rem);line-height:1.1;margin-bottom:4px}
+.pm-sub{font-size:0.82rem;color:var(--ink-soft);font-weight:300}
+.pm-meta{display:flex;gap:40px;padding:16px 56px 24px;border-bottom:1px solid var(--border)}
+.pm-meta-item{display:flex;flex-direction:column;gap:3px}
+.pm-meta-label{font-size:0.52rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-muted)}
+.pm-meta-value{font-size:0.8rem;font-weight:300}
+.pm-desc{padding:24px 56px 8px;font-size:0.88rem;font-weight:300;line-height:1.95;color:var(--ink-soft);max-width:660px}
+.pm-cover{padding:16px 56px 8px}
+.pm-cover img{width:100%;max-height:520px;object-fit:cover;border-radius:1px}
+.pm-gallery{padding:12px 56px 56px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pm-gallery img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:1px;cursor:zoom-in;transition:opacity 0.25s}
+.pm-gallery img:hover{opacity:0.88}
+.pm-loading{padding:40px 56px;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-muted)}
+@media(max-width:768px){
+  .pm-head,.pm-meta,.pm-desc,.pm-cover,.pm-gallery,.pm-loading{padding-left:20px;padding-right:20px}
+  .pm-gallery{grid-template-columns:1fr;gap:8px}
+  .pm-meta{flex-wrap:wrap;gap:20px}
+}
 
 /* ── SERVICES ── */
 #services{background:var(--warm);padding:120px 0}
@@ -311,7 +355,7 @@ footer{background:#080806;border-top:1px solid rgba(255,255,255,0.05);padding:56
 .intro-right p,.svc-card p,.phil-text,.prod-p,.uk-content p{color:var(--ink-soft)}
 .nav-links a{color:rgba(255,255,255,0.9)}
 nav#mainnav.nav-scrolled .nav-links a{color:var(--ink)}
-.ft-col ul li a{color:rgba(255,255,255,0.5)}
+.ft-col ul li a{color:rgba(245,240,230,0.88)}
 .ft-copy{color:rgba(255,255,255,0.4)}
 .h-meta-lbl{color:rgba(255,255,255,0.6)}
 .h-eye{color:var(--gold)}
@@ -339,9 +383,9 @@ nav#mainnav.nav-scrolled .nav-links a{color:var(--ink)}
   .proc-top{flex-direction:column;align-items:flex-start;gap:16px}.proc-top p{text-align:left}
 }
 @media(max-width:768px){
-  :root{--nav-h:64px}nav#mainnav{padding-top:env(safe-area-inset-top,0px)}
+  :root{--nav-h:64px}nav#mainnav{padding-top:env(safe-area-inset-top,0px)}nav#mainnav{padding-top:env(safe-area-inset-top,0px)}
   .nav-links{display:none}.nav-burger{display:flex}
-  .nav-inner,.wrap,.wrap-n{padding-left:24px;padding-right:24px}.nav-inner{padding-top:max(env(safe-area-inset-top,0px),14px)}
+  .nav-inner,.wrap,.wrap-n{padding-left:24px;padding-right:24px}.nav-inner{padding-top:max(env(safe-area-inset-top,0px),14px)}.nav-inner{padding-top:max(env(safe-area-inset-top,0px),14px)}
   .h-body{padding:0 24px 52px;grid-template-columns:1fr}.h-right{display:none}
   .h-meta{flex-wrap:wrap;gap:24px}
   .mosaic{grid-template-columns:1fr 1fr;grid-auto-rows:160px}.pj:nth-child(n){grid-column:span 1;grid-row:span 1}
@@ -872,6 +916,14 @@ function renderProjects() {
     info.className = 'pj-info';
     info.innerHTML = '<p class="pj-cat">' + (p.category||'') + ' &middot; ' + (p.location||'') + '</p><h3 class="pj-name">' + p.name + '</h3>';
     article.appendChild(info);
+    article.dataset.slug     = p.slug          || '';
+    article.dataset.title    = p.title         || '';
+    article.dataset.subtitle = p.subtitle      || '';
+    article.dataset.location = p.location      || '';
+    article.dataset.year     = p.year          || '';
+    article.dataset.type     = p.type          || '';
+    article.dataset.cover    = p.cover_image   || '';
+    article.dataset.desc     = p.description   || '';
     grid.appendChild(article);
   });
   if (window._ro) { grid.querySelectorAll('.pj').forEach(function(el){ window._ro.observe(el); }); }
@@ -994,6 +1046,132 @@ if ('IntersectionObserver' in window) {
       });
     });
   }
+
+
+// ════════════════════════════════════════════════════════════════
+// PROJECT GRID EXPAND / COLLAPSE
+// ════════════════════════════════════════════════════════════════
+function toggleMosaic(btn) {
+  var mosaic = document.querySelector('.mosaic');
+  if (!mosaic) return;
+  var expanded = mosaic.classList.toggle('expanded');
+  btn.querySelector('.btn-label').textContent = expanded ? 'Show Less' : 'View All Projects';
+  btn.classList.toggle('active', expanded);
+  if (!expanded) {
+    var sec = document.getElementById('projects');
+    if (sec) sec.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+}
+
+function maybeShowExpandBtn() {
+  var tiles = document.querySelectorAll('.mosaic .pj');
+  if (tiles.length <= 6) return;
+  var bar = document.querySelector('.proj-cta-bar');
+  if (!bar) return;
+  var btn = document.getElementById('proj-expand-btn');
+  if (!btn) {
+    btn = document.createElement('button');
+    btn.className = 'proj-expand-btn';
+    btn.id = 'proj-expand-btn';
+    btn.setAttribute('onclick','toggleMosaic(this)');
+    btn.innerHTML = '<span class="btn-label">View All Projects</span><span class="btn-arrow" style="margin-left:6px">&#8595;</span>';
+    bar.insertBefore(btn, bar.firstChild);
+  }
+  btn.style.display = 'inline-flex';
+}
+
+// ════════════════════════════════════════════════════════════════
+// PROJECT MODAL
+// ════════════════════════════════════════════════════════════════
+var _RAW = 'https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/images/uploads/';
+var _DATA = 'https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/projects/';
+
+function openProjModal(slug, title, subtitle, location, year, type, cover, desc) {
+  var modal = document.getElementById('proj-modal');
+  var content = document.getElementById('pm-content');
+  var head = '';
+  head += '<div class="pm-head">';
+  head += '<div class="pm-eyebrow">' + (type || 'Residential') + '</div>';
+  head += '<h2 class="pm-title">' + (title || '') + '</h2>';
+  if (subtitle) head += '<p class="pm-sub">' + subtitle + '</p>';
+  head += '</div>';
+  head += '<div class="pm-meta">';
+  if (location) head += '<div class="pm-meta-item"><span class="pm-meta-label">Location</span><span class="pm-meta-value">' + location + '</span></div>';
+  if (year) head += '<div class="pm-meta-item"><span class="pm-meta-label">Year</span><span class="pm-meta-value">' + year + '</span></div>';
+  if (type) head += '<div class="pm-meta-item"><span class="pm-meta-label">Type</span><span class="pm-meta-value">' + type + '</span></div>';
+  head += '</div>';
+  if (desc) head += '<div class="pm-desc">' + desc + '</div>';
+  if (cover) head += '<div class="pm-cover"><img src="' + _RAW + cover + '" alt="' + (title||'') + '" loading="eager"/></div>';
+  head += '<div class="pm-loading" id="pm-gallery-status">Loading gallery…</div>';
+  head += '<div class="pm-gallery" id="pm-gallery"></div>';
+  content.innerHTML = head;
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('pm-panel').scrollTop = 0;
+
+  if (slug) {
+    fetch(_DATA + slug + '.json')
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(d) {
+        var status = document.getElementById('pm-gallery-status');
+        var gallery = document.getElementById('pm-gallery');
+        if (!d || !d.images || !d.images.length) { if(status) status.remove(); return; }
+        if (status) status.remove();
+        var imgs = '';
+        d.images.forEach(function(img) {
+          imgs += '<img src="' + _RAW + img + '" alt="' + (d.title||title||'') + ' — Blue Door Architects" loading="lazy"/>';
+        });
+        if (gallery) gallery.innerHTML = imgs;
+      })
+      .catch(function() {
+        var status = document.getElementById('pm-gallery-status');
+        if (status) status.remove();
+      });
+  } else {
+    var status = document.getElementById('pm-gallery-status');
+    if (status) status.remove();
+  }
+}
+
+function closeProjModal() {
+  var modal = document.getElementById('proj-modal');
+  if (modal) modal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeProjModal();
+});
+
+// Wire up click handlers and data attributes on project tiles
+function wirePjClicks() {
+  document.querySelectorAll('.mosaic .pj:not([data-wired])').forEach(function(pj) {
+    pj.setAttribute('data-wired','1');
+    pj.addEventListener('click', function() {
+      var d = pj.dataset;
+      openProjModal(d.slug||'', d.title||'', d.subtitle||'', d.location||'', d.year||'', d.type||'', d.cover||'', d.desc||'');
+    });
+  });
+}
+
+// Observe mosaic for dynamically added tiles
+(function() {
+  var el = document.querySelector('.mosaic');
+  if (!el) return;
+  new MutationObserver(function() { wirePjClicks(); maybeShowExpandBtn(); })
+    .observe(el, {childList:true});
+  wirePjClicks();
+  maybeShowExpandBtn();
+})();
 </script>
+
+<!-- ── PROJECT MODAL ── -->
+<div id="proj-modal" role="dialog" aria-modal="true" aria-label="Project details">
+  <div class="pm-backdrop" onclick="closeProjModal()"></div>
+  <div class="pm-panel" id="pm-panel">
+    <div class="pm-close"><button class="pm-close-btn" onclick="closeProjModal()" aria-label="Close project">&#215;</button></div>
+    <div id="pm-content"></div>
+  </div>
+</div>
 </body>
 </html>
