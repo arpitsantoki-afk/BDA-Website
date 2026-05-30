@@ -26,8 +26,15 @@ collections:
           - label: "Project Slugs"
             name: "projects"
             widget: "list"
-            hint: "Add the slug of each project. The slug is the filename without .json"
-            field: { label: "Slug", name: "slug", widget: "string" }
+            hint: "Add the slug of each project. The slug is the filename without .json (e.g. terra-calm-garg-residence)"
+            field:
+              label: "Project Slug"
+              name: "slug"
+              widget: "relation"
+              collection: "projects"
+              search_fields: ["name", "slug"]
+              value_field: "{{slug}}"
+              display_fields: ["name", "location"]
 
   # ── PROJECTS ───────────────────────────────────────────────
   - name: "projects"
@@ -44,11 +51,17 @@ collections:
       - label: "Category"
         name: "category"
         widget: "select"
-        options: ["Residential", "Commercial", "Hospitality", "Mixed-Use", "Cultural", "Interior"]
+        options: ["Residential", "Commercial", "Hospitality", "Landscape", "Mixed-Use", "Cultural", "Interior"]
       - { label: "Location", name: "location", widget: "string", hint: "e.g. Gandhinagar, India" }
       - { label: "Year", name: "year", widget: "string" }
       - { label: "Cover Image", name: "cover_image", widget: "image" }
       - { label: "Short Description", name: "description", widget: "text", required: false }
+      - label: "Project Images (Gallery)"
+        name: "images"
+        widget: "list"
+        required: false
+        hint: "Add all images for this project's gallery popup. Select from uploaded media."
+        field: { label: "Image", name: "image", widget: "image" }
       - { label: "Featured on Homepage", name: "featured", widget: "boolean", default: true }
       - { label: "Display Order", name: "order", widget: "number", default: 1, hint: "Lower = shown first" }
 
