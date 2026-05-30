@@ -1116,17 +1116,14 @@ function maybeShowExpandBtn() {
 // ════════════════════════════════════════════════════════════════
 var _RAW = 'https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/images/uploads/';
 var _BASE = 'https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/';
-// Smart image URL resolver — handles old uploads/ paths and new per-project paths
+// Smart image URL resolver -- handles old uploads/ and new per-project paths
 function resolveImg(img) {
   if (!img) return '';
-  // Already a full URL
   if (img.startsWith('http')) return img;
-  // Full path from CMS (e.g. "images/projects/slug/file.webp")
   if (img.startsWith('images/') || img.startsWith('/images/')) {
     return _BASE + img.replace(/^\//, '');
   }
-  // Legacy: just a filename → assume images/uploads/
-  return resolveImg(img);
+  return _RAW + img;
 }
 var _DATA = 'https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/projects/';
 
