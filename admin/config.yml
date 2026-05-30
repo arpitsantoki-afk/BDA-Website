@@ -48,8 +48,6 @@ collections:
     format: "json"
     extension: "json"
     identifier_field: name
-    media_folder: "images/projects/{{slug}}"
-    public_folder: "/images/projects/{{slug}}"
     fields:
       - { label: "Project Name", name: "name", widget: "string" }
       - label: "Category"
