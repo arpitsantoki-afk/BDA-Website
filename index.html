@@ -1101,6 +1101,7 @@ function maybeShowExpandBtn() {
 // PROJECT MODAL
 // ════════════════════════════════════════════════════════════════
 var _RAW = 'https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/images/uploads/';
+var _BASE = 'https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/';
 var _DATA = 'https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/projects/';
 
 function openProjModal(slug, title, subtitle, location, year, type, cover, desc) {
@@ -1136,7 +1137,7 @@ function openProjModal(slug, title, subtitle, location, year, type, cover, desc)
         if (status) status.remove();
         var imgs = '';
         d.images.forEach(function(img) {
-          imgs += '<img src="' + _RAW + img + '" alt="' + (d.title||title||'') + ' — Blue Door Architects" loading="lazy"/>';
+          imgs += '<img src="' + (img.startsWith('/') ? _BASE + img.slice(1) : _RAW + img) + '" alt="' + (d.title||title||'') + ' - Blue Door Architects" loading="lazy"/>';
         });
         if (gallery) gallery.innerHTML = imgs;
       })
