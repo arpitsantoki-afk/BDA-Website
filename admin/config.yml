@@ -12,6 +12,8 @@ backend:
 
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
+# Note: Individual projects use their own subfolder: images/projects/{slug}/
+# This keeps project images organized and makes the picker fast
 
 collections:
 
@@ -46,6 +48,8 @@ collections:
     format: "json"
     extension: "json"
     identifier_field: name
+    media_folder: "images/projects/{{slug}}"
+    public_folder: "/images/projects/{{slug}}"
     fields:
       - { label: "Project Name", name: "name", widget: "string" }
       - label: "Category"
@@ -60,7 +64,7 @@ collections:
         name: "images"
         widget: "list"
         required: false
-        hint: "Add all images for this project's gallery popup. Select from uploaded media."
+        hint: "Upload images directly here — they go into this project's own folder. Add all images for this project's gallery popup. Select from uploaded media."
         field: { label: "Image", name: "image", widget: "image" }
       - { label: "Featured on Homepage", name: "featured", widget: "boolean", default: true }
       - { label: "Display Order", name: "order", widget: "number", default: 1, hint: "Lower = shown first" }
