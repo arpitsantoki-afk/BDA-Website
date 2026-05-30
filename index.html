@@ -345,7 +345,7 @@ footer{background:#080806;border-top:1px solid rgba(255,255,255,0.05);padding:56
 .ft-bottom{border-top:1px solid rgba(255,255,255,0.05);padding-top:24px;display:flex;justify-content:space-between;align-items:center}
 .ft-copy{font-size:0.65rem;font-weight:200;color:rgba(245,240,230,0.42)}
 .ft-legal{display:flex;gap:20px}
-.ft-legal a{font-size:0.6rem;font-weight:200;color:rgba(245,240,230,0.38);transition:color 0.2s}.ft-legal a:hover{color:#c9a96e}
+.ft-legal a{font-size:0.6rem;font-weight:200;color:rgba(245,240,230,0.38);transition:color 0.2s}.ft-legal a:hover{color:#c9a96e}.ft-legal-btn{background:none;border:none;cursor:pointer;font-family:var(--sans);font-size:0.6rem;font-weight:200;color:rgba(245,240,230,0.38);transition:color 0.2s;padding:0}.ft-legal-btn:hover{color:#c9a96e}
 
 /* Skip link for accessibility */
 .skip-link{position:absolute;top:-40px;left:0;background:var(--gold);color:white;padding:8px 16px;font-size:0.8rem;z-index:9999;transition:top 0.2s}
@@ -404,6 +404,20 @@ nav#mainnav.nav-scrolled .nav-links a{color:var(--ink)}
   #publications{padding:88px 0}
   #projects{padding-top:88px}
 }
+
+/* ── LEGAL MODAL ── */
+#legal-modal{position:fixed;inset:0;z-index:9500;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity 0.3s}
+#legal-modal.open{opacity:1;pointer-events:all}
+.lm-backdrop{position:absolute;inset:0;background:rgba(8,8,6,0.82);backdrop-filter:blur(6px)}
+.lm-panel{position:relative;z-index:1;background:var(--warm);width:100%;max-width:680px;max-height:80vh;overflow-y:auto;border-radius:2px;padding:48px 52px;scrollbar-width:thin}
+.lm-close{position:absolute;top:20px;right:20px;background:none;border:1px solid var(--border);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:1rem;color:var(--ink);transition:all 0.2s;display:flex;align-items:center;justify-content:center}
+.lm-close:hover{background:var(--ink);color:var(--warm)}
+.lm-eyebrow{font-size:0.56rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.lm-title{font-family:var(--serif);font-weight:300;font-size:1.8rem;margin-bottom:28px;line-height:1.2}
+.lm-body{font-size:0.82rem;font-weight:300;line-height:1.95;color:var(--ink-soft)}
+.lm-body h3{font-size:0.72rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink);margin:24px 0 8px}
+.lm-body p{margin-bottom:14px}
+@media(max-width:768px){.lm-panel{padding:32px 24px}.lm-panel{max-height:90vh}}
 </style>
 <!-- Preload hero image for fastest LCP -->
 <link rel="preload" as="image" href="/images/uploads/shades-of-white-foyer-ganesha-artwork-blue-door-architects.webp"/>
@@ -712,7 +726,7 @@ nav#mainnav.nav-scrolled .nav-links a{color:var(--ink)}
             <div class="fld"><label for="pt">Project Type *</label>
               <select id="pt" name="project-type" required>
                 <option value="" disabled selected>Select a type</option>
-                <option>Residential</option><option>Commercial</option><option>Hospitality</option>
+                <option>Residential</option><option>Commercial</option><option>Hospitality</option><option>Landscape</option>
                 <option>Mixed-Use</option><option>Interior Only</option><option>Unikraft Furniture</option>
               </select>
             </div>
@@ -742,14 +756,31 @@ nav#mainnav.nav-scrolled .nav-links a{color:var(--ink)}
         <p class="ft-palm">A sub-brand of <a href="#">The Palm Group</a></p>
       </div>
       <nav class="ft-nav" aria-label="Footer navigation">
-        <div class="ft-col"><h5>Work</h5><ul><li><a href="#projects">Residential</a></li><li><a href="#projects">Commercial</a></li><li><a href="#projects">Hospitality</a></li><li><a href="#projects">Mixed-Use</a></li></ul></div>
-        <div class="ft-col"><h5>Studio</h5><ul><li><a href="#philosophy">About</a></li><li><a href="#services">Services</a></li><li><a href="#process">Process</a></li><li><a href="#unikraft">Unikraft</a></li></ul></div>
-        <div class="ft-col"><h5>Connect</h5><ul><li><a href="https://www.instagram.com/bluedoor_architects/" target="_blank" rel="noopener">Instagram</a></li><li><a href="https://in.pinterest.com/bluedoorarchitects/" target="_blank" rel="noopener">Pinterest</a></li><li><a id="footer-email" href="mailto:info@bluedoorarchitects.com">Email</a></li><li><a href="#contact">Begin a Project</a></li></ul></div>
+        <div class="ft-col"><h5>Work</h5><ul>
+          <li><a href="#projects">Residential</a></li>
+          <li><a href="#projects">Commercial</a></li>
+          <li><a href="#projects">Hospitality</a></li>
+          <li><a href="#projects">Landscape</a></li>
+          <li><a href="#projects">Mixed-Use</a></li>
+        </ul></div>
+        <div class="ft-col"><h5>Studio</h5><ul>
+          <li><a href="#philosophy">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#process">Process</a></li>
+          <li><a href="#unikraft">Unikraft</a></li>
+          <li><a href="https://thepalmgroup.in" target="_blank" rel="noopener">The Palm Group ↗</a></li>
+        </ul></div>
+        <div class="ft-col"><h5>Connect</h5><ul>
+          <li><a href="https://www.instagram.com/bluedoor_architects/" target="_blank" rel="noopener">Instagram ↗</a></li>
+          <li><a href="https://in.pinterest.com/bluedoorarchitects/" target="_blank" rel="noopener">Pinterest ↗</a></li>
+          <li><a href="mailto:info@bluedoorarchitects.com">Email</a></li>
+          <li><a href="#contact">Begin a Project</a></li>
+        </ul></div>
       </nav>
     </div>
     <div class="ft-bottom">
       <p class="ft-copy">&copy; 2025 Blue Door Architects. All rights reserved.</p>
-      <div class="ft-legal"><a href="#">Privacy Policy</a><a href="#">Terms</a></div>
+      <div class="ft-legal"><button class="ft-legal-btn" onclick="openLegalModal('privacy')">Privacy Policy</button><button class="ft-legal-btn" onclick="openLegalModal('terms')">Terms</button></div>
     </div>
   </div>
 </footer>
@@ -1163,6 +1194,67 @@ function wirePjClicks() {
   wirePjClicks();
   maybeShowExpandBtn();
 })();
+
+
+// ════════════════════════════════════════════════════════════════
+// LEGAL MODALS — Privacy Policy & Terms
+// ════════════════════════════════════════════════════════════════
+var _legalContent = {
+  privacy: {
+    title: 'Privacy Policy',
+    body: `
+      <h3>Information We Collect</h3>
+      <p>When you submit an enquiry through our website, we collect your name, email address, phone number, and project details you choose to share. We do not collect any information automatically beyond standard server logs.</p>
+      <h3>How We Use Your Information</h3>
+      <p>Your information is used solely to respond to your enquiry and, with your consent, to keep you informed about our work. We do not sell, rent, or share your personal data with third parties outside The Palm Group.</p>
+      <h3>Data Storage</h3>
+      <p>Enquiry data is stored securely and retained only as long as necessary to fulfil the purpose for which it was collected. You may request deletion at any time by emailing us.</p>
+      <h3>Cookies</h3>
+      <p>This website uses no tracking cookies. We use only essential functionality. No advertising or analytics cookies are placed on your device.</p>
+      <h3>Contact</h3>
+      <p>For any privacy-related queries, write to us at <a href="mailto:info@bluedoorarchitects.com" style="color:var(--gold)">info@bluedoorarchitects.com</a>.</p>
+      <p style="margin-top:20px;font-size:0.72rem;color:var(--ink-muted)">Last updated: May 2025</p>
+    `
+  },
+  terms: {
+    title: 'Terms of Use',
+    body: `
+      <h3>Use of This Website</h3>
+      <p>This website is operated by Blue Door Architects, a sub-brand of The Palm Group. By accessing it, you agree to these terms. The content is provided for informational purposes only.</p>
+      <h3>Intellectual Property</h3>
+      <p>All images, text, design work, and renderings shown on this website are the intellectual property of Blue Door Architects or their respective clients. Reproduction without written permission is prohibited.</p>
+      <h3>Project Images</h3>
+      <p>Project photographs and visualisations are shared with client consent. If you are a client and wish to request removal of any image, please contact us directly.</p>
+      <h3>No Warranty</h3>
+      <p>We make every effort to keep information accurate, but we make no warranties regarding completeness or fitness for any particular purpose. Portfolio images are representative of past work and do not constitute a guarantee of identical outcomes.</p>
+      <h3>Contact</h3>
+      <p>Questions about these terms: <a href="mailto:info@bluedoorarchitects.com" style="color:var(--gold)">info@bluedoorarchitects.com</a></p>
+      <p style="margin-top:20px;font-size:0.72rem;color:var(--ink-muted)">Last updated: May 2025</p>
+    `
+  }
+};
+
+function openLegalModal(type) {
+  var modal = document.getElementById('legal-modal');
+  var content = document.getElementById('lm-content');
+  var d = _legalContent[type];
+  if (!d) return;
+  content.innerHTML =
+    '<div class="lm-eyebrow">Blue Door Architects</div>' +
+    '<h2 class="lm-title">' + d.title + '</h2>' +
+    '<div class="lm-body">' + d.body + '</div>';
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLegalModal() {
+  document.getElementById('legal-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') { closeLegalModal(); }
+});
 </script>
 
 <!-- ── PROJECT MODAL ── -->
@@ -1171,6 +1263,15 @@ function wirePjClicks() {
   <div class="pm-panel" id="pm-panel">
     <div class="pm-close"><button class="pm-close-btn" onclick="closeProjModal()" aria-label="Close project">&#215;</button></div>
     <div id="pm-content"></div>
+  </div>
+</div>
+
+<!-- ── LEGAL MODAL ── -->
+<div id="legal-modal" role="dialog" aria-modal="true">
+  <div class="lm-backdrop" onclick="closeLegalModal()"></div>
+  <div class="lm-panel">
+    <button class="lm-close" onclick="closeLegalModal()" aria-label="Close">&#215;</button>
+    <div id="lm-content"></div>
   </div>
 </div>
 </body>
