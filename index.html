@@ -933,12 +933,12 @@ function renderProjects() {
     info.className = 'pj-info';
     info.innerHTML = '<p class="pj-cat">' + (p.category||'') + ' &middot; ' + (p.location||'') + '</p><h3 class="pj-name">' + p.name + '</h3>';
     article.appendChild(info);
-    article.dataset.slug     = p.slug          || '';
-    article.dataset.title    = p.title         || '';
+    article.dataset.slug     = p._slug         || '';
+    article.dataset.title    = p.name          || '';
     article.dataset.subtitle = p.subtitle      || '';
     article.dataset.location = p.location      || '';
     article.dataset.year     = p.year          || '';
-    article.dataset.type     = p.type          || '';
+    article.dataset.type     = p.category      || '';
     article.dataset.cover    = p.cover_image   || '';
     article.dataset.desc     = p.description   || '';
     grid.appendChild(article);
@@ -961,7 +961,7 @@ fetch('https://api.github.com/repos/arpitsantoki-afk/BDA-Website/contents/_data/
       fetch('/_data/projects/' + file.name + '?v=' + Date.now())
         .then(function(r) { return r.ok ? r.json() : null; })
         .then(function(d) {
-          if (d && d.name) allProjects.push(d);
+          if (d && d.name) { d._slug = file.name.replace('.json',''); allProjects.push(d); }
           loaded++;
           if (loaded === jsonFiles.length) renderProjects();
         })
@@ -1137,7 +1137,7 @@ function openProjModal(slug, title, subtitle, location, year, type, cover, desc)
         if (status) status.remove();
         var imgs = '';
         d.images.forEach(function(img) {
-          imgs += '<img src="' + (img.startsWith('/') ? _BASE + img.slice(1) : _RAW + img) + '" alt="' + (d.title||title||'') + ' - Blue Door Architects" loading="lazy"/>';
+          imgs += '<img src="' + (img.startsWith('/') ? _BASE + img.slice(1) : _RAW + img) + '" alt="' + (d.name||d.title||title||'') + ' - Blue Door Architects" loading="lazy"/>';
         });
         if (gallery) gallery.innerHTML = imgs;
       })
