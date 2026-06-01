@@ -1,10 +1,21 @@
 {
+  "name": "The Verdant",
   "featured": true,
   "order": 5,
-  "name": "The Verdant",
-  "category": "Residential",
-  "location": "Gandhinagar, Gujarat",
-  "year": "2026",
   "cover_image": "/images/uploads/palm-altezza-garden-gym-pavilion-glass-facade-evening-gandhinagar-blue-door-architects.webp",
-  "description": ""
+  "location": "Gandhinagar, Gujarat",
+  "images": [
+    "/images/uploads/palm-altezza-amenity-lawn-water-feature-pergola-gandhinagar-blue-door-architects.webp",
+    "/images/uploads/palm-altezza-courtyard-seating-steel-pergola-landscaping-gandhinagar-blue-door-architects.webp",
+    "/images/uploads/palm-altezza-ground-floor-lobby-timber-ceiling-planters-gandhinagar-blue-door-architects.webp",
+    "/images/uploads/palm-altezza-home-theatre-recliner-seats-acoustic-panels-gandhinagar-blue-door-architects.webp",
+    "/images/uploads/palm-altezza-pool-deck-sun-loungers-brick-wall-landscaping-gandhinagar-blue-door-architects.webp",
+    "/images/uploads/palm-altezza-residential-complex-aerial-pool-lawn-gym-evening-gandhinagar-blue-door-architects.webp",
+    "/images/uploads/palm-altezza-residential-complex-courtyard-landscaping-aerial-gandhinagar-blue-door-architects.webp",
+    "/images/uploads/palm-altezza-residential-complex-swimming-pool-palm-trees-aerial-gandhinagar-blue-door-architects.webp",
+    "/images/uploads/palm-altezza-swimming-pool-sun-deck-landscaping-gandhinagar-blue-door-architects.webp"
+  ],
+  "description": "",
+  "year": "2026",
+  "category": "Residential"
 }
