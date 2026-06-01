@@ -1119,7 +1119,7 @@ function openProjModal(slug, title, subtitle, location, year, type, cover, desc)
   if (type) head += '<div class="pm-meta-item"><span class="pm-meta-label">Type</span><span class="pm-meta-value">' + type + '</span></div>';
   head += '</div>';
   if (desc) head += '<div class="pm-desc">' + desc + '</div>';
-  if (cover) head += '<div class="pm-cover"><img src="' + _RAW + cover + '" alt="' + (title||'') + '" loading="eager"/></div>';
+  if (cover) head += '<div class="pm-cover"><img src="' + (cover && cover.startsWith('/') ? _BASE + cover.slice(1) : _RAW + cover) + '" alt="' + (title||'') + '" loading="eager"/></div>';
   head += '<div class="pm-loading" id="pm-gallery-status">Loading gallery…</div>';
   head += '<div class="pm-gallery" id="pm-gallery"></div>';
   content.innerHTML = head;
