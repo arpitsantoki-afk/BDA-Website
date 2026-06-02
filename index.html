@@ -998,7 +998,7 @@ function renderPublications(pubs) {
     card.rel = 'noopener noreferrer';
     card.innerHTML =
       '<div class="pub-card-top">' +
-        (p.logo ? '<img class="pub-logo" src="' + resolveImg(p.logo) + '" alt="' + (p.outlet||'') + '" loading="lazy">' : '<p class="pub-outlet">' + (p.outlet||'') + '</p>') +
+        (p.logo ? '<img class="pub-logo" src="' + (p.logo && p.logo.startsWith('/') ? 'https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/' + p.logo.slice(1) : p.logo||''  ) + '" alt="' + (p.outlet||'') + '" loading="lazy">' : '<p class="pub-outlet">' + (p.outlet||'') + '</p>') +
         '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>' +
       '</div>' +
       '<h3 class="pub-title">\u201c' + (p.title||'') + '\u201d</h3>' +
