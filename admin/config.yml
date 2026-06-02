@@ -175,6 +175,7 @@ collections:
     identifier_field: title
     fields:
       - { label: "Article Title", name: "title", widget: "string" }
+      - { label: "Publication Logo", name: "logo", widget: "image", required: false, hint: "Upload publication logo (PNG/SVG with transparent background works best)" }
       - { label: "Publication / Outlet", name: "outlet", widget: "string", hint: "e.g. Architect & Interiors India" }
       - { label: "Article URL", name: "url", widget: "string" }
       - { label: "Date", name: "date", widget: "string", hint: "e.g. December 2025" }
