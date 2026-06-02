@@ -53,7 +53,7 @@ collections:
       - label: "Category"
         name: "category"
         widget: "select"
-        options: ["Residential", "Commercial", "Hospitality", "Landscape", "Mixed-Use", "Cultural", "Interior"]
+        options: ["Residential", "Commercial", "Hospitality", "Landscape", "Mixed-Use", "Cultural", "Interior","Architectural & Landscape"]
       - { label: "Location", name: "location", widget: "string", hint: "e.g. Gandhinagar, India" }
       - { label: "Year", name: "year", widget: "string" }
       - { label: "Cover Image", name: "cover_image", widget: "image" }
