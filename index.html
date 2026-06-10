@@ -934,28 +934,24 @@ function renderProjects() {
   if (window._ro) { grid.querySelectorAll('.pj').forEach(function(el){ window._ro.observe(el); }); }
 }
 
-// Auto-discover all projects via GitHub API — no manifest needed
-fetch('https://api.github.com/repos/arpitsantoki-afk/BDA-Website/contents/_data/projects', {
-  headers: { 'Accept': 'application/vnd.github.v3+json' }
-})
-  .then(function(r) { return r.ok ? r.json() : []; })
-  .then(function(files) {
-    var jsonFiles = Array.isArray(files)
-      ? files.filter(function(f) { return f.name.endsWith('.json'); })
-      : [];
-    if (jsonFiles.length === 0) { renderProjects(); return; }
+// Load projects in order defined by Projects Index in CMS
+fetch('/_data/projects-index.json?v=' + Date.now())
+  .then(function(r) { return r.ok ? r.json() : null; })
+  .then(function(index) {
+    var slugs = (index && Array.isArray(index.projects)) ? index.projects : [];
+    if (slugs.length === 0) { renderProjects(); return; }
     var loaded = 0;
-    jsonFiles.forEach(function(file) {
-      fetch('/_data/projects/' + file.name + '?v=' + Date.now())
+    slugs.forEach(function(slug) {
+      fetch('/_data/projects/' + slug + '.json?v=' + Date.now())
         .then(function(r) { return r.ok ? r.json() : null; })
         .then(function(d) {
-          if (d && d.name) { d._slug = file.name.replace('.json',''); allProjects.push(d); }
+          if (d && d.name) { d._slug = slug; allProjects.push(d); }
           loaded++;
-          if (loaded === jsonFiles.length) renderProjects();
+          if (loaded === slugs.length) renderProjects();
         })
         .catch(function() {
           loaded++;
-          if (loaded === jsonFiles.length) renderProjects();
+          if (loaded === slugs.length) renderProjects();
         });
     });
   })
