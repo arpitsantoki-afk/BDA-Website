@@ -114,11 +114,34 @@ collections:
         label: "General Info"
         file: "_data/settings.json"
         fields:
+          # ── CONTACT ──────────────────────────────────────
+          - { label: "Studio Name", name: "studio_name", widget: "string", hint: "Appears in footer and page titles" }
+          - { label: "Tagline", name: "tagline", widget: "string", hint: "e.g. Architecture & Turnkey Design" }
           - { label: "Phone", name: "phone", widget: "string" }
           - { label: "Email", name: "email", widget: "string" }
-          - { label: "Studio Location", name: "location", widget: "string" }
+          - { label: "Studio Location", name: "location", widget: "string", hint: "e.g. Gandhinagar, India" }
+          - { label: "Address (optional)", name: "address", widget: "string", required: false }
+          # ── SOCIAL ───────────────────────────────────────
           - { label: "Instagram URL", name: "instagram", widget: "string" }
+          - { label: "Pinterest URL", name: "pinterest", widget: "string", required: false }
+          # ── HERO SECTION ─────────────────────────────────
+          - { label: "Hero Headline", name: "hero_headline", widget: "string", hint: "Main headline on homepage", required: false }
+          - { label: "Hero Subtext", name: "hero_subtext", widget: "string", hint: "Small label above headline e.g. Architecture & Turnkey Design", required: false }
+          - { label: "Projects Count", name: "stat_projects", widget: "string", hint: "e.g. 120+", required: false }
+          - { label: "Years Count", name: "stat_years", widget: "string", hint: "e.g. 15+", required: false }
+          - { label: "Turnkey Label", name: "stat_turnkey", widget: "string", hint: "e.g. 100%", required: false }
+          # ── ABOUT / INTRO ─────────────────────────────────
+          - { label: "Intro Heading", name: "intro_heading", widget: "string", required: false, hint: "e.g. A studio that designs with conviction" }
+          - { label: "Intro Body Para 1", name: "intro_body1", widget: "text", required: false }
+          - { label: "Intro Body Para 2", name: "intro_body2", widget: "text", required: false }
+          # ── THE PALM GROUP ────────────────────────────────
           - { label: "Palm Group Description", name: "palm_group_desc", widget: "text" }
+          - { label: "Palm Group URL", name: "palm_group_url", widget: "string", required: false, hint: "e.g. https://www.thepalm.in/" }
+          # ── SEO ──────────────────────────────────────────
+          - { label: "Meta Description", name: "meta_description", widget: "text", required: false, hint: "For Google search results" }
+          - { label: "Canonical URL", name: "canonical_url", widget: "string", required: false, hint: "e.g. https://www.bluedoorarchitects.com/" }
+          # ── COPYRIGHT ────────────────────────────────────
+          - { label: "Copyright Year", name: "copyright_year", widget: "string", required: false, hint: "e.g. 2025" }
 
   # ── TESTIMONIALS ───────────────────────────────────────────
   - name: "testimonials"
