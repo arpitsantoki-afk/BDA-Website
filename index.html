@@ -445,7 +445,7 @@ nav#mainnav.nav-scrolled .nav-links a{color:var(--ink)}
       <a href="#production">Manufacturing</a>
       <a href="#philosophy">Studio</a>
       <a href="#publications">Press</a>
-      <a href="#process">Process</a>
+      
       <a href="#contact" class="nav-cta">Begin a Project</a>
     </div>
     <label for="nav-toggle" class="nav-burger" aria-label="Open navigation">
@@ -512,7 +512,6 @@ nav#mainnav.nav-scrolled .nav-links a{color:var(--ink)}
       <h2 class="rv">Selected <em style="font-family:var(--serif);font-style:italic">Work</em></h2>
       <div class="proj-hdr-right rv d1">
         <p>Each project is a singular act of authorship.</p>
-        <a href="#contact" class="proj-see-all">View All Projects &rarr;</a>
       </div>
     </div>
     <!-- Projects injected dynamically by JS from _data/projects/*.json -->
@@ -727,7 +726,7 @@ nav#mainnav.nav-scrolled .nav-links a{color:var(--ink)}
       <div>
         <p class="ft-brand-name">Blue Door Architects</p>
         <p class="ft-brand-sub">Architecture &amp; Turnkey Design</p>
-        <p class="ft-palm">A sub-brand of <a href="https://www.thepalm.in/" target="_blank" rel="noopener">The Palm Group</a></p>
+        <p class="ft-palm">A sub-brand of <a id="ft-palm-link" href="https://www.thepalm.in/" target="_blank" rel="noopener">The Palm Group</a></p>
       </div>
       <nav class="ft-nav" aria-label="Footer navigation">
         <div class="ft-col"><h5>Work</h5><ul>
@@ -740,7 +739,7 @@ nav#mainnav.nav-scrolled .nav-links a{color:var(--ink)}
         <div class="ft-col"><h5>Studio</h5><ul>
           <li><a href="#philosophy">About</a></li>
           <li><a href="#services">Services</a></li>
-          <li><a href="#process">Process</a></li>
+          <li></li>
           <li><a href="#unikraft">Unikraft</a></li>
           <li><a href="https://thepalmgroup.in" target="_blank" rel="noopener">The Palm Group &#8599;</a></li>
         </ul></div>
@@ -809,6 +808,7 @@ loadJSON('/_data/settings.json', function(d) {
   setHref('ct-instagram', ig);
   setText('ct-location', d.location);
   setText('palm-desc', d.palm_group_desc);
+  if (d.palm_group_url) setHref('ft-palm-link', d.palm_group_url);
 });
 
 // Load Unikraft
