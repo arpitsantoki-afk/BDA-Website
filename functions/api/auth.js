@@ -3,7 +3,7 @@
 
 const CLIENT_ID = "Ov23lit8gNRJzxceLwmY";
 const CLIENT_SECRET = "211802d026a4a620779939b840d151f8270e28a8";
-const ORIGIN = "https://bda-website.info-unikraft.workers.dev";
+const ORIGIN = "https://bluedoorarchitects.com";
 
 export async function onRequest(context) {
   const url = new URL(context.request.url);
