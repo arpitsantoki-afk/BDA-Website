@@ -897,7 +897,7 @@ fetch('https://api.github.com/repos/arpitsantoki-afk/BDA-Website/contents/_data/
 var allProjects = [];
 
 function renderProjects() {
-  allProjects.sort(function(a,b){ return (a.order||99) - (b.order||99); });
+  allProjects.sort(function(a,b){ return (a._indexOrder !== undefined ? a._indexOrder : 99) - (b._indexOrder !== undefined ? b._indexOrder : 99); });
   var grid = document.getElementById('projects-grid');
   if (!grid) return;
   grid.innerHTML = '';
@@ -966,7 +966,7 @@ fetch('/_data/projects-index.json?v=' + Date.now())
       fetch('/_data/projects/' + slug + '.json?v=' + Date.now())
         .then(function(r) { return r.ok ? r.json() : null; })
         .then(function(d) {
-          if (d && d.name) { d._slug = slug; allProjects.push(d); }
+          if (d && d.name) { d._slug = slug; d._indexOrder = slugs.indexOf(slug); allProjects.push(d); }
           loaded++;
           if (loaded === slugs.length) renderProjects();
         })
