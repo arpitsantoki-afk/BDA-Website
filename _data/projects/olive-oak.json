@@ -1,11 +1,9 @@
 {
+  "name": "Olive & Oak",
   "featured": true,
   "order": 4,
-  "name": "Olive & Oak",
-  "category": "Interior",
-  "location": "Gandhinagar",
-  "year": "2025",
   "cover_image": "/images/uploads/olive-and-oak-living-room-olive-sofa-chandelier-gandhinagar-blue-door-architects.webp",
+  "location": "Gandhinagar",
   "images": [
     "/images/uploads/olive-and-oak-bedroom-two-artwork-red-lamp-gandhinagar-blue-door-architects.webp",
     "/images/uploads/olive-and-oak-bedroom-walnut-wardrobe-green-accent-wall-gandhinagar-blue-door-architects.webp",
@@ -17,5 +15,8 @@
     "/images/uploads/olive-and-oak-open-plan-kitchen-living-view-gandhinagar-blue-door-architects.webp",
     "/images/uploads/olive-and-oak-study-room-walnut-desk-pinboard-gandhinagar-blue-door-architects.webp",
     "/images/uploads/olive-and-oak-tv-unit-fluted-wall-panel-gandhinagar-blue-door-architects.webp"
-  ]
+  ],
+  "description": "A warm, material-rich interior for a private residence in Gandhinagar. Olive & Oak takes its name from the two defining elements of the space — sage green cabinetry and solid walnut joinery that run consistently from the kitchen through the bedrooms. Blue Door Architects designed and executed the full turnkey interior, including modular kitchen, custom wardrobes, upholstered furniture, and lighting — delivering the completed home ahead of the client's personal deadline. Every room is considered, every material intentional.",
+  "year": "2025",
+  "category": "Interior"
 }
