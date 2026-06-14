@@ -1,0 +1,17 @@
+{
+  "name": "Silver Square",
+  "featured": true,
+  "order": 1,
+  "cover_image": "/images/uploads/silver-square-clubhouse-evening-view-garden-tower-rajkot-blue-door-architects.webp",
+  "location": "Rajkot",
+  "images": [
+    "/images/uploads/silver-square-residential-facade-night-view-landscaping-rajkot-blue-door-architects.webp",
+    "/images/uploads/silver-square-building-entry-arch-reception-garden-rajkot-blue-door-architects.webp",
+    "/images/uploads/silver-square-reception-lobby-arched-window-courtyard-rajkot-blue-door-architects.webp",
+    "/images/uploads/silver-square-multipurpose-hall-timber-ceiling-marble-floor-rajkot-blue-door-architects.webp",
+    "/images/uploads/silver-square-gym-glass-facade-timber-floor-garden-view-rajkot-blue-door-architects.webp"
+  ],
+  "description": "A premium residential tower in Rajkot where sculpted landscape, arched stone thresholds, and warm material interiors create an arrival experience that feels as considered as the homes within.",
+  "year": "2025",
+  "category": "Landscape"
+}
