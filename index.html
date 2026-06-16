@@ -719,7 +719,7 @@ nav#mainnav.nav-scrolled .nav-links a{color:var(--ink)}
         <div class="ct-details rv d2">
           <div><p class="ct-d-lbl">Email</p><p class="ct-d-val"><a id="ct-email" href="mailto:info@bluedoorarchitects.com">info@bluedoorarchitects.com</a></p></div>
           <div><p class="ct-d-lbl">Studio</p><p class="ct-d-val" id="ct-location">India</p></div>
-          <div><p class="ct-d-lbl">Phone</p><p class="ct-d-val"><a id="ct-phone" href="tel:+917434006001">+91 74340 06001</a></p></div>
+          <div><p class="ct-d-lbl">Phone</p><p class="ct-d-val"><a id="ct-phone" href="tel:+917434006001" onclick="gtag('event','conversion',{'send_to':'AW-18244039331/X-FKCIOx_b8cEKPlt_tD'});return true;">+91 74340 06001</a></p></div>
         </div>
         <div class="ct-social rv d3">
           <span class="ct-soc-lbl">Follow</span>
@@ -1094,7 +1094,7 @@ if ('IntersectionObserver' in window) {
         if (result.success) {
           document.getElementById('form-inner').style.display = 'none';
           document.getElementById('fsuccess').style.display = 'block';
-          if(typeof gtag==='function'){gtag('event','conversion',{'send_to':'AW-18244039331'});}
+          if(typeof gtag==='function'){gtag('event','conversion',{'send_to':'AW-18244039331/DgrPCP2w_b8cEKPlt_tD','value':0,'currency':'INR'});}
         } else {
           if (btn) { btn.disabled = false; btn.innerHTML = 'Send Enquiry <svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h16M11 1l6 5-6 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>'; }
           alert('Something went wrong. Please email us at info@bluedoorarchitects.com');
