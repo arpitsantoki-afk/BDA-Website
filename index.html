@@ -835,7 +835,7 @@ function setHref(id, href, text) {
 }
 
 // Load Hero
-loadJSON('/_data/hero.json', function(d) {
+loadJSON('https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/hero.json', function(d) {
   setImg('hero-img', d.hero_image);
   if (d.line1 || d.line2 || d.line3) {
     var t = document.getElementById('hero-title');
@@ -846,7 +846,7 @@ loadJSON('/_data/hero.json', function(d) {
 });
 
 // Load Settings
-loadJSON('/_data/settings.json', function(d) {
+loadJSON('https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/settings.json', function(d) {
   var email = d.email || 'info@bluedoorarchitects.com';
   var phone = d.phone || '+91 74340 06001';
   var ig    = d.instagram || 'https://www.instagram.com/bluedoor_architects/';
@@ -862,7 +862,7 @@ loadJSON('/_data/settings.json', function(d) {
 });
 
 // Load Unikraft
-loadJSON('/_data/unikraft.json', function(d) {
+loadJSON('https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/unikraft.json', function(d) {
   setImg('uk-img', d.image);
   setText('uk-headline', d.headline);
   setText('uk-body1', d.body1);
@@ -871,7 +871,7 @@ loadJSON('/_data/unikraft.json', function(d) {
 });
 
 // Load Production
-loadJSON('/_data/production.json', function(d) {
+loadJSON('https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/production.json', function(d) {
   setImg('prod-img', d.image);
   setText('prod-size', d.size);
   setText('prod-body1', d.body1);
@@ -985,14 +985,14 @@ function renderProjects() {
 }
 
 // Load projects in order defined by Projects Index in CMS
-fetch('/_data/projects-index.json?v=' + Date.now())
+fetch('https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/projects-index.json?v=' + Date.now())
   .then(function(r) { return r.ok ? r.json() : null; })
   .then(function(index) {
     var slugs = (index && Array.isArray(index.projects)) ? index.projects : [];
     if (slugs.length === 0) { renderProjects(); return; }
     var loaded = 0;
     slugs.forEach(function(slug) {
-      fetch('/_data/projects/' + slug + '.json?v=' + Date.now())
+      fetch('https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/projects/' + slug + '.json?v=' + Date.now())
         .then(function(r) { return r.ok ? r.json() : null; })
         .then(function(d) {
           if (d && d.name) { d._slug = slug; d._indexOrder = slugs.indexOf(slug); allProjects.push(d); }
