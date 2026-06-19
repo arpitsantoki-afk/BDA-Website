@@ -134,29 +134,7 @@ collections:
           - { label: "Intro Heading", name: "intro_heading", widget: "string", required: false, hint: "e.g. A studio that designs with conviction" }
           - { label: "Intro Body Para 1", name: "intro_body1", widget: "text", required: false }
           - { label: "Intro Body Para 2", name: "intro_body2", widget: "text", required: false }
-               # ── THE STUDIO SECTION ────────────────────────────────────
-          - { label: "Studio Label", name: "studio_label", widget: "string", default: "The Studio", hint: "Gold label above the quote" }
-          - { label: "Studio Quote", name: "studio_quote", widget: "text", hint: "The blockquote in the Studio section" }
-          - { label: "Philosophy Point 1 — Title", name: "phil_1_title", widget: "string" }
-          - { label: "Philosophy Point 1 — Text", name: "phil_1_text", widget: "text" }
-          - { label: "Philosophy Point 2 — Title", name: "phil_2_title", widget: "string" }
-          - { label: "Philosophy Point 2 — Text", name: "phil_2_text", widget: "text" }
-          - { label: "Philosophy Point 3 — Title", name: "phil_3_title", widget: "string" }
-          - { label: "Philosophy Point 3 — Text", name: "phil_3_text", widget: "text" }
-          - { label: "Studio Image Caption — Number", name: "studio_img_number", widget: "string", hint: "e.g. 120+" }
-          - { label: "Studio Image Caption — Label", name: "studio_img_label", widget: "string", hint: "e.g. Projects delivered" }
-          - { label: "Studio Image Caption — Sub Label", name: "studio_img_sub", widget: "string", hint: "e.g. Residential, commercial & hospitality" }
-          # ── THREE DISCIPLINES SECTION ─────────────────────────────
-          - { label: "Services Headline Line 1", name: "svc_headline1", widget: "string", hint: "e.g. Three disciplines." }
-          - { label: "Services Headline Line 2 (italic)", name: "svc_headline2", widget: "string", hint: "e.g. One practice." }
-          - { label: "Services Subtext", name: "svc_subtext", widget: "text" }
-          - { label: "Service 1 — Title", name: "svc_1_title", widget: "string" }
-          - { label: "Service 1 — Text", name: "svc_1_text", widget: "text" }
-          - { label: "Service 2 — Title", name: "svc_2_title", widget: "string" }
-          - { label: "Service 2 — Text", name: "svc_2_text", widget: "text" }
-          - { label: "Service 3 — Title", name: "svc_3_title", widget: "string" }
-          - { label: "Service 3 — Text", name: "svc_3_text", widget: "text" }
-     # ── THE PALM GROUP ────────────────────────────────
+          # ── THE PALM GROUP ────────────────────────────────
           - { label: "Palm Group Description", name: "palm_group_desc", widget: "text" }
           - { label: "Palm Group URL", name: "palm_group_url", widget: "string", required: false, hint: "e.g. https://www.thepalm.in/" }
           # ── SEO ──────────────────────────────────────────
@@ -207,6 +185,45 @@ collections:
           - { label: "Facility Size", name: "size", widget: "string" }
           - { label: "Body Text 1", name: "body1", widget: "text" }
           - { label: "Body Text 2", name: "body2", widget: "text" }
+
+  # ── THE STUDIO ────────────────────────────────────────────
+  - name: "studio"
+    label: "The Studio"
+    files:
+      - name: "studio_content"
+        label: "Studio Content"
+        file: "_data/studio.json"
+        fields:
+          - { label: "Studio Label", name: "studio_label", widget: "string", default: "The Studio", hint: "Gold label above the quote" }
+          - { label: "Studio Quote", name: "studio_quote", widget: "text", hint: "The blockquote displayed in the Studio section" }
+          - { label: "Philosophy Point 1 — Title", name: "phil_1_title", widget: "string" }
+          - { label: "Philosophy Point 1 — Text", name: "phil_1_text", widget: "text" }
+          - { label: "Philosophy Point 2 — Title", name: "phil_2_title", widget: "string" }
+          - { label: "Philosophy Point 2 — Text", name: "phil_2_text", widget: "text" }
+          - { label: "Philosophy Point 3 — Title", name: "phil_3_title", widget: "string" }
+          - { label: "Philosophy Point 3 — Text", name: "phil_3_text", widget: "text" }
+          - { label: "Studio Image", name: "studio_image", widget: "image", hint: "Portrait image shown alongside the philosophy points" }
+          - { label: "Image Caption — Number", name: "studio_img_number", widget: "string", hint: "e.g. 120+" }
+          - { label: "Image Caption — Label", name: "studio_img_label", widget: "string", hint: "e.g. Projects delivered" }
+          - { label: "Image Caption — Sub Label", name: "studio_img_sub", widget: "string", hint: "e.g. Residential, commercial & hospitality" }
+
+  # ── SERVICES ───────────────────────────────────────────────
+  - name: "services"
+    label: "Services"
+    files:
+      - name: "services_content"
+        label: "Services Content"
+        file: "_data/services.json"
+        fields:
+          - { label: "Headline Line 1", name: "svc_headline1", widget: "string", hint: "e.g. Three disciplines." }
+          - { label: "Headline Line 2 (italic)", name: "svc_headline2", widget: "string", hint: "e.g. One practice." }
+          - { label: "Subtext", name: "svc_subtext", widget: "text" }
+          - { label: "Service 1 — Title", name: "svc_1_title", widget: "string" }
+          - { label: "Service 1 — Text", name: "svc_1_text", widget: "text" }
+          - { label: "Service 2 — Title", name: "svc_2_title", widget: "string" }
+          - { label: "Service 2 — Text", name: "svc_2_text", widget: "text" }
+          - { label: "Service 3 — Title", name: "svc_3_title", widget: "string" }
+          - { label: "Service 3 — Text", name: "svc_3_text", widget: "text" }
 
   # ── PUBLICATIONS ───────────────────────────────────────────
   - name: "publications"
