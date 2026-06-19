@@ -636,7 +636,7 @@ nav#mainnav.nav-scrolled .nav-links a{color:var(--ink)}
         </div>
       </div>
       <div class="phil-img-side rv d2">
-        <img class="phil-img" id="phil-img" src="/images/uploads/shades-of-white-open-plan-living-room-blue-door-architects.webp" alt="Blue Door Architects — Shades of White interior project, Gandhinagar" loading="lazy" width="800" height="1067"/>
+        <img class="phil-img" id="studio-img" src="/images/uploads/shades-of-white-open-plan-living-room-blue-door-architects.webp" alt="Blue Door Architects — Shades of White interior project, Gandhinagar" loading="lazy" width="800" height="1067"/>
         <div class="phil-img-cap">
           <div class="phil-img-cap-n" id="studio-img-number">120+</div>
           <div class="phil-img-cap-l" id="studio-img-label">Projects delivered</div>
@@ -859,28 +859,7 @@ loadJSON('https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_d
   setText('ct-location', d.location);
   setText('palm-desc', d.palm_group_desc);
   if (d.palm_group_url) { setHref('ft-palm-link', d.palm_group_url); setHref('ft-palm-link2', d.palm_group_url); }
-  // Studio section
-  if (d.studio_label)    setText('studio-label',    d.studio_label);
-  if (d.studio_quote)    { var q = document.getElementById('studio-quote'); if(q) q.innerHTML = '\u201c' + d.studio_quote + '\u201d'; }
-  if (d.phil_1_title)    setText('phil-1-title',    d.phil_1_title);
-  if (d.phil_1_text)     setText('phil-1-text',     d.phil_1_text);
-  if (d.phil_2_title)    setText('phil-2-title',    d.phil_2_title);
-  if (d.phil_2_text)     setText('phil-2-text',     d.phil_2_text);
-  if (d.phil_3_title)    setText('phil-3-title',    d.phil_3_title);
-  if (d.phil_3_text)     setText('phil-3-text',     d.phil_3_text);
-  if (d.studio_img_number) setText('studio-img-number', d.studio_img_number);
-  if (d.studio_img_label)  setText('studio-img-label',  d.studio_img_label);
-  if (d.studio_img_sub)    setText('studio-img-sub',    d.studio_img_sub);
-  // Services section
-  if (d.svc_headline1)   setText('svc-headline1',   d.svc_headline1);
-  if (d.svc_headline2)   setText('svc-headline2',   d.svc_headline2);
-  if (d.svc_subtext)     setText('svc-subtext',     d.svc_subtext);
-  if (d.svc_1_title)     setText('svc-1-title',     d.svc_1_title);
-  if (d.svc_1_text)      setText('svc-1-text',      d.svc_1_text);
-  if (d.svc_2_title)     setText('svc-2-title',     d.svc_2_title);
-  if (d.svc_2_text)      setText('svc-2-text',      d.svc_2_text);
-  if (d.svc_3_title)     setText('svc-3-title',     d.svc_3_title);
-  if (d.svc_3_text)      setText('svc-3-text',      d.svc_3_text);
+
 });
 
 // Load Unikraft
@@ -937,6 +916,37 @@ fetch('https://api.github.com/repos/arpitsantoki-afk/BDA-Website/contents/_data/
     });
   })
   .catch(function() {}); // silently keep fallback
+
+// Load Studio section from _data/studio.json
+loadJSON('https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/studio.json', function(d) {
+  if (!d) return;
+  if (d.studio_label)      setText('studio-label',     d.studio_label);
+  if (d.studio_quote)      { var q = document.getElementById('studio-quote'); if(q) q.innerHTML = '\u201c' + d.studio_quote + '\u201d'; }
+  if (d.phil_1_title)      setText('phil-1-title',     d.phil_1_title);
+  if (d.phil_1_text)       setText('phil-1-text',      d.phil_1_text);
+  if (d.phil_2_title)      setText('phil-2-title',     d.phil_2_title);
+  if (d.phil_2_text)       setText('phil-2-text',      d.phil_2_text);
+  if (d.phil_3_title)      setText('phil-3-title',     d.phil_3_title);
+  if (d.phil_3_text)       setText('phil-3-text',      d.phil_3_text);
+  if (d.studio_image)      setImg('studio-img',        d.studio_image);
+  if (d.studio_img_number) setText('studio-img-number',d.studio_img_number);
+  if (d.studio_img_label)  setText('studio-img-label', d.studio_img_label);
+  if (d.studio_img_sub)    setText('studio-img-sub',   d.studio_img_sub);
+});
+
+// Load Services section from _data/services.json
+loadJSON('https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/services.json', function(d) {
+  if (!d) return;
+  if (d.svc_headline1) setText('svc-headline1', d.svc_headline1);
+  if (d.svc_headline2) setText('svc-headline2', d.svc_headline2);
+  if (d.svc_subtext)   setText('svc-subtext',   d.svc_subtext);
+  if (d.svc_1_title)   setText('svc-1-title',   d.svc_1_title);
+  if (d.svc_1_text)    setText('svc-1-text',    d.svc_1_text);
+  if (d.svc_2_title)   setText('svc-2-title',   d.svc_2_title);
+  if (d.svc_2_text)    setText('svc-2-text',    d.svc_2_text);
+  if (d.svc_3_title)   setText('svc-3-title',   d.svc_3_title);
+  if (d.svc_3_text)    setText('svc-3-text',    d.svc_3_text);
+});
 
 // Load Projects — fetch all known project files
 // When you add a new project via CMS, add its filename to this array
