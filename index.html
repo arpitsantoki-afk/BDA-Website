@@ -569,24 +569,24 @@ nav#mainnav.nav-scrolled .nav-links a{color:var(--ink)}
 <section id="services">
   <div class="wrap">
     <div class="svc-top">
-      <h2 class="rv">Three disciplines.<br><em style="font-family:var(--serif);font-style:italic">One practice.</em></h2>
-      <p class="rv d1">Architecture does not end at the drawing board. We follow every project through to its physical conclusion &mdash; by design and by choice.</p>
+      <h2 class="rv"><span id="svc-headline1">Three disciplines.</span><br><em style="font-family:var(--serif);font-style:italic" id="svc-headline2">One practice.</em></h2>
+      <p class="rv d1" id="svc-subtext">Architecture does not end at the drawing board. We follow every project through to its physical conclusion &mdash; by design and by choice.</p>
     </div>
     <div class="svc-grid rv d1">
       <article class="svc-card">
         <span class="svc-n">01.</span>
-        <h3>Architecture + Landscape</h3>
-        <p>Considered, context-aware design across every typology — residential, commercial, hospitality, and landscape. We treat each site as a unique proposition, shaping built form and outdoor environments in concert. Never a formula, always a place.</p>
+        <h3 id="svc-1-title">Architecture + Landscape</h3>
+        <p id="svc-1-text">Considered, context-aware design across every typology — residential, commercial, hospitality, and landscape. We treat each site as a unique proposition, shaping built form and outdoor environments in concert. Never a formula, always a place.</p>
       </article>
       <article class="svc-card">
         <span class="svc-n">02.</span>
-        <h3>Interior</h3>
-        <p>Interior design conceived as an extension of the architecture, not an afterthought. Material, light, proportion, and atmosphere &mdash; resolved from structure to surface.</p>
+        <h3 id="svc-2-title">Interior</h3>
+        <p id="svc-2-text">Interior design conceived as an extension of the architecture, not an afterthought. Material, light, proportion, and atmosphere &mdash; resolved from structure to surface.</p>
       </article>
       <article class="svc-card">
         <span class="svc-n">03.</span>
-        <h3>Turnkey Execution</h3>
-        <p>Full construction and fit-out management, delivered by the same team that drew the plans. Complete continuity of intent from concept to handover.</p>
+        <h3 id="svc-3-title">Turnkey Execution</h3>
+        <p id="svc-3-text">Full construction and fit-out management, delivered by the same team that drew the plans. Complete continuity of intent from concept to handover.</p>
       </article>
     </div>
   </div>
@@ -617,12 +617,12 @@ nav#mainnav.nav-scrolled .nav-links a{color:var(--ink)}
   <div class="wrap">
     <div class="phil-grid">
       <div>
-        <p class="phil-lbl rv">The Studio</p>
-        <blockquote class="phil-quote rv d1">&ldquo;A building is a gift to the world. It must be worthy of the ground it occupies, the people who use it, and the time that will outlast it.&rdquo;</blockquote>
+        <p class="phil-lbl rv" id="studio-label">The Studio</p>
+        <blockquote class="phil-quote rv d1" id="studio-quote">&ldquo;A building is a gift to the world. It must be worthy of the ground it occupies, the people who use it, and the time that will outlast it.&rdquo;</blockquote>
         <div class="phil-attrs rv d2">
-          <div class="phil-attr"><span class="phil-num">I.</span><div><p class="phil-title">The Architect Stays</p><p class="phil-text">The principal who designs is the same person accountable for delivery. No handoffs, no dilution of intent.</p></div></div>
-          <div class="phil-attr"><span class="phil-num">II.</span><div><p class="phil-title">Selective by Principle</p><p class="phil-text">A limited number of commissions each year. Each project receives our undivided attention &mdash; from brief to the day we hand you the key.</p></div></div>
-          <div class="phil-attr"><span class="phil-num">III.</span><div><p class="phil-title">One Roof, Full Journey</p><p class="phil-text">Architecture, interior, turnkey execution, and furniture. Every dimension of your space, designed and delivered in concert.</p></div></div>
+          <div class="phil-attr"><span class="phil-num">I.</span><div><p class="phil-title" id="phil-1-title">The Architect Stays</p><p class="phil-text" id="phil-1-text">The principal who designs is the same person accountable for delivery. No handoffs, no dilution of intent.</p></div></div>
+          <div class="phil-attr"><span class="phil-num">II.</span><div><p class="phil-title" id="phil-2-title">Selective by Principle</p><p class="phil-text" id="phil-2-text">A limited number of commissions each year. Each project receives our undivided attention &mdash; from brief to the day we hand you the key.</p></div></div>
+          <div class="phil-attr"><span class="phil-num">III.</span><div><p class="phil-title" id="phil-3-title">One Roof, Full Journey</p><p class="phil-text" id="phil-3-text">Architecture, interior, turnkey execution, and furniture. Every dimension of your space, designed and delivered in concert.</p></div></div>
         </div>
         <div class="palm-card rv d3" style="display:none">
           <div class="palm-card-inner">
@@ -638,9 +638,9 @@ nav#mainnav.nav-scrolled .nav-links a{color:var(--ink)}
       <div class="phil-img-side rv d2">
         <img class="phil-img" id="phil-img" src="/images/uploads/shades-of-white-open-plan-living-room-blue-door-architects.webp" alt="Blue Door Architects — Shades of White interior project, Gandhinagar" loading="lazy" width="800" height="1067"/>
         <div class="phil-img-cap">
-          <div class="phil-img-cap-n">120+</div>
-          <div class="phil-img-cap-l">Projects delivered</div>
-          <div class="phil-img-cap-sub">Residential, commercial &amp; hospitality</div>
+          <div class="phil-img-cap-n" id="studio-img-number">120+</div>
+          <div class="phil-img-cap-l" id="studio-img-label">Projects delivered</div>
+          <div class="phil-img-cap-sub" id="studio-img-sub">Residential, commercial &amp; hospitality</div>
         </div>
       </div>
     </div>
@@ -859,6 +859,28 @@ loadJSON('https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_d
   setText('ct-location', d.location);
   setText('palm-desc', d.palm_group_desc);
   if (d.palm_group_url) { setHref('ft-palm-link', d.palm_group_url); setHref('ft-palm-link2', d.palm_group_url); }
+  // Studio section
+  if (d.studio_label)    setText('studio-label',    d.studio_label);
+  if (d.studio_quote)    { var q = document.getElementById('studio-quote'); if(q) q.innerHTML = '\u201c' + d.studio_quote + '\u201d'; }
+  if (d.phil_1_title)    setText('phil-1-title',    d.phil_1_title);
+  if (d.phil_1_text)     setText('phil-1-text',     d.phil_1_text);
+  if (d.phil_2_title)    setText('phil-2-title',    d.phil_2_title);
+  if (d.phil_2_text)     setText('phil-2-text',     d.phil_2_text);
+  if (d.phil_3_title)    setText('phil-3-title',    d.phil_3_title);
+  if (d.phil_3_text)     setText('phil-3-text',     d.phil_3_text);
+  if (d.studio_img_number) setText('studio-img-number', d.studio_img_number);
+  if (d.studio_img_label)  setText('studio-img-label',  d.studio_img_label);
+  if (d.studio_img_sub)    setText('studio-img-sub',    d.studio_img_sub);
+  // Services section
+  if (d.svc_headline1)   setText('svc-headline1',   d.svc_headline1);
+  if (d.svc_headline2)   setText('svc-headline2',   d.svc_headline2);
+  if (d.svc_subtext)     setText('svc-subtext',     d.svc_subtext);
+  if (d.svc_1_title)     setText('svc-1-title',     d.svc_1_title);
+  if (d.svc_1_text)      setText('svc-1-text',      d.svc_1_text);
+  if (d.svc_2_title)     setText('svc-2-title',     d.svc_2_title);
+  if (d.svc_2_text)      setText('svc-2-text',      d.svc_2_text);
+  if (d.svc_3_title)     setText('svc-3-title',     d.svc_3_title);
+  if (d.svc_3_text)      setText('svc-3-text',      d.svc_3_text);
 });
 
 // Load Unikraft
