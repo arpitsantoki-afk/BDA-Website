@@ -203,9 +203,7 @@ collections:
           - { label: "Philosophy Point 3 — Title", name: "phil_3_title", widget: "string" }
           - { label: "Philosophy Point 3 — Text", name: "phil_3_text", widget: "text" }
           - { label: "Studio Image", name: "studio_image", widget: "image", hint: "Portrait image shown alongside the philosophy points" }
-          - { label: "Image Caption — Number", name: "studio_img_number", widget: "string", hint: "e.g. 120+" }
-          - { label: "Image Caption — Label", name: "studio_img_label", widget: "string", hint: "e.g. Projects delivered" }
-          - { label: "Image Caption — Sub Label", name: "studio_img_sub", widget: "string", hint: "e.g. Residential, commercial & hospitality" }
+
 
   # ── SERVICES ───────────────────────────────────────────────
   - name: "services"
