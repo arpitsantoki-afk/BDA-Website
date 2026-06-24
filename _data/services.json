@@ -1,11 +1,11 @@
 {
-  "svc_headline1": "Three disciplines.",
-  "svc_headline2": "One practice.",
-  "svc_subtext": "Architecture does not end at the drawing board. We follow every project through to its physical conclusion \u2014 by design and by choice.",
   "svc_1_title": "Architecture + Landscape",
-  "svc_1_text": "Considered, context-aware design across every typology \u2014 residential, commercial, hospitality, and landscape. We treat each site as a unique proposition, shaping built form and outdoor environments in concert. Never a formula, always a place.",
-  "svc_2_title": "Interior",
-  "svc_2_text": "Interior design conceived as an extension of the architecture, not an afterthought. Material, light, proportion, and atmosphere \u2014 resolved from structure to surface.",
+  "svc_2_title": "Interior Design & Decoration",
   "svc_3_title": "Turnkey Execution",
-  "svc_3_text": "Full construction and fit-out management, delivered by the same team that drew the plans. Complete continuity of intent from concept to handover."
+  "svc_subtext": "Architecture does not end at the drawing board. We follow every project through to its physical conclusion — by design and by choice.",
+  "svc_3_text": "Full construction and fit-out management, delivered by the same team that drew the plans. Complete continuity of intent from concept to handover.",
+  "svc_2_text": "Interior design conceived as an extension of the architecture, not an afterthought. Material, light, proportion, and atmosphere — resolved from structure to surface.",
+  "svc_1_text": "Considered, context-aware design across every typology — residential, commercial, hospitality, and landscape. We treat each site as a unique proposition, shaping built form and outdoor environments in concert. Never a formula, always a place.",
+  "svc_headline1": "Three disciplines.",
+  "svc_headline2": "One practice."
 }
