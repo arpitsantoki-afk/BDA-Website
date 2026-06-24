@@ -1,0 +1,31 @@
+name: Process new images to mobile WebP
+
+on:
+  push:
+    paths:
+      - 'images/uploads/**'
+
+jobs:
+  process:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 2
+
+      - name: Install Pillow
+        run: pip install Pillow --break-system-packages
+
+      - name: Process new images
+        run: python3 scripts/process_images.py
+
+      - name: Commit mobile images
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add images/uploads/*-mobile.webp
+          git diff --staged --quiet || git commit -m "Perf: auto-generate mobile WebP versions"
+          git push
