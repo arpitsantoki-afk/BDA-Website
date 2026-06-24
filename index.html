@@ -905,123 +905,108 @@ loadJSON('https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_d
   setText('hero-count-years', d.count_years);
 });
 
-// Defer non-critical CMS loads until after paint
-(function() {
-  function deferredLoad() {
-  
-  
-  // Load Settings
-  loadJSON('https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/settings.json', function(d) {
-    var email = d.email || 'info@bluedoorarchitects.com';
-    var phone = d.phone || '+91 74340 06001';
-    var ig    = d.instagram || 'https://www.instagram.com/bluedoor_architects/';
-    setHref('ct-email',  'mailto:' + email, email);
-    setHref('footer-email', 'mailto:' + email);
-    setHref('ct-phone',  'tel:' + phone.replace(/\s/g,''), phone);
-    setHref('ct-instagram', ig);
-    if(document.getElementById('nav-instagram')) document.getElementById('nav-instagram').href = ig;
-    if(document.getElementById('nav-instagram-mobile')) document.getElementById('nav-instagram-mobile').href = ig;
-    setText('ct-location', d.location);
-    setText('palm-desc', d.palm_group_desc);
-    if (d.palm_group_url) { setHref('ft-palm-link', d.palm_group_url); setHref('ft-palm-link2', d.palm_group_url); }
-  
-  });
-  
-  // Load Unikraft
-  loadJSON('https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/unikraft.json', function(d) {
-    setImg('uk-img', d.image);
-    setText('uk-headline', d.headline);
-    setText('uk-body1', d.body1);
-    setText('uk-body2', d.body2);
-    if (d.collection) setText('uk-collection', d.collection + ' Collection');
-  });
-  
-  // Load Production
-  loadJSON('https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/production.json', function(d) {
-    setImg('prod-img', d.image);
-    setText('prod-size', d.size);
-    setText('prod-body1', d.body1);
-    setText('prod-body2', d.body2);
-  });
-  
-  // Load Testimonials — show first active one
-  // Load testimonials dynamically via GitHub API
-  // Hardcoded fallback stays visible if API fails
-  fetch('https://api.github.com/repos/arpitsantoki-afk/BDA-Website/contents/_data/testimonials', {
-    headers: { 'Accept': 'application/vnd.github.v3+json' }
-  })
-    .then(function(r) { return r.ok ? r.json() : []; })
-    .then(function(files) {
-      var jsonFiles = Array.isArray(files)
-        ? files.filter(function(f) { return f.name.endsWith('.json'); })
-        : [];
-      if (jsonFiles.length === 0) return; // keep fallback
-      var loaded = 0;
-      var found = false;
-      jsonFiles.forEach(function(file) {
-        fetch('/_data/testimonials/' + file.name + '?v=' + Date.now())
-          .then(function(r) { return r.ok ? r.json() : null; })
-          .then(function(d) {
-            loaded++;
-            if (!d) return;
-            // Support both field name conventions
-            var active = d.active !== false;
-            var quote  = d.quote || d.testimonial || '';
-            var name   = d.client_name || d.name || '';
-            var role   = d.client_role || d.role || '';
-            if (active && quote && !found) {
-              found = true;
-              var q = document.getElementById('tst-quote');
-              if (q) q.innerHTML = '\u201c' + quote + '\u201d';
-              setText('tst-name', name);
-              setText('tst-role', role);
-            }
-          })
-          .catch(function() { loaded++; });
-      });
-    })
-    .catch(function() {}); // silently keep fallback
-  
-  // Load Studio section from _data/studio.json
-  loadJSON('https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/studio.json', function(d) {
-    if (!d) return;
-    if (d.studio_label)      setText('studio-label',     d.studio_label);
-    if (d.studio_quote)      { var q = document.getElementById('studio-quote'); if(q) q.innerHTML = '\u201c' + d.studio_quote + '\u201d'; }
-    if (d.phil_1_title)      setText('phil-1-title',     d.phil_1_title);
-    if (d.phil_1_text)       setText('phil-1-text',      d.phil_1_text);
-    if (d.phil_2_title)      setText('phil-2-title',     d.phil_2_title);
-    if (d.phil_2_text)       setText('phil-2-text',      d.phil_2_text);
-    if (d.phil_3_title)      setText('phil-3-title',     d.phil_3_title);
-    if (d.phil_3_text)       setText('phil-3-text',      d.phil_3_text);
-    if (d.studio_image)      setImg('studio-img',        d.studio_image);
-    if (d.studio_img_number) setText('studio-img-number',d.studio_img_number);
-    if (d.studio_img_label)  setText('studio-img-label', d.studio_img_label);
-    if (d.studio_img_sub)    setText('studio-img-sub',   d.studio_img_sub);
-  });
-  
-  // Load Services section from _data/services.json
-  loadJSON('https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/services.json', function(d) {
-    if (!d) return;
-    if (d.svc_headline1) setText('svc-headline1', d.svc_headline1);
-    if (d.svc_headline2) setText('svc-headline2', d.svc_headline2);
-    if (d.svc_subtext)   setText('svc-subtext',   d.svc_subtext);
-    if (d.svc_1_title)   setText('svc-1-title',   d.svc_1_title);
-    if (d.svc_1_text)    setText('svc-1-text',    d.svc_1_text);
-    if (d.svc_2_title)   setText('svc-2-title',   d.svc_2_title);
-    if (d.svc_2_text)    setText('svc-2-text',    d.svc_2_text);
-    if (d.svc_3_title)   setText('svc-3-title',   d.svc_3_title);
-    if (d.svc_3_text)    setText('svc-3-text',    d.svc_3_text);
-  });
-  }
-  if (typeof requestIdleCallback === "function") {
-    requestIdleCallback(deferredLoad, { timeout: 2000 });
-  } else {
-    setTimeout(deferredLoad, 200);
-  }
-})();
+// Load Settings
+loadJSON('https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/settings.json', function(d) {
+  var email = d.email || 'info@bluedoorarchitects.com';
+  var phone = d.phone || '+91 74340 06001';
+  var ig    = d.instagram || 'https://www.instagram.com/bluedoor_architects/';
+  setHref('ct-email',  'mailto:' + email, email);
+  setHref('footer-email', 'mailto:' + email);
+  setHref('ct-phone',  'tel:' + phone.replace(/\s/g,''), phone);
+  setHref('ct-instagram', ig);
+  if(document.getElementById('nav-instagram')) document.getElementById('nav-instagram').href = ig;
+  if(document.getElementById('nav-instagram-mobile')) document.getElementById('nav-instagram-mobile').href = ig;
+  setText('ct-location', d.location);
+  setText('palm-desc', d.palm_group_desc);
+  if (d.palm_group_url) { setHref('ft-palm-link', d.palm_group_url); setHref('ft-palm-link2', d.palm_group_url); }
 
-// Load Projects immediately after paint (visible content)
-setTimeout(function() {
+});
+
+// Load Unikraft
+loadJSON('https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/unikraft.json', function(d) {
+  setImg('uk-img', d.image);
+  setText('uk-headline', d.headline);
+  setText('uk-body1', d.body1);
+  setText('uk-body2', d.body2);
+  if (d.collection) setText('uk-collection', d.collection + ' Collection');
+});
+
+// Load Production
+loadJSON('https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/production.json', function(d) {
+  setImg('prod-img', d.image);
+  setText('prod-size', d.size);
+  setText('prod-body1', d.body1);
+  setText('prod-body2', d.body2);
+});
+
+// Load Testimonials — show first active one
+// Load testimonials dynamically via GitHub API
+// Hardcoded fallback stays visible if API fails
+fetch('https://api.github.com/repos/arpitsantoki-afk/BDA-Website/contents/_data/testimonials', {
+  headers: { 'Accept': 'application/vnd.github.v3+json' }
+})
+  .then(function(r) { return r.ok ? r.json() : []; })
+  .then(function(files) {
+    var jsonFiles = Array.isArray(files)
+      ? files.filter(function(f) { return f.name.endsWith('.json'); })
+      : [];
+    if (jsonFiles.length === 0) return; // keep fallback
+    var loaded = 0;
+    var found = false;
+    jsonFiles.forEach(function(file) {
+      fetch('/_data/testimonials/' + file.name + '?v=' + Date.now())
+        .then(function(r) { return r.ok ? r.json() : null; })
+        .then(function(d) {
+          loaded++;
+          if (!d) return;
+          // Support both field name conventions
+          var active = d.active !== false;
+          var quote  = d.quote || d.testimonial || '';
+          var name   = d.client_name || d.name || '';
+          var role   = d.client_role || d.role || '';
+          if (active && quote && !found) {
+            found = true;
+            var q = document.getElementById('tst-quote');
+            if (q) q.innerHTML = '\u201c' + quote + '\u201d';
+            setText('tst-name', name);
+            setText('tst-role', role);
+          }
+        })
+        .catch(function() { loaded++; });
+    });
+  })
+  .catch(function() {}); // silently keep fallback
+
+// Load Studio section from _data/studio.json
+loadJSON('https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/studio.json', function(d) {
+  if (!d) return;
+  if (d.studio_label)      setText('studio-label',     d.studio_label);
+  if (d.studio_quote)      { var q = document.getElementById('studio-quote'); if(q) q.innerHTML = '\u201c' + d.studio_quote + '\u201d'; }
+  if (d.phil_1_title)      setText('phil-1-title',     d.phil_1_title);
+  if (d.phil_1_text)       setText('phil-1-text',      d.phil_1_text);
+  if (d.phil_2_title)      setText('phil-2-title',     d.phil_2_title);
+  if (d.phil_2_text)       setText('phil-2-text',      d.phil_2_text);
+  if (d.phil_3_title)      setText('phil-3-title',     d.phil_3_title);
+  if (d.phil_3_text)       setText('phil-3-text',      d.phil_3_text);
+  if (d.studio_image)      setImg('studio-img',        d.studio_image);
+  if (d.studio_img_number) setText('studio-img-number',d.studio_img_number);
+  if (d.studio_img_label)  setText('studio-img-label', d.studio_img_label);
+  if (d.studio_img_sub)    setText('studio-img-sub',   d.studio_img_sub);
+});
+
+// Load Services section from _data/services.json
+loadJSON('https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/services.json', function(d) {
+  if (!d) return;
+  if (d.svc_headline1) setText('svc-headline1', d.svc_headline1);
+  if (d.svc_headline2) setText('svc-headline2', d.svc_headline2);
+  if (d.svc_subtext)   setText('svc-subtext',   d.svc_subtext);
+  if (d.svc_1_title)   setText('svc-1-title',   d.svc_1_title);
+  if (d.svc_1_text)    setText('svc-1-text',    d.svc_1_text);
+  if (d.svc_2_title)   setText('svc-2-title',   d.svc_2_title);
+  if (d.svc_2_text)    setText('svc-2-text',    d.svc_2_text);
+  if (d.svc_3_title)   setText('svc-3-title',   d.svc_3_title);
+  if (d.svc_3_text)    setText('svc-3-text',    d.svc_3_text);
+});
 
 // Load Projects — fetch all known project files
 // When you add a new project via CMS, add its filename to this array
@@ -1306,8 +1291,6 @@ function closeProjModal() {
   if (modal) modal.classList.remove('open');
   document.body.style.overflow = '';
 }
-
-}}, 0);
 
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeProjModal();
