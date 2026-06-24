@@ -905,392 +905,405 @@ loadJSON('https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_d
   setText('hero-count-years', d.count_years);
 });
 
-// Load Settings
-loadJSON('https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/settings.json', function(d) {
-  var email = d.email || 'info@bluedoorarchitects.com';
-  var phone = d.phone || '+91 74340 06001';
-  var ig    = d.instagram || 'https://www.instagram.com/bluedoor_architects/';
-  setHref('ct-email',  'mailto:' + email, email);
-  setHref('footer-email', 'mailto:' + email);
-  setHref('ct-phone',  'tel:' + phone.replace(/\s/g,''), phone);
-  setHref('ct-instagram', ig);
-  if(document.getElementById('nav-instagram')) document.getElementById('nav-instagram').href = ig;
-  if(document.getElementById('nav-instagram-mobile')) document.getElementById('nav-instagram-mobile').href = ig;
-  setText('ct-location', d.location);
-  setText('palm-desc', d.palm_group_desc);
-  if (d.palm_group_url) { setHref('ft-palm-link', d.palm_group_url); setHref('ft-palm-link2', d.palm_group_url); }
-
-});
-
-// Load Unikraft
-loadJSON('https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/unikraft.json', function(d) {
-  setImg('uk-img', d.image);
-  setText('uk-headline', d.headline);
-  setText('uk-body1', d.body1);
-  setText('uk-body2', d.body2);
-  if (d.collection) setText('uk-collection', d.collection + ' Collection');
-});
-
-// Load Production
-loadJSON('https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/production.json', function(d) {
-  setImg('prod-img', d.image);
-  setText('prod-size', d.size);
-  setText('prod-body1', d.body1);
-  setText('prod-body2', d.body2);
-});
-
-// Load Testimonials — show first active one
-// Load testimonials dynamically via GitHub API
-// Hardcoded fallback stays visible if API fails
-fetch('https://api.github.com/repos/arpitsantoki-afk/BDA-Website/contents/_data/testimonials', {
-  headers: { 'Accept': 'application/vnd.github.v3+json' }
-})
-  .then(function(r) { return r.ok ? r.json() : []; })
-  .then(function(files) {
-    var jsonFiles = Array.isArray(files)
-      ? files.filter(function(f) { return f.name.endsWith('.json'); })
-      : [];
-    if (jsonFiles.length === 0) return; // keep fallback
-    var loaded = 0;
-    var found = false;
-    jsonFiles.forEach(function(file) {
-      fetch('/_data/testimonials/' + file.name + '?v=' + Date.now())
-        .then(function(r) { return r.ok ? r.json() : null; })
-        .then(function(d) {
-          loaded++;
-          if (!d) return;
-          // Support both field name conventions
-          var active = d.active !== false;
-          var quote  = d.quote || d.testimonial || '';
-          var name   = d.client_name || d.name || '';
-          var role   = d.client_role || d.role || '';
-          if (active && quote && !found) {
-            found = true;
-            var q = document.getElementById('tst-quote');
-            if (q) q.innerHTML = '\u201c' + quote + '\u201d';
-            setText('tst-name', name);
-            setText('tst-role', role);
+// Defer non-critical CMS loads until after paint
+(function() {
+  function deferredLoad() {
+  
+  
+  // Load Settings
+  loadJSON('https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/settings.json', function(d) {
+    var email = d.email || 'info@bluedoorarchitects.com';
+    var phone = d.phone || '+91 74340 06001';
+    var ig    = d.instagram || 'https://www.instagram.com/bluedoor_architects/';
+    setHref('ct-email',  'mailto:' + email, email);
+    setHref('footer-email', 'mailto:' + email);
+    setHref('ct-phone',  'tel:' + phone.replace(/\s/g,''), phone);
+    setHref('ct-instagram', ig);
+    if(document.getElementById('nav-instagram')) document.getElementById('nav-instagram').href = ig;
+    if(document.getElementById('nav-instagram-mobile')) document.getElementById('nav-instagram-mobile').href = ig;
+    setText('ct-location', d.location);
+    setText('palm-desc', d.palm_group_desc);
+    if (d.palm_group_url) { setHref('ft-palm-link', d.palm_group_url); setHref('ft-palm-link2', d.palm_group_url); }
+  
+  });
+  
+  // Load Unikraft
+  loadJSON('https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/unikraft.json', function(d) {
+    setImg('uk-img', d.image);
+    setText('uk-headline', d.headline);
+    setText('uk-body1', d.body1);
+    setText('uk-body2', d.body2);
+    if (d.collection) setText('uk-collection', d.collection + ' Collection');
+  });
+  
+  // Load Production
+  loadJSON('https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/production.json', function(d) {
+    setImg('prod-img', d.image);
+    setText('prod-size', d.size);
+    setText('prod-body1', d.body1);
+    setText('prod-body2', d.body2);
+  });
+  
+  // Load Testimonials — show first active one
+  // Load testimonials dynamically via GitHub API
+  // Hardcoded fallback stays visible if API fails
+  fetch('https://api.github.com/repos/arpitsantoki-afk/BDA-Website/contents/_data/testimonials', {
+    headers: { 'Accept': 'application/vnd.github.v3+json' }
+  })
+    .then(function(r) { return r.ok ? r.json() : []; })
+    .then(function(files) {
+      var jsonFiles = Array.isArray(files)
+        ? files.filter(function(f) { return f.name.endsWith('.json'); })
+        : [];
+      if (jsonFiles.length === 0) return; // keep fallback
+      var loaded = 0;
+      var found = false;
+      jsonFiles.forEach(function(file) {
+        fetch('/_data/testimonials/' + file.name + '?v=' + Date.now())
+          .then(function(r) { return r.ok ? r.json() : null; })
+          .then(function(d) {
+            loaded++;
+            if (!d) return;
+            // Support both field name conventions
+            var active = d.active !== false;
+            var quote  = d.quote || d.testimonial || '';
+            var name   = d.client_name || d.name || '';
+            var role   = d.client_role || d.role || '';
+            if (active && quote && !found) {
+              found = true;
+              var q = document.getElementById('tst-quote');
+              if (q) q.innerHTML = '\u201c' + quote + '\u201d';
+              setText('tst-name', name);
+              setText('tst-role', role);
+            }
+          })
+          .catch(function() { loaded++; });
+      });
+    })
+    .catch(function() {}); // silently keep fallback
+  
+  // Load Studio section from _data/studio.json
+  loadJSON('https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/studio.json', function(d) {
+    if (!d) return;
+    if (d.studio_label)      setText('studio-label',     d.studio_label);
+    if (d.studio_quote)      { var q = document.getElementById('studio-quote'); if(q) q.innerHTML = '\u201c' + d.studio_quote + '\u201d'; }
+    if (d.phil_1_title)      setText('phil-1-title',     d.phil_1_title);
+    if (d.phil_1_text)       setText('phil-1-text',      d.phil_1_text);
+    if (d.phil_2_title)      setText('phil-2-title',     d.phil_2_title);
+    if (d.phil_2_text)       setText('phil-2-text',      d.phil_2_text);
+    if (d.phil_3_title)      setText('phil-3-title',     d.phil_3_title);
+    if (d.phil_3_text)       setText('phil-3-text',      d.phil_3_text);
+    if (d.studio_image)      setImg('studio-img',        d.studio_image);
+    if (d.studio_img_number) setText('studio-img-number',d.studio_img_number);
+    if (d.studio_img_label)  setText('studio-img-label', d.studio_img_label);
+    if (d.studio_img_sub)    setText('studio-img-sub',   d.studio_img_sub);
+  });
+  
+  // Load Services section from _data/services.json
+  loadJSON('https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/services.json', function(d) {
+    if (!d) return;
+    if (d.svc_headline1) setText('svc-headline1', d.svc_headline1);
+    if (d.svc_headline2) setText('svc-headline2', d.svc_headline2);
+    if (d.svc_subtext)   setText('svc-subtext',   d.svc_subtext);
+    if (d.svc_1_title)   setText('svc-1-title',   d.svc_1_title);
+    if (d.svc_1_text)    setText('svc-1-text',    d.svc_1_text);
+    if (d.svc_2_title)   setText('svc-2-title',   d.svc_2_title);
+    if (d.svc_2_text)    setText('svc-2-text',    d.svc_2_text);
+    if (d.svc_3_title)   setText('svc-3-title',   d.svc_3_title);
+    if (d.svc_3_text)    setText('svc-3-text',    d.svc_3_text);
+  });
+  
+  // Load Projects — fetch all known project files
+  // When you add a new project via CMS, add its filename to this array
+  // ═══════════════════════════════════════════════
+  // PROJECT LOADER — reads manifest then loads each project
+  // To add a new project: add its slug to _data/projects-index.json
+  // The CMS admin panel handles this automatically via config
+  // ═══════════════════════════════════════════════
+  var allProjects = [];
+  
+  function renderProjects() {
+    allProjects.sort(function(a,b){ return (a._indexOrder !== undefined ? a._indexOrder : 99) - (b._indexOrder !== undefined ? b._indexOrder : 99); });
+    var grid = document.getElementById('projects-grid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    var featured = allProjects.filter(function(p){ return p.featured !== false; }).slice(0, 999);
+  
+    var gradients = [
+      'linear-gradient(155deg,#1C2B3A,#0A1520)',
+      'linear-gradient(155deg,#2A1F14,#3D2B18)',
+      'linear-gradient(155deg,#1A2518,#243320)',
+      'linear-gradient(155deg,#1F1A2A,#2B2438)',
+      'linear-gradient(155deg,#2A1414,#3D1C1C)',
+      'linear-gradient(155deg,#12201F,#1A302E)'
+    ];
+  
+    if (featured.length === 0) {
+      grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--ink-muted);padding:80px 0;font-size:0.85rem;letter-spacing:0.1em;text-transform:uppercase;">Projects coming soon</p>';
+      return;
+    }
+  
+    featured.forEach(function(p, i) {
+      var article = document.createElement('article');
+      article.className = 'pj';
+      article.setAttribute('aria-label', p.name);
+      if (p.cover_image) {
+        var img = document.createElement('img');
+        img.className = 'pj-img';
+        img.src = p.cover_image;
+        img.alt = p.name;
+        img.loading = 'lazy';
+        img.width = 800;
+        img.height = 600;
+        article.appendChild(img);
+      } else {
+        var fb = document.createElement('div');
+        fb.className = 'pj-fallback';
+        fb.style.background = gradients[i] || gradients[0];
+        article.appendChild(fb);
+      }
+      var ov = document.createElement('div'); ov.className = 'pj-ov'; article.appendChild(ov);
+      var always = document.createElement('p'); always.className = 'pj-always'; always.textContent = p.category || ''; article.appendChild(always);
+      var info = document.createElement('div');
+      info.className = 'pj-info';
+      info.innerHTML = '<p class="pj-cat">' + (p.category||'') + ' &middot; ' + (p.location||'') + '</p><h3 class="pj-name">' + p.name + '</h3>';
+      article.appendChild(info);
+      article.dataset.slug     = p._slug         || '';
+      article.dataset.title    = p.name          || '';
+      article.dataset.subtitle = p.subtitle      || '';
+      article.dataset.location = p.location      || '';
+      article.dataset.year     = p.year          || '';
+      article.dataset.type     = p.category      || '';
+      article.dataset.cover    = p.cover_image   || '';
+      article.dataset.desc     = p.description   || '';
+      grid.appendChild(article);
+    });
+    if (window._ro) { grid.querySelectorAll('.pj').forEach(function(el){ window._ro.observe(el); }); }
+  }
+  
+  // Load projects in order defined by Projects Index in CMS
+  fetch('https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/projects-index.json?v=' + Date.now())
+    .then(function(r) { return r.ok ? r.json() : null; })
+    .then(function(index) {
+      var slugs = (index && Array.isArray(index.projects)) ? index.projects : [];
+      if (slugs.length === 0) { renderProjects(); return; }
+      var loaded = 0;
+      slugs.forEach(function(slug) {
+        fetch('https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/projects/' + slug + '.json?v=' + Date.now())
+          .then(function(r) { return r.ok ? r.json() : null; })
+          .then(function(d) {
+            if (d && d.name) { d._slug = slug; d._indexOrder = slugs.indexOf(slug); allProjects.push(d); }
+            loaded++;
+            if (loaded === slugs.length) renderProjects();
+          })
+          .catch(function() {
+            loaded++;
+            if (loaded === slugs.length) renderProjects();
+          });
+      });
+    })
+    .catch(function() { renderProjects(); });
+  
+  // Load publications dynamically via GitHub API
+  fetch('https://api.github.com/repos/arpitsantoki-afk/BDA-Website/contents/_data/publications', {
+    headers: { 'Accept': 'application/vnd.github.v3+json' }
+  })
+    .then(function(r) { return r.ok ? r.json() : []; })
+    .then(function(files) {
+      var jsonFiles = Array.isArray(files)
+        ? files.filter(function(f) { return f.name.endsWith('.json'); })
+        : [];
+      if (jsonFiles.length === 0) return;
+      var pubs = [];
+      var loaded = 0;
+      jsonFiles.forEach(function(file) {
+        fetch('/_data/publications/' + file.name + '?v=' + Date.now())
+          .then(function(r) { return r.ok ? r.json() : null; })
+          .then(function(d) {
+            if (d && d.active !== false) pubs.push(d);
+            loaded++;
+            if (loaded === jsonFiles.length) renderPublications(pubs);
+          })
+          .catch(function() { loaded++; });
+      });
+    })
+    .catch(function() {});
+  
+  function renderPublications(pubs) {
+    var grid = document.getElementById('pub-grid');
+    if (!grid || pubs.length === 0) return;
+    pubs.sort(function(a,b){ return (a.order||99) - (b.order||99); });
+    grid.innerHTML = '';
+    pubs.forEach(function(p) {
+      var card = document.createElement('a');
+      card.className = 'pub-card';
+      card.href = p.url || '#';
+      card.target = '_blank';
+      card.rel = 'noopener noreferrer';
+      card.innerHTML =
+        '<div class="pub-card-top">' +
+          (p.logo ? '<img class="pub-logo" src="' + (p.logo && p.logo.startsWith('/') ? 'https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/' + p.logo.slice(1) : p.logo||''  ) + '" alt="' + (p.outlet||'') + '" loading="lazy">' : '<p class="pub-outlet">' + (p.outlet||'') + '</p>') +
+          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>' +
+        '</div>' +
+        '<h3 class="pub-title">\u201c' + (p.title||'') + '\u201d</h3>' +
+        '<p class="pub-meta">' + (p.date||'') + '</p>';
+      grid.appendChild(card);
+    });
+    if (window._ro) { grid.querySelectorAll('.pub-card').forEach(function(el){ window._ro.observe(el); }); }
+  }
+  // ═══════════════════════════════════════════════
+  var nav = document.getElementById('mainnav');
+  function updateNav(){ nav.classList.toggle('nav-scrolled', window.scrollY > 40); }
+  window.addEventListener('scroll', updateNav, {passive:true});
+  updateNav();
+  
+  // ═══════════════════════════════════════════════
+  // SCROLL REVEAL
+  // ═══════════════════════════════════════════════
+  if ('IntersectionObserver' in window) {
+    window._ro = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); window._ro.unobserve(e.target); }
+      });
+    }, {threshold:0.1, rootMargin:'0px 0px -48px 0px'});
+    document.querySelectorAll('.rv').forEach(function(el){ window._ro.observe(el); });
+  } else {
+    document.querySelectorAll('.rv').forEach(function(el){ el.classList.add('in'); });
+  }
+  
+  // ═══════════════════════════════════════════════
+  // CONTACT FORM
+  // ═══════════════════════════════════════════════
+    // Contact form — Netlify Forms handles delivery to your email automatically
+    var enquiryForm = document.getElementById('enquiry-form');
+    if (enquiryForm) {
+      enquiryForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var btn = enquiryForm.querySelector('button[type="submit"]');
+        if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+        var data = new FormData(enquiryForm);
+        fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: data
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(result) {
+          if (result.success) {
+            document.getElementById('form-inner').style.display = 'none';
+            document.getElementById('fsuccess').style.display = 'block';
+            if(typeof gtag==='function'){gtag('event','conversion',{'send_to':'AW-18244039331/DgrPCP2w_b8cEKPlt_tD','value':0,'currency':'INR'});}
+          } else {
+            if (btn) { btn.disabled = false; btn.innerHTML = 'Send Enquiry <svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h16M11 1l6 5-6 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>'; }
+            alert('Something went wrong. Please email us at info@bluedoorarchitects.com');
           }
         })
-        .catch(function() { loaded++; });
-    });
-  })
-  .catch(function() {}); // silently keep fallback
-
-// Load Studio section from _data/studio.json
-loadJSON('https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/studio.json', function(d) {
-  if (!d) return;
-  if (d.studio_label)      setText('studio-label',     d.studio_label);
-  if (d.studio_quote)      { var q = document.getElementById('studio-quote'); if(q) q.innerHTML = '\u201c' + d.studio_quote + '\u201d'; }
-  if (d.phil_1_title)      setText('phil-1-title',     d.phil_1_title);
-  if (d.phil_1_text)       setText('phil-1-text',      d.phil_1_text);
-  if (d.phil_2_title)      setText('phil-2-title',     d.phil_2_title);
-  if (d.phil_2_text)       setText('phil-2-text',      d.phil_2_text);
-  if (d.phil_3_title)      setText('phil-3-title',     d.phil_3_title);
-  if (d.phil_3_text)       setText('phil-3-text',      d.phil_3_text);
-  if (d.studio_image)      setImg('studio-img',        d.studio_image);
-  if (d.studio_img_number) setText('studio-img-number',d.studio_img_number);
-  if (d.studio_img_label)  setText('studio-img-label', d.studio_img_label);
-  if (d.studio_img_sub)    setText('studio-img-sub',   d.studio_img_sub);
-});
-
-// Load Services section from _data/services.json
-loadJSON('https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/services.json', function(d) {
-  if (!d) return;
-  if (d.svc_headline1) setText('svc-headline1', d.svc_headline1);
-  if (d.svc_headline2) setText('svc-headline2', d.svc_headline2);
-  if (d.svc_subtext)   setText('svc-subtext',   d.svc_subtext);
-  if (d.svc_1_title)   setText('svc-1-title',   d.svc_1_title);
-  if (d.svc_1_text)    setText('svc-1-text',    d.svc_1_text);
-  if (d.svc_2_title)   setText('svc-2-title',   d.svc_2_title);
-  if (d.svc_2_text)    setText('svc-2-text',    d.svc_2_text);
-  if (d.svc_3_title)   setText('svc-3-title',   d.svc_3_title);
-  if (d.svc_3_text)    setText('svc-3-text',    d.svc_3_text);
-});
-
-// Load Projects — fetch all known project files
-// When you add a new project via CMS, add its filename to this array
-// ═══════════════════════════════════════════════
-// PROJECT LOADER — reads manifest then loads each project
-// To add a new project: add its slug to _data/projects-index.json
-// The CMS admin panel handles this automatically via config
-// ═══════════════════════════════════════════════
-var allProjects = [];
-
-function renderProjects() {
-  allProjects.sort(function(a,b){ return (a._indexOrder !== undefined ? a._indexOrder : 99) - (b._indexOrder !== undefined ? b._indexOrder : 99); });
-  var grid = document.getElementById('projects-grid');
-  if (!grid) return;
-  grid.innerHTML = '';
-  var featured = allProjects.filter(function(p){ return p.featured !== false; }).slice(0, 999);
-
-  var gradients = [
-    'linear-gradient(155deg,#1C2B3A,#0A1520)',
-    'linear-gradient(155deg,#2A1F14,#3D2B18)',
-    'linear-gradient(155deg,#1A2518,#243320)',
-    'linear-gradient(155deg,#1F1A2A,#2B2438)',
-    'linear-gradient(155deg,#2A1414,#3D1C1C)',
-    'linear-gradient(155deg,#12201F,#1A302E)'
-  ];
-
-  if (featured.length === 0) {
-    grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--ink-muted);padding:80px 0;font-size:0.85rem;letter-spacing:0.1em;text-transform:uppercase;">Projects coming soon</p>';
-    return;
-  }
-
-  featured.forEach(function(p, i) {
-    var article = document.createElement('article');
-    article.className = 'pj';
-    article.setAttribute('aria-label', p.name);
-    if (p.cover_image) {
-      var img = document.createElement('img');
-      img.className = 'pj-img';
-      img.src = p.cover_image;
-      img.alt = p.name;
-      img.loading = 'lazy';
-      img.width = 800;
-      img.height = 600;
-      article.appendChild(img);
-    } else {
-      var fb = document.createElement('div');
-      fb.className = 'pj-fallback';
-      fb.style.background = gradients[i] || gradients[0];
-      article.appendChild(fb);
-    }
-    var ov = document.createElement('div'); ov.className = 'pj-ov'; article.appendChild(ov);
-    var always = document.createElement('p'); always.className = 'pj-always'; always.textContent = p.category || ''; article.appendChild(always);
-    var info = document.createElement('div');
-    info.className = 'pj-info';
-    info.innerHTML = '<p class="pj-cat">' + (p.category||'') + ' &middot; ' + (p.location||'') + '</p><h3 class="pj-name">' + p.name + '</h3>';
-    article.appendChild(info);
-    article.dataset.slug     = p._slug         || '';
-    article.dataset.title    = p.name          || '';
-    article.dataset.subtitle = p.subtitle      || '';
-    article.dataset.location = p.location      || '';
-    article.dataset.year     = p.year          || '';
-    article.dataset.type     = p.category      || '';
-    article.dataset.cover    = p.cover_image   || '';
-    article.dataset.desc     = p.description   || '';
-    grid.appendChild(article);
-  });
-  if (window._ro) { grid.querySelectorAll('.pj').forEach(function(el){ window._ro.observe(el); }); }
-}
-
-// Load projects in order defined by Projects Index in CMS
-fetch('https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/projects-index.json?v=' + Date.now())
-  .then(function(r) { return r.ok ? r.json() : null; })
-  .then(function(index) {
-    var slugs = (index && Array.isArray(index.projects)) ? index.projects : [];
-    if (slugs.length === 0) { renderProjects(); return; }
-    var loaded = 0;
-    slugs.forEach(function(slug) {
-      fetch('https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/projects/' + slug + '.json?v=' + Date.now())
-        .then(function(r) { return r.ok ? r.json() : null; })
-        .then(function(d) {
-          if (d && d.name) { d._slug = slug; d._indexOrder = slugs.indexOf(slug); allProjects.push(d); }
-          loaded++;
-          if (loaded === slugs.length) renderProjects();
-        })
         .catch(function() {
-          loaded++;
-          if (loaded === slugs.length) renderProjects();
-        });
-    });
-  })
-  .catch(function() { renderProjects(); });
-
-// Load publications dynamically via GitHub API
-fetch('https://api.github.com/repos/arpitsantoki-afk/BDA-Website/contents/_data/publications', {
-  headers: { 'Accept': 'application/vnd.github.v3+json' }
-})
-  .then(function(r) { return r.ok ? r.json() : []; })
-  .then(function(files) {
-    var jsonFiles = Array.isArray(files)
-      ? files.filter(function(f) { return f.name.endsWith('.json'); })
-      : [];
-    if (jsonFiles.length === 0) return;
-    var pubs = [];
-    var loaded = 0;
-    jsonFiles.forEach(function(file) {
-      fetch('/_data/publications/' + file.name + '?v=' + Date.now())
-        .then(function(r) { return r.ok ? r.json() : null; })
-        .then(function(d) {
-          if (d && d.active !== false) pubs.push(d);
-          loaded++;
-          if (loaded === jsonFiles.length) renderPublications(pubs);
-        })
-        .catch(function() { loaded++; });
-    });
-  })
-  .catch(function() {});
-
-function renderPublications(pubs) {
-  var grid = document.getElementById('pub-grid');
-  if (!grid || pubs.length === 0) return;
-  pubs.sort(function(a,b){ return (a.order||99) - (b.order||99); });
-  grid.innerHTML = '';
-  pubs.forEach(function(p) {
-    var card = document.createElement('a');
-    card.className = 'pub-card';
-    card.href = p.url || '#';
-    card.target = '_blank';
-    card.rel = 'noopener noreferrer';
-    card.innerHTML =
-      '<div class="pub-card-top">' +
-        (p.logo ? '<img class="pub-logo" src="' + (p.logo && p.logo.startsWith('/') ? 'https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/' + p.logo.slice(1) : p.logo||''  ) + '" alt="' + (p.outlet||'') + '" loading="lazy">' : '<p class="pub-outlet">' + (p.outlet||'') + '</p>') +
-        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>' +
-      '</div>' +
-      '<h3 class="pub-title">\u201c' + (p.title||'') + '\u201d</h3>' +
-      '<p class="pub-meta">' + (p.date||'') + '</p>';
-    grid.appendChild(card);
-  });
-  if (window._ro) { grid.querySelectorAll('.pub-card').forEach(function(el){ window._ro.observe(el); }); }
-}
-// ═══════════════════════════════════════════════
-var nav = document.getElementById('mainnav');
-function updateNav(){ nav.classList.toggle('nav-scrolled', window.scrollY > 40); }
-window.addEventListener('scroll', updateNav, {passive:true});
-updateNav();
-
-// ═══════════════════════════════════════════════
-// SCROLL REVEAL
-// ═══════════════════════════════════════════════
-if ('IntersectionObserver' in window) {
-  window._ro = new IntersectionObserver(function(entries) {
-    entries.forEach(function(e){
-      if(e.isIntersecting){ e.target.classList.add('in'); window._ro.unobserve(e.target); }
-    });
-  }, {threshold:0.1, rootMargin:'0px 0px -48px 0px'});
-  document.querySelectorAll('.rv').forEach(function(el){ window._ro.observe(el); });
-} else {
-  document.querySelectorAll('.rv').forEach(function(el){ el.classList.add('in'); });
-}
-
-// ═══════════════════════════════════════════════
-// CONTACT FORM
-// ═══════════════════════════════════════════════
-  // Contact form — Netlify Forms handles delivery to your email automatically
-  var enquiryForm = document.getElementById('enquiry-form');
-  if (enquiryForm) {
-    enquiryForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      var btn = enquiryForm.querySelector('button[type="submit"]');
-      if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
-      var data = new FormData(enquiryForm);
-      fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        body: data
-      })
-      .then(function(r) { return r.json(); })
-      .then(function(result) {
-        if (result.success) {
-          document.getElementById('form-inner').style.display = 'none';
-          document.getElementById('fsuccess').style.display = 'block';
-          if(typeof gtag==='function'){gtag('event','conversion',{'send_to':'AW-18244039331/DgrPCP2w_b8cEKPlt_tD','value':0,'currency':'INR'});}
-        } else {
           if (btn) { btn.disabled = false; btn.innerHTML = 'Send Enquiry <svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h16M11 1l6 5-6 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>'; }
           alert('Something went wrong. Please email us at info@bluedoorarchitects.com');
-        }
-      })
-      .catch(function() {
-        if (btn) { btn.disabled = false; btn.innerHTML = 'Send Enquiry <svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h16M11 1l6 5-6 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>'; }
-        alert('Something went wrong. Please email us at info@bluedoorarchitects.com');
-      });
-    });
-  }
-
-
-// ════════════════════════════════════════════════════════════════
-// PROJECT GRID EXPAND / COLLAPSE
-// ════════════════════════════════════════════════════════════════
-function toggleMosaic(btn) {
-  var mosaic = document.querySelector('.mosaic');
-  if (!mosaic) return;
-  var expanded = mosaic.classList.toggle('expanded');
-  btn.querySelector('.btn-label').textContent = expanded ? 'Show Less' : 'View All Projects';
-  btn.classList.toggle('active', expanded);
-  if (!expanded) {
-    var sec = document.getElementById('projects');
-    if (sec) sec.scrollIntoView({behavior:'smooth', block:'start'});
-  }
-}
-
-function maybeShowExpandBtn() {
-  var tiles = document.querySelectorAll('.mosaic .pj');
-  if (tiles.length <= 6) return;
-  var bar = document.querySelector('.proj-cta-bar');
-  if (!bar) return;
-  var btn = document.getElementById('proj-expand-btn');
-  if (!btn) {
-    btn = document.createElement('button');
-    btn.className = 'proj-expand-btn';
-    btn.id = 'proj-expand-btn';
-    btn.setAttribute('onclick','toggleMosaic(this)');
-    btn.innerHTML = '<span class="btn-label">View All Projects</span><span class="btn-arrow" style="margin-left:6px">&#8595;</span>';
-    bar.insertBefore(btn, bar.firstChild);
-  }
-  btn.style.display = 'inline-flex';
-}
-
-// ════════════════════════════════════════════════════════════════
-// PROJECT MODAL
-// ════════════════════════════════════════════════════════════════
-var _RAW = 'https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/images/uploads/';
-var _BASE = 'https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/';
-var _DATA = 'https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/projects/';
-
-function openProjModal(slug, title, subtitle, location, year, type, cover, desc) {
-  var modal = document.getElementById('proj-modal');
-  var content = document.getElementById('pm-content');
-  var head = '';
-  head += '<div class="pm-head">';
-  head += '<div class="pm-eyebrow">' + (type || 'Residential') + '</div>';
-  head += '<h2 class="pm-title">' + (title || '') + '</h2>';
-  if (subtitle) head += '<p class="pm-sub">' + subtitle + '</p>';
-  head += '</div>';
-  head += '<div class="pm-meta">';
-  if (location) head += '<div class="pm-meta-item"><span class="pm-meta-label">Location</span><span class="pm-meta-value">' + location + '</span></div>';
-  if (year) head += '<div class="pm-meta-item"><span class="pm-meta-label">Year</span><span class="pm-meta-value">' + year + '</span></div>';
-  if (type) head += '<div class="pm-meta-item"><span class="pm-meta-label">Type</span><span class="pm-meta-value">' + type + '</span></div>';
-  head += '</div>';
-  if (desc) head += '<div class="pm-desc">' + desc + '</div>';
-  if (cover) head += '<div class="pm-cover"><img src="' + (cover && cover.startsWith('/') ? _BASE + cover.slice(1) : _RAW + cover) + '" alt="' + (title||'') + '" loading="eager"/></div>';
-  head += '<div class="pm-loading" id="pm-gallery-status">Loading gallery…</div>';
-  head += '<div class="pm-gallery" id="pm-gallery"></div>';
-  content.innerHTML = head;
-  modal.classList.add('open');
-  document.body.style.overflow = 'hidden';
-  document.getElementById('pm-panel').scrollTop = 0;
-
-  if (slug) {
-    fetch(_DATA + slug + '.json')
-      .then(function(r){ return r.ok ? r.json() : null; })
-      .then(function(d) {
-        var status = document.getElementById('pm-gallery-status');
-        var gallery = document.getElementById('pm-gallery');
-        if (!d || !d.images || !d.images.length) { if(status) status.remove(); return; }
-        if (status) status.remove();
-        var imgs = '';
-        d.images.forEach(function(img) {
-          imgs += '<img src="' + (img.startsWith('/') ? _BASE + img.slice(1) : _RAW + img) + '" alt="' + (d.name||d.title||title||'') + ' - Blue Door Architects" loading="lazy"/>';
         });
-        if (gallery) gallery.innerHTML = imgs;
-      })
-      .catch(function() {
-        var status = document.getElementById('pm-gallery-status');
-        if (status) status.remove();
       });
-  } else {
-    var status = document.getElementById('pm-gallery-status');
-    if (status) status.remove();
+    }
+  
+  
+  // ════════════════════════════════════════════════════════════════
+  // PROJECT GRID EXPAND / COLLAPSE
+  // ════════════════════════════════════════════════════════════════
+  function toggleMosaic(btn) {
+    var mosaic = document.querySelector('.mosaic');
+    if (!mosaic) return;
+    var expanded = mosaic.classList.toggle('expanded');
+    btn.querySelector('.btn-label').textContent = expanded ? 'Show Less' : 'View All Projects';
+    btn.classList.toggle('active', expanded);
+    if (!expanded) {
+      var sec = document.getElementById('projects');
+      if (sec) sec.scrollIntoView({behavior:'smooth', block:'start'});
+    }
   }
-}
-
-function closeProjModal() {
-  var modal = document.getElementById('proj-modal');
-  if (modal) modal.classList.remove('open');
-  document.body.style.overflow = '';
-}
+  
+  function maybeShowExpandBtn() {
+    var tiles = document.querySelectorAll('.mosaic .pj');
+    if (tiles.length <= 6) return;
+    var bar = document.querySelector('.proj-cta-bar');
+    if (!bar) return;
+    var btn = document.getElementById('proj-expand-btn');
+    if (!btn) {
+      btn = document.createElement('button');
+      btn.className = 'proj-expand-btn';
+      btn.id = 'proj-expand-btn';
+      btn.setAttribute('onclick','toggleMosaic(this)');
+      btn.innerHTML = '<span class="btn-label">View All Projects</span><span class="btn-arrow" style="margin-left:6px">&#8595;</span>';
+      bar.insertBefore(btn, bar.firstChild);
+    }
+    btn.style.display = 'inline-flex';
+  }
+  
+  // ════════════════════════════════════════════════════════════════
+  // PROJECT MODAL
+  // ════════════════════════════════════════════════════════════════
+  var _RAW = 'https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/images/uploads/';
+  var _BASE = 'https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/';
+  var _DATA = 'https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/projects/';
+  
+  function openProjModal(slug, title, subtitle, location, year, type, cover, desc) {
+    var modal = document.getElementById('proj-modal');
+    var content = document.getElementById('pm-content');
+    var head = '';
+    head += '<div class="pm-head">';
+    head += '<div class="pm-eyebrow">' + (type || 'Residential') + '</div>';
+    head += '<h2 class="pm-title">' + (title || '') + '</h2>';
+    if (subtitle) head += '<p class="pm-sub">' + subtitle + '</p>';
+    head += '</div>';
+    head += '<div class="pm-meta">';
+    if (location) head += '<div class="pm-meta-item"><span class="pm-meta-label">Location</span><span class="pm-meta-value">' + location + '</span></div>';
+    if (year) head += '<div class="pm-meta-item"><span class="pm-meta-label">Year</span><span class="pm-meta-value">' + year + '</span></div>';
+    if (type) head += '<div class="pm-meta-item"><span class="pm-meta-label">Type</span><span class="pm-meta-value">' + type + '</span></div>';
+    head += '</div>';
+    if (desc) head += '<div class="pm-desc">' + desc + '</div>';
+    if (cover) head += '<div class="pm-cover"><img src="' + (cover && cover.startsWith('/') ? _BASE + cover.slice(1) : _RAW + cover) + '" alt="' + (title||'') + '" loading="eager"/></div>';
+    head += '<div class="pm-loading" id="pm-gallery-status">Loading gallery…</div>';
+    head += '<div class="pm-gallery" id="pm-gallery"></div>';
+    content.innerHTML = head;
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('pm-panel').scrollTop = 0;
+  
+    if (slug) {
+      fetch(_DATA + slug + '.json')
+        .then(function(r){ return r.ok ? r.json() : null; })
+        .then(function(d) {
+          var status = document.getElementById('pm-gallery-status');
+          var gallery = document.getElementById('pm-gallery');
+          if (!d || !d.images || !d.images.length) { if(status) status.remove(); return; }
+          if (status) status.remove();
+          var imgs = '';
+          d.images.forEach(function(img) {
+            imgs += '<img src="' + (img.startsWith('/') ? _BASE + img.slice(1) : _RAW + img) + '" alt="' + (d.name||d.title||title||'') + ' - Blue Door Architects" loading="lazy"/>';
+          });
+          if (gallery) gallery.innerHTML = imgs;
+        })
+        .catch(function() {
+          var status = document.getElementById('pm-gallery-status');
+          if (status) status.remove();
+        });
+    } else {
+      var status = document.getElementById('pm-gallery-status');
+      if (status) status.remove();
+    }
+  }
+  
+  function closeProjModal() {
+    var modal = document.getElementById('proj-modal');
+    if (modal) modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  
+  }
+  if (typeof requestIdleCallback === "function") {
+    requestIdleCallback(deferredLoad, { timeout: 2000 });
+  } else {
+    setTimeout(deferredLoad, 200);
+  }
+})();
 
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeProjModal();
