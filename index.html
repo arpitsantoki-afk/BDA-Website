@@ -1046,6 +1046,9 @@ function renderProjects() {
       var img = document.createElement('img');
       img.className = 'pj-img';
       img.src = p.cover_image;
+      var mobileSrc = p.cover_image.replace('.webp', '-mobile.webp');
+      img.srcset = mobileSrc + ' 800w, ' + p.cover_image + ' 1600w';
+      img.sizes = '(max-width: 768px) 100vw, 50vw';
       img.alt = p.name;
       img.loading = 'lazy';
       img.width = 800;
