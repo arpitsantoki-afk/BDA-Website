@@ -20,10 +20,17 @@ navWrap.innerHTML = NAV_HTML;
 var navEl = navWrap.firstElementChild;
 document.body.insertBefore(navEl, document.body.firstChild);
 
-// Inject footer at end of body
-var ftWrap = document.createElement('div');
-ftWrap.innerHTML = FOOTER_HTML;
-document.body.appendChild(ftWrap.firstElementChild);
+// Inject footer at end of body — after DOM is ready
+function injectFooter() {
+  var ftWrap = document.createElement('div');
+  ftWrap.innerHTML = FOOTER_HTML;
+  document.body.appendChild(ftWrap.firstElementChild);
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', injectFooter);
+} else {
+  injectFooter();
+}
 
 // Mark active nav link based on current path
 var path = window.location.pathname;
