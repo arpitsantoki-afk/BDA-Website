@@ -11,135 +11,236 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap"/>
-<!-- Google tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-LZEWCJRHDY"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-LZEWCJRHDY');gtag('config','AW-18244039331');</script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{--gold:#c9a96e;--warm:#f5f0e8;--ink:#1a1a16;--mid:#6b6860}
-body{background:var(--warm);color:var(--ink);font-family:'Jost',sans-serif;font-weight:300;min-height:100vh}
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.25rem 2.5rem;background:var(--warm)}
-.nav-logo img{height:28px;width:auto}
-.nav-links{display:flex;gap:2rem;list-style:none}
-.nav-links a{font-family:'Jost',sans-serif;font-weight:300;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;color:var(--ink);opacity:0.7;transition:opacity 0.2s}
-.nav-links a:hover{opacity:1}
-.nav-cta{font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;color:var(--ink);border:0.5px solid rgba(26,26,22,0.4);padding:0.5rem 1.25rem;transition:all 0.2s}
-.nav-cta:hover{background:var(--ink);color:var(--warm)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --ink:#0C0C0A;--ink-soft:#6B6860;--ink-muted:#A8A49E;
+  --gold:#B8965A;--gold-lt:#D4B07A;
+  --cream:#F5F2EC;--warm:#FDFCFA;
+  --border:rgba(0,0,0,0.08);
+  --serif:'Cormorant Garamond',Georgia,'Times New Roman',serif;
+  --sans:'Jost',system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
+  --nav-h:88px;--ease:cubic-bezier(0.4,0,0.2,1);
+}
+body{font-family:var(--sans);color:var(--ink);background:var(--warm);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
 
-/* HEADER */
-.page-header{padding:9rem 2.5rem 3rem;max-width:900px;margin:0 auto}
-.page-header h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.5rem,5vw,4rem);letter-spacing:0.02em;line-height:1.1;margin-bottom:1rem}
-.page-header p{font-size:0.9rem;color:var(--mid);letter-spacing:0.04em;line-height:1.7;max-width:520px}
-.divider{width:40px;height:0.5px;background:var(--gold);margin:1.5rem 0}
+/* ── MOBILE MENU ── */
+#nav-toggle{position:fixed;opacity:0;pointer-events:none;width:0;height:0;}
+.nav-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:#0C0C0A;z-index:8000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:36px;transform:translateX(-100%);transition:transform 0.38s cubic-bezier(0.4,0,0.2,1);}
+#nav-toggle:checked ~ .nav-overlay{transform:translateX(0);}
+.nav-overlay-close{position:absolute;top:24px;right:24px;font-family:var(--sans);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.4);cursor:pointer;padding:12px;background:none;border:none;}
+.nav-overlay-close:hover{color:white}
+.nav-overlay a{font-family:var(--serif);font-size:2.4rem;font-weight:300;color:rgba(255,255,255,0.85);letter-spacing:0.06em;transition:color 0.2s;}
+.nav-overlay a:hover,.nav-overlay a.accent{color:var(--gold)}
+.nav-burger{display:none;flex-direction:column;gap:5px;padding:8px;cursor:pointer;background:none;border:none;user-select:none;}
+.nav-burger span{display:block;height:1px;background:white;transition:background 0.4s}
+.nav-burger span:first-child{width:24px}
+.nav-burger span:last-child{width:14px}
+nav#mainnav.nav-scrolled .nav-burger span{background:var(--ink)}
 
-/* GRID */
-.insights-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:2px;padding:0 2.5rem 6rem;max-width:1400px;margin:0 auto}
+/* ── NAV ── */
+nav#mainnav{position:fixed;top:0;left:0;right:0;z-index:500;height:var(--nav-h);display:flex;align-items:center;transition:background 0.4s,border-color 0.4s;border-bottom:1px solid transparent}
+nav#mainnav.nav-scrolled{background:rgba(253,252,250,0.96);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-color:var(--border)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;width:100%;padding:0 48px}
+.nav-logo{display:flex;align-items:center}
+.logo-white{height:72px;width:auto;object-fit:contain;display:block}
+.logo-black{height:72px;width:auto;object-fit:contain;display:none}
+nav#mainnav.nav-scrolled .logo-white{display:none}
+nav#mainnav.nav-scrolled .logo-black{display:block}
+.nav-links{display:flex;align-items:center;gap:32px}
+.nav-links a{font-size:0.7rem;font-weight:300;letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.8);transition:opacity 0.2s}
+.nav-links a:hover{opacity:0.5}
+nav#mainnav.nav-scrolled .nav-links a{color:var(--ink-soft)}
+.nav-cta{color:var(--gold)!important;border-bottom:1px solid var(--gold);padding-bottom:1px;opacity:1!important}
+
+/* ── FOOTER ── */
+footer{background:#080806;border-top:1px solid rgba(255,255,255,0.05);padding:56px 0 36px}
+.ft-inner{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:52px}
+.ft-brand-name{font-family:var(--serif);font-weight:300;font-size:1.05rem;letter-spacing:0.16em;text-transform:uppercase;color:rgba(245,240,230,0.88)}
+.ft-brand-sub{font-size:0.56rem;letter-spacing:0.26em;text-transform:uppercase;color:rgba(245,240,230,0.50);margin-top:4px}
+.ft-palm{font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(245,240,230,0.38);margin-top:14px}
+.ft-palm a{color:rgba(184,150,90,0.4);transition:color 0.2s}.ft-palm a:hover{color:var(--gold)}
+.ft-nav{display:flex;gap:56px}
+.ft-col h5{font-size:0.54rem;letter-spacing:0.24em;text-transform:uppercase;color:#c9a96e;margin-bottom:14px}
+.ft-col ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.ft-col ul li a{font-size:0.75rem;font-weight:200;color:rgba(245,240,230,0.72);transition:color 0.2s}.ft-col ul li a:hover{color:#c9a96e}
+.ft-bottom{border-top:1px solid rgba(255,255,255,0.05);padding-top:24px;display:flex;justify-content:space-between;align-items:center}
+.ft-copy{font-size:0.65rem;font-weight:200;color:rgba(245,240,230,0.42)}
+.ft-legal{display:flex;gap:20px}
+.ft-legal a{font-size:0.6rem;font-weight:200;color:rgba(245,240,230,0.38);transition:color 0.2s}.ft-legal a:hover{color:#c9a96e}.ft-legal-btn{background:none;border:none;cursor:pointer;font-family:var(--sans);font-size:0.6rem;font-weight:200;color:rgba(245,240,230,0.38);transition:color 0.2s;padding:0}.ft-legal-btn:hover{color:#c9a96e}
+
+/* Skip link for accessibility */
+.skip-link{position:absolute;top:-40px;left:0;background:var(--gold);color:white;padding:8px 16px;font-size:0.8rem;z-index:9999;transition:top 0.2s}
+.skip-link:focus{top:0}
+
+
+/* ── INSIGHTS PAGE ── */
+.ins-page-body{padding-top:80px;min-height:100vh;background:var(--warm)}
+.ins-page-header{padding:4rem 2.5rem 2rem;max-width:1400px;margin:0 auto}
+.ins-page-header h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.5rem,5vw,4rem);letter-spacing:0.02em;line-height:1.1;margin-bottom:0.75rem}
+.ins-page-header p{font-size:0.85rem;color:var(--mid);letter-spacing:0.04em;line-height:1.7;max-width:480px}
+.ins-divider{width:40px;height:0.5px;background:var(--gold);margin:1.25rem 0}
+.ins-grid-page{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:2rem;padding:2rem 2.5rem 6rem;max-width:1400px;margin:0 auto}
 .ins-card{background:var(--warm);text-decoration:none;color:var(--ink);display:block;transition:opacity 0.2s}
-.ins-card:hover{opacity:0.8}
-.ins-cover{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:#e8e3db}
-.ins-body{padding:1.5rem 0.25rem 2rem}
-.ins-meta{font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--mid);margin-bottom:0.75rem}
-.ins-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.4rem;line-height:1.3;margin-bottom:0.75rem}
-.ins-excerpt{font-size:0.82rem;line-height:1.7;color:var(--mid);margin-bottom:1rem}
-.ins-read{font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold)}
-.loading{text-align:center;padding:6rem;font-size:0.85rem;color:var(--mid);letter-spacing:0.08em}
-.empty{text-align:center;padding:6rem 2rem;font-size:0.9rem;color:var(--mid)}
-
-/* FOOTER */
-footer{background:var(--ink);color:rgba(245,240,232,0.5);padding:3rem 2.5rem;font-size:0.75rem;letter-spacing:0.06em;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
-footer a{color:rgba(245,240,232,0.5);text-decoration:none}
-footer a:hover{color:var(--gold)}
-
+.ins-card:hover{opacity:0.75}
+.ins-cover{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#e8e3db}
+.ins-card-body{padding:1.25rem 0 2rem}
+.ins-meta{font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--mid);margin-bottom:0.6rem}
+.ins-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.35rem;line-height:1.3;margin-bottom:0.6rem}
+.ins-excerpt{font-size:0.8rem;line-height:1.75;color:var(--mid);margin-bottom:0.75rem}
+.ins-read{font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold)}
+.ins-loading{text-align:center;padding:6rem;font-size:0.85rem;color:var(--mid);letter-spacing:0.08em;grid-column:1/-1}
 @media(max-width:768px){
-  nav{padding:1rem 1.25rem}
-  .nav-links{display:none}
-  .page-header{padding:7rem 1.25rem 2rem}
-  .insights-grid{grid-template-columns:1fr;padding:0 1.25rem 4rem}
+  .ins-page-header{padding:3rem 1.25rem 1.5rem}
+  .ins-grid-page{grid-template-columns:1fr;padding:1.5rem 1.25rem 4rem}
 }
 </style>
 </head>
 <body>
-
-<nav>
-  <a href="/" class="nav-logo"><img src="/logo-black.png" alt="Blue Door Architects" height="28"/></a>
-  <ul class="nav-links">
-    <li><a href="/#projects">Work</a></li>
-    <li><a href="/#services">Services</a></li>
-    <li><a href="/#studio">Studio</a></li>
-    <li><a href="/insights/">Insights</a></li>
-  </ul>
-  <a href="/#contact" class="nav-cta">Begin a Project</a>
+<nav id="mainnav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo" aria-label="Blue Door Architects — Home">
+      <img src="logo-white.png" alt="Blue Door Architects" class="logo-white" width="300" height="300"/>
+      <img src="logo-black.png" alt="" class="logo-black" aria-hidden="true" width="300" height="300"/>
+    </a>
+    </a>
+    <div class="nav-links">
+      <a href="#projects">Work</a>
+      <a href="#services">Services</a>
+      <a href="#unikraft">Unikraft</a>
+      <a href="#production">Manufacturing</a>
+      <a href="#philosophy">Studio</a>
+      <a href="#publications">Press</a>
+      <a href="/insights/">Insights</a>
+      
+      <a href="https://www.instagram.com/bluedoor_architects/" id="nav-instagram" target="_blank" rel="noopener" aria-label="Instagram" style="display:inline-flex;align-items:center;opacity:0.55;transition:opacity 0.2s;padding:4px 0" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.55"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+      <a href="#contact" class="nav-cta">Begin a Project</a>
+    </div>
+    <label for="nav-toggle" class="nav-burger" aria-label="Open navigation">
+      <span></span><span></span>
+    </label>
+  </div>
 </nav>
-
-<div class="page-header">
-  <p style="font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--mid);margin-bottom:1.5rem">Blue Door Architects</p>
-  <h1>Insights</h1>
-  <div class="divider"></div>
-  <p>Design thinking, project stories and perspectives from our studio in Gandhinagar.</p>
+<div class="ins-page-body">
+  <div class="ins-page-header">
+    <p style="font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--mid);margin-bottom:1.25rem">Blue Door Architects</p>
+    <h1>Insights</h1>
+    <div class="ins-divider"></div>
+    <p>Design thinking, project stories and perspectives from our studio in Gandhinagar.</p>
+  </div>
+  <div class="ins-grid-page" id="insights-grid">
+    <div class="ins-loading">Loading&hellip;</div>
+  </div>
 </div>
-
-<div class="insights-grid" id="insights-grid">
-  <div class="loading">Loading posts&hellip;</div>
-</div>
-
-<footer>
-  <span>&copy; 2026 Blue Door Architects &mdash; A Palm Group Company</span>
-  <a href="/">bluedoorarchitects.com</a>
+<footer role="contentinfo">
+  <div class="wrap">
+    <div class="ft-inner">
+      <div>
+        <p class="ft-brand-name">Blue Door Architects</p>
+        <p class="ft-brand-sub">Architecture &amp; Turnkey Design</p>
+        <p class="ft-palm">A sub-brand of <a id="ft-palm-link" href="https://www.thepalm.in/" target="_blank" rel="noopener">The Palm Group</a></p>
+      </div>
+      <nav class="ft-nav" aria-label="Footer navigation">
+        <div class="ft-col"><h5>Work</h5><ul>
+          <li><a href="#projects">Residential</a></li>
+          <li><a href="#projects">Commercial</a></li>
+          <li><a href="#projects">Hospitality</a></li>
+          <li><a href="#projects">Landscape</a></li>
+          <li><a href="#projects">Mixed-Use</a></li>
+        </ul></div>
+        <div class="ft-col"><h5>Studio</h5><ul>
+          <li><a href="#philosophy">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li></li>
+          <li><a href="#unikraft">Unikraft</a></li>
+          <li><a id="ft-palm-link2" href="https://thepalmgroup.in" target="_blank" rel="noopener">The Palm Group &#8599;</a></li>
+        </ul></div>
+        <div class="ft-col"><h5>Connect</h5><ul>
+          <li><a href="https://www.instagram.com/bluedoor_architects/" target="_blank" rel="noopener">Instagram &#8599;</a></li>
+          <li><a href="https://in.pinterest.com/bluedoorarchitects/" target="_blank" rel="noopener">Pinterest &#8599;</a></li>
+          <li><a id="footer-email" href="mailto:info@bluedoorarchitects.com">Email</a></li>
+          <li><a href="#contact">Begin a Project</a></li>
+        </ul></div>
+      </nav>
+    </div>
+    <div class="ft-bottom">
+      <p class="ft-copy">&copy; 2025 Blue Door Architects. All rights reserved.</p>
+      <div class="ft-legal"><button class="ft-legal-btn" onclick="openLegalModal('privacy')">Privacy Policy</button><button class="ft-legal-btn" onclick="openLegalModal('terms')">Terms</button></div>
+    </div>
+  </div>
 </footer>
 
 <script>
-var _BASE = 'https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/';
-var _DATA_INSIGHTS = 'https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/insights/';
-
-function imgUrl(src) {
-  return src && src.startsWith('/') ? _BASE + src.slice(1) : src;
+// Load settings for nav/footer dynamic content
+(function() {
+  var _B = 'https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/';
+  fetch(_B + '_data/settings.json?t=' + Date.now())
+    .then(function(r){ return r.json(); })
+    .then(function(d) {
+      var ig = document.getElementById('nav-instagram');
+      var igm = document.getElementById('nav-instagram-mobile');
+      if(ig && d.instagram) ig.href = d.instagram;
+      if(igm && d.instagram) igm.href = d.instagram;
+      var palmLinks = ['ft-palm-link','ft-palm-link2'];
+      palmLinks.forEach(function(id){
+        var el = document.getElementById(id);
+        if(el && d.palm_group_url) el.href = d.palm_group_url;
+      });
+      if(d.email) {
+        var ftEmail = document.getElementById('ft-email');
+        if(ftEmail){ ftEmail.href='mailto:'+d.email; ftEmail.textContent=d.email; }
+      }
+      if(d.phone) {
+        var ftPhone = document.getElementById('ft-phone');
+        if(ftPhone){ ftPhone.href='tel:'+d.phone.replace(/\s/g,''); ftPhone.textContent=d.phone; }
+      }
+    });
+})();
+</script>
+<script>
+var _B = 'https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/';
+var _INS = _B + '_data/insights/';
+function imgU(s){ return s && s.startsWith('/') ? _B + s.slice(1) : s; }
+function fmtD(d){
+  if(!d) return '';
+  var m=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var p=d.split('-'); return m[parseInt(p[1],10)-1]+' '+p[0];
 }
-
-function formatDate(d) {
-  if (!d) return '';
-  var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  var parts = d.split('-');
-  return months[parseInt(parts[1],10)-1] + ' ' + parts[0];
-}
-
 function renderCard(post) {
-  var url = '/insights/post.html?slug=' + encodeURIComponent(post.slug || post.title.toLowerCase().replace(/[^a-z0-9]+/g,'-'));
-  return '<a href="' + url + '" class="ins-card">' +
-    '<img class="ins-cover" src="' + imgUrl(post.cover_image) + '" alt="' + post.title + '" loading="lazy"/>' +
-    '<div class="ins-body">' +
-    '<div class="ins-meta">' + (post.category||'') + (post.date ? ' &nbsp;&middot;&nbsp; ' + formatDate(post.date) : '') + '</div>' +
-    '<div class="ins-title">' + post.title + '</div>' +
-    '<div class="ins-excerpt">' + (post.excerpt||'') + '</div>' +
-    '<span class="ins-read">Read more &rarr;</span>' +
+  var url='/insights/post.html?slug='+encodeURIComponent(post.slug);
+  return '<a href="'+url+'" class="ins-card">'+
+    '<img class="ins-cover" src="'+imgU(post.cover_image)+'" alt="'+post.title+'" loading="lazy"/>'+
+    '<div class="ins-card-body">'+
+    '<div class="ins-meta">'+(post.category||'')+(post.date?' &middot; '+fmtD(post.date):'')+' </div>'+
+    '<div class="ins-title">'+post.title+'</div>'+
+    '<div class="ins-excerpt">'+(post.excerpt||'')+'</div>'+
+    '<span class="ins-read">Read more &rarr;</span>'+
     '</div></a>';
 }
-
-// Fetch insights index
-fetch(_BASE + '_data/insights-index.json?t=' + Date.now())
-  .then(function(r){ return r.ok ? r.json() : Promise.reject(); })
-  .then(function(idx) {
-    var slugs = idx.posts || [];
-    if (!slugs.length) { document.getElementById('insights-grid').innerHTML = '<div class="empty">No posts yet.</div>'; return; }
-    var posts = [];
-    var loaded = 0;
-    slugs.forEach(function(slug, i) {
-      fetch(_DATA_INSIGHTS + slug + '.json?t=' + Date.now())
-        .then(function(r){ return r.json(); })
-        .then(function(post) {
-          post.slug = slug;
-          posts[i] = post;
-          loaded++;
-          if (loaded === slugs.length) {
-            document.getElementById('insights-grid').innerHTML = posts.filter(Boolean).map(renderCard).join('');
-          }
-        });
+fetch(_B+'_data/insights-index.json?t='+Date.now())
+  .then(function(r){ return r.ok?r.json():Promise.reject(); })
+  .then(function(idx){
+    var slugs=idx.posts||[];
+    if(!slugs.length){document.getElementById('insights-grid').innerHTML='<div class="ins-loading">No posts yet.</div>';return;}
+    var posts=[],loaded=0;
+    slugs.forEach(function(slug,i){
+      fetch(_INS+slug+'.json?t='+Date.now())
+        .then(function(r){return r.json();})
+        .then(function(p){p.slug=slug;posts[i]=p;loaded++;if(loaded===slugs.length)document.getElementById('insights-grid').innerHTML=posts.filter(Boolean).map(renderCard).join('');})
+        .catch(function(){loaded++;});
     });
   })
-  .catch(function() {
-    document.getElementById('insights-grid').innerHTML = '<div class="empty">No posts yet.</div>';
-  });
+  .catch(function(){document.getElementById('insights-grid').innerHTML='<div class="ins-loading">No posts yet.</div>';});
+
+// Nav scroll behaviour (same as main site)
+var nav=document.getElementById('mainnav');
+window.addEventListener('scroll',function(){nav.classList.toggle('nav-scrolled',window.scrollY>40);},{ passive:true });
 </script>
 </body>
 </html>
