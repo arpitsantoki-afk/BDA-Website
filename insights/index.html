@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Insights — Blue Door Architects</title>
+<meta name="description" content="Design thinking, project stories and perspectives from Blue Door Architects — luxury architecture and interior design studio, Gandhinagar."/>
+<link rel="canonical" href="https://bluedoorarchitects.com/insights/"/>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+<link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap"/>
+<!-- Google tag -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LZEWCJRHDY"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-LZEWCJRHDY');gtag('config','AW-18244039331');</script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--gold:#c9a96e;--warm:#f5f0e8;--ink:#1a1a16;--mid:#6b6860}
+body{background:var(--warm);color:var(--ink);font-family:'Jost',sans-serif;font-weight:300;min-height:100vh}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.25rem 2.5rem;background:var(--warm)}
+.nav-logo img{height:28px;width:auto}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-family:'Jost',sans-serif;font-weight:300;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;color:var(--ink);opacity:0.7;transition:opacity 0.2s}
+.nav-links a:hover{opacity:1}
+.nav-cta{font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;color:var(--ink);border:0.5px solid rgba(26,26,22,0.4);padding:0.5rem 1.25rem;transition:all 0.2s}
+.nav-cta:hover{background:var(--ink);color:var(--warm)}
+
+/* HEADER */
+.page-header{padding:9rem 2.5rem 3rem;max-width:900px;margin:0 auto}
+.page-header h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.5rem,5vw,4rem);letter-spacing:0.02em;line-height:1.1;margin-bottom:1rem}
+.page-header p{font-size:0.9rem;color:var(--mid);letter-spacing:0.04em;line-height:1.7;max-width:520px}
+.divider{width:40px;height:0.5px;background:var(--gold);margin:1.5rem 0}
+
+/* GRID */
+.insights-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:2px;padding:0 2.5rem 6rem;max-width:1400px;margin:0 auto}
+.ins-card{background:var(--warm);text-decoration:none;color:var(--ink);display:block;transition:opacity 0.2s}
+.ins-card:hover{opacity:0.8}
+.ins-cover{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:#e8e3db}
+.ins-body{padding:1.5rem 0.25rem 2rem}
+.ins-meta{font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--mid);margin-bottom:0.75rem}
+.ins-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.4rem;line-height:1.3;margin-bottom:0.75rem}
+.ins-excerpt{font-size:0.82rem;line-height:1.7;color:var(--mid);margin-bottom:1rem}
+.ins-read{font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold)}
+.loading{text-align:center;padding:6rem;font-size:0.85rem;color:var(--mid);letter-spacing:0.08em}
+.empty{text-align:center;padding:6rem 2rem;font-size:0.9rem;color:var(--mid)}
+
+/* FOOTER */
+footer{background:var(--ink);color:rgba(245,240,232,0.5);padding:3rem 2.5rem;font-size:0.75rem;letter-spacing:0.06em;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+footer a{color:rgba(245,240,232,0.5);text-decoration:none}
+footer a:hover{color:var(--gold)}
+
+@media(max-width:768px){
+  nav{padding:1rem 1.25rem}
+  .nav-links{display:none}
+  .page-header{padding:7rem 1.25rem 2rem}
+  .insights-grid{grid-template-columns:1fr;padding:0 1.25rem 4rem}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo"><img src="/logo-black.png" alt="Blue Door Architects" height="28"/></a>
+  <ul class="nav-links">
+    <li><a href="/#projects">Work</a></li>
+    <li><a href="/#services">Services</a></li>
+    <li><a href="/#studio">Studio</a></li>
+    <li><a href="/insights/">Insights</a></li>
+  </ul>
+  <a href="/#contact" class="nav-cta">Begin a Project</a>
+</nav>
+
+<div class="page-header">
+  <p style="font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--mid);margin-bottom:1.5rem">Blue Door Architects</p>
+  <h1>Insights</h1>
+  <div class="divider"></div>
+  <p>Design thinking, project stories and perspectives from our studio in Gandhinagar.</p>
+</div>
+
+<div class="insights-grid" id="insights-grid">
+  <div class="loading">Loading posts&hellip;</div>
+</div>
+
+<footer>
+  <span>&copy; 2026 Blue Door Architects &mdash; A Palm Group Company</span>
+  <a href="/">bluedoorarchitects.com</a>
+</footer>
+
+<script>
+var _BASE = 'https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/';
+var _DATA_INSIGHTS = 'https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/insights/';
+
+function imgUrl(src) {
+  return src && src.startsWith('/') ? _BASE + src.slice(1) : src;
+}
+
+function formatDate(d) {
+  if (!d) return '';
+  var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var parts = d.split('-');
+  return months[parseInt(parts[1],10)-1] + ' ' + parts[0];
+}
+
+function renderCard(post) {
+  var url = '/insights/post.html?slug=' + encodeURIComponent(post.slug || post.title.toLowerCase().replace(/[^a-z0-9]+/g,'-'));
+  return '<a href="' + url + '" class="ins-card">' +
+    '<img class="ins-cover" src="' + imgUrl(post.cover_image) + '" alt="' + post.title + '" loading="lazy"/>' +
+    '<div class="ins-body">' +
+    '<div class="ins-meta">' + (post.category||'') + (post.date ? ' &nbsp;&middot;&nbsp; ' + formatDate(post.date) : '') + '</div>' +
+    '<div class="ins-title">' + post.title + '</div>' +
+    '<div class="ins-excerpt">' + (post.excerpt||'') + '</div>' +
+    '<span class="ins-read">Read more &rarr;</span>' +
+    '</div></a>';
+}
+
+// Fetch insights index
+fetch(_BASE + '_data/insights-index.json?t=' + Date.now())
+  .then(function(r){ return r.ok ? r.json() : Promise.reject(); })
+  .then(function(idx) {
+    var slugs = idx.posts || [];
+    if (!slugs.length) { document.getElementById('insights-grid').innerHTML = '<div class="empty">No posts yet.</div>'; return; }
+    var posts = [];
+    var loaded = 0;
+    slugs.forEach(function(slug, i) {
+      fetch(_DATA_INSIGHTS + slug + '.json?t=' + Date.now())
+        .then(function(r){ return r.json(); })
+        .then(function(post) {
+          post.slug = slug;
+          posts[i] = post;
+          loaded++;
+          if (loaded === slugs.length) {
+            document.getElementById('insights-grid').innerHTML = posts.filter(Boolean).map(renderCard).join('');
+          }
+        });
+    });
+  })
+  .catch(function() {
+    document.getElementById('insights-grid').innerHTML = '<div class="empty">No posts yet.</div>';
+  });
+</script>
+</body>
+</html>
