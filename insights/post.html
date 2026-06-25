@@ -40,9 +40,6 @@ body{background:var(--warm);color:var(--ink);font-family:'Jost',sans-serif;font-
 </style>
 </head>
 <body>
-<!-- Nav and footer injected by shared component -->
-<script src="/components/nav-footer.js"></script>
-
 <div class="post-page-body">
   <img class="post-hero" id="post-hero" src="" alt=""/>
   <div class="post-wrap">
@@ -102,5 +99,6 @@ if(!slug){
     .catch(function(){ document.getElementById('post-h1').textContent = 'Post not found.'; });
 }
 </script>
+<script src="/components/nav-footer.js"></script>
 </body>
 </html>
