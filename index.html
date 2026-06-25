@@ -1365,7 +1365,7 @@ document.addEventListener('keydown', function(e) {
     }).catch(function(){});
 })();
 
-Wire up click handlers and data attributes on project tiles
+// Wire up click handlers and data attributes on project tiles
 function wirePjClicks() {
   document.querySelectorAll('.mosaic .pj:not([data-wired])').forEach(function(pj) {
     pj.setAttribute('data-wired','1');
