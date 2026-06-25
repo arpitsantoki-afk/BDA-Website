@@ -448,7 +448,7 @@ nav#mainnav.nav-scrolled .nav-links a{color:var(--ink)}
 }
 #legal-modal{position:fixed;inset:0;z-index:9500;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity 0.3s}#legal-modal.open{opacity:1;pointer-events:all}.lm-backdrop{position:absolute;inset:0;background:rgba(8,8,6,0.82);backdrop-filter:blur(6px)}.lm-panel{position:relative;z-index:1;background:var(--warm);width:100%;max-width:680px;max-height:80vh;overflow-y:auto;border-radius:2px;padding:48px 52px;scrollbar-width:thin}.lm-close{position:absolute;top:20px;right:20px;background:none;border:1px solid var(--border);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:1rem;color:var(--ink);transition:all 0.2s;display:flex;align-items:center;justify-content:center}.lm-close:hover{background:var(--ink);color:var(--warm)}.lm-eyebrow{font-size:0.56rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}.lm-title{font-family:var(--serif);font-weight:300;font-size:1.8rem;margin-bottom:28px;line-height:1.2}.lm-body{font-size:0.82rem;font-weight:300;line-height:1.95;color:var(--ink-soft)}.lm-body h3{font-size:0.72rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink);margin:24px 0 8px}.lm-body p{margin-bottom:14px}@media(max-width:768px){.lm-panel{padding:32px 24px;max-height:90vh}}</style>
 <!-- Preload hero image for fastest LCP -->
-<link rel="preload" as="image" href="/images/uploads/shades-of-white-foyer-ganesha-artwork-blue-door-architects.webp"/>
+<link rel="preload" as="image" href="/images/uploads/shades-of-white-kitchen-dining-pendant-blue-door-architects.webp"/>
 </head>
 <body>
 
@@ -498,7 +498,7 @@ nav#mainnav.nav-scrolled .nav-links a{color:var(--ink)}
 
 <!-- ═══ HERO ═══ -->
 <section id="hero" aria-label="Hero" role="banner">
-  <img class="hero-img" id="hero-img" src="/images/uploads/shades-of-white-foyer-ganesha-artwork-blue-door-architects.webp" srcset="/images/uploads/shades-of-white-foyer-ganesha-artwork-blue-door-architects-mobile.webp 800w, /images/uploads/shades-of-white-foyer-ganesha-artwork-blue-door-architects.webp 1350w" sizes="100vw" alt="Blue Door Architects — Shades of White interior project, Sargasan Gandhinagar" fetchpriority="high" width="1350" height="1800"/>
+  <img class="hero-img" id="hero-img" src="/images/uploads/shades-of-white-kitchen-dining-pendant-blue-door-architects.webp" srcset="/images/uploads/shades-of-white-kitchen-dining-pendant-blue-door-architects-mobile.webp 800w, /images/uploads/shades-of-white-kitchen-dining-pendant-blue-door-architects.webp 1600w" sizes="100vw" alt="Blue Door Architects — luxury interior design project, Gandhinagar" fetchpriority="high" width="1600" height="1067"/>
   <div class="h-ov" aria-hidden="true"></div>
   <div class="h-body">
     <div class="h-left">
@@ -883,7 +883,14 @@ function loadJSON(path, callback) {
 
 function setImg(id, src) {
   var el = document.getElementById(id);
-  if (el && src) { el.src = src; el.classList.add('cms-ready'); el.classList.remove('cms-loading'); }
+  if (el && src) {
+    el.src = src;
+    if (el.srcset !== undefined) {
+      var mobileSrc = src.replace('.webp', '-mobile.webp');
+      el.srcset = mobileSrc + ' 800w, ' + src + ' 1600w';
+    }
+    el.classList.add('cms-ready'); el.classList.remove('cms-loading');
+  }
 }
 function setText(id, text) {
   var el = document.getElementById(id);
