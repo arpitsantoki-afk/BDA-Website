@@ -45,8 +45,16 @@ links.forEach(function(a) {
 // Nav scroll behaviour
 var nav = document.getElementById('mainnav');
 if (nav) {
+  // On non-homepage (light background), always show dark nav
+  var isHomepage = window.location.pathname === '/' || window.location.pathname === '';
+  if (!isHomepage) {
+    nav.classList.add('nav-scrolled');
+    nav.style.position = 'fixed';
+  }
   window.addEventListener('scroll', function() {
-    nav.classList.toggle('nav-scrolled', window.scrollY > 40);
+    if (isHomepage) {
+      nav.classList.toggle('nav-scrolled', window.scrollY > 40);
+    }
   }, { passive: true });
 }
 
