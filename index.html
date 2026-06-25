@@ -1189,6 +1189,13 @@ if ('IntersectionObserver' in window) {
 } else {
   document.querySelectorAll('.rv').forEach(function(el){ el.classList.add('in'); });
 }
+// Force-reveal any rv elements already in viewport on load
+setTimeout(function(){
+  document.querySelectorAll('.rv:not(.in)').forEach(function(el){
+    var r=el.getBoundingClientRect();
+    if(r.top < window.innerHeight){ el.classList.add('in'); }
+  });
+}, 100);
 
 // ═══════════════════════════════════════════════
 // CONTACT FORM
