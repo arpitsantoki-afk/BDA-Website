@@ -79,8 +79,7 @@ function renderBody(text){
   });
   return html;
 }
-var params = new URLSearchParams(window.location.search);
-var slug = params.get('slug');
+var slug = decodeURIComponent(window.location.hash.slice(1));
 if(!slug){
   document.getElementById('post-h1').textContent = 'Post not found.';
 } else {
