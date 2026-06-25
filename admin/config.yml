@@ -241,3 +241,21 @@ collections:
       - { label: "Date", name: "date", widget: "string", hint: "e.g. December 2025" }
       - { label: "Show on Website", name: "active", widget: "boolean", default: true }
       - { label: "Display Order", name: "order", widget: "number", default: 1, hint: "Lower = shown first" }
+
+  - name: "insights"
+    label: "Insights"
+    label_singular: "Post"
+    folder: "_data/insights"
+    create: true
+    format: "json"
+    extension: "json"
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string", hint: "URL-friendly version of the title, e.g. shades-of-white-design-process" }
+      - { label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "Category", name: "category", widget: "select", options: ["Architecture", "Interior Design", "Landscape", "Furniture", "Studio"] }
+      - { label: "Excerpt", name: "excerpt", widget: "text", hint: "2-3 sentences shown in the post card and used as SEO meta description" }
+      - { label: "Cover Image", name: "cover_image", widget: "image" }
+      - { label: "Author", name: "author", widget: "string", default: "Blue Door Architects" }
+      - { label: "Body", name: "body", widget: "markdown" }
