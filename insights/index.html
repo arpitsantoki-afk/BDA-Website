@@ -39,9 +39,6 @@ body{background:var(--warm);color:var(--ink);font-family:'Jost',sans-serif;font-
 </style>
 </head>
 <body>
-<!-- Nav and footer injected by shared component -->
-<script src="/components/nav-footer.js"></script>
-
 <div class="ins-page-body">
   <div class="ins-page-header">
     <p style="font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--mid);margin-bottom:1.25rem">Blue Door Architects</p>
@@ -89,5 +86,6 @@ fetch(_B + '_data/insights-index.json?t=' + Date.now())
   })
   .catch(function(){ document.getElementById('insights-grid').innerHTML='<div class="ins-loading">No posts yet.</div>'; });
 </script>
+<script src="/components/nav-footer.js"></script>
 </body>
 </html>
