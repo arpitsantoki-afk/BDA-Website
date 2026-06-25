@@ -446,7 +446,7 @@ nav#mainnav.nav-scrolled .nav-links a{color:var(--ink)}
   #publications{padding:88px 0}
   #projects{padding-top:88px}
 }
-#legal-modal{position:fixed;inset:0;z-index:9500;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity 0.3s}#legal-modal.open{opacity:1;pointer-events:all}.lm-backdrop{position:absolute;inset:0;background:rgba(8,8,6,0.82);backdrop-filter:blur(6px)}.lm-panel{position:relative;z-index:1;background:var(--warm);width:100%;max-width:680px;max-height:80vh;overflow-y:auto;border-radius:2px;padding:48px 52px;scrollbar-width:thin}.lm-close{position:absolute;top:20px;right:20px;background:none;border:1px solid var(--border);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:1rem;color:var(--ink);transition:all 0.2s;display:flex;align-items:center;justify-content:center}.lm-close:hover{background:var(--ink);color:var(--warm)}.lm-eyebrow{font-size:0.56rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}.lm-title{font-family:var(--serif);font-weight:300;font-size:1.8rem;margin-bottom:28px;line-height:1.2}.lm-body{font-size:0.82rem;font-weight:300;line-height:1.95;color:var(--ink-soft)}.lm-body h3{font-size:0.72rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink);margin:24px 0 8px}.lm-body p{margin-bottom:14px}@media(max-width:768px){.lm-panel{padding:32px 24px;max-height:90vh}}</style>
+#legal-modal{position:fixed;inset:0;z-index:9500;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity 0.3s}#legal-modal.open{opacity:1;pointer-events:all}.lm-backdrop{position:absolute;inset:0;background:rgba(8,8,6,0.82);backdrop-filter:blur(6px)}.lm-panel{position:relative;z-index:1;background:var(--warm);width:100%;max-width:680px;max-height:80vh;overflow-y:auto;border-radius:2px;padding:48px 52px;scrollbar-width:thin}.lm-close{position:absolute;top:20px;right:20px;background:none;border:1px solid var(--border);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:1rem;color:var(--ink);transition:all 0.2s;display:flex;align-items:center;justify-content:center}.lm-close:hover{background:var(--ink);color:var(--warm)}.lm-eyebrow{font-size:0.56rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}.lm-title{font-family:var(--serif);font-weight:300;font-size:1.8rem;margin-bottom:28px;line-height:1.2}.lm-body{font-size:0.82rem;font-weight:300;line-height:1.95;color:var(--ink-soft)}.lm-body h3{font-size:0.72rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink);margin:24px 0 8px}.lm-body p{margin-bottom:14px}@media(max-width:768px){.lm-panel{padding:32px 24px;max-height:90vh}}.ins-sec{padding:5rem 2.5rem;max-width:1400px;margin:0 auto}.ins-sec-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3rem}.ins-sec-head h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.8rem,3vw,2.5rem);letter-spacing:0.02em}.ins-sec-head a{font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);text-decoration:none;transition:opacity 0.2s}.ins-sec-head a:hover{opacity:0.7}.ins-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:2rem}.ins-card-hp{text-decoration:none;color:var(--ink);display:block;transition:opacity 0.2s}.ins-card-hp:hover{opacity:0.75}.ins-card-hp img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#e8e3db;margin-bottom:1rem}.ins-card-hp .ic-meta{font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--mid);margin-bottom:0.5rem}.ins-card-hp .ic-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.2rem;line-height:1.35;margin-bottom:0.5rem}.ins-card-hp .ic-exc{font-size:0.8rem;line-height:1.7;color:var(--mid)}@media(max-width:768px){.ins-sec{padding:3.5rem 1.25rem}.ins-grid{grid-template-columns:1fr;gap:2rem}}</style>
 <!-- Preload hero image for fastest LCP -->
 <link rel="preload" as="image" href="/images/uploads/shades-of-white-kitchen-dining-pendant-blue-door-architects.webp"/>
 </head>
@@ -717,6 +717,17 @@ nav#mainnav.nav-scrolled .nav-links a{color:var(--ink)}
 
 
 <!-- ═══ PUBLICATIONS ═══ -->
+<section id="insights" class="ins-sec">
+  <div class="ins-sec-head">
+    <h2>Insights</h2>
+    <a href="/insights/">View all &rarr;</a>
+  </div>
+  <div class="ins-grid" id="ins-grid-hp">
+    <!-- INSIGHTS-STATIC-START -->
+    <!-- INSIGHTS-STATIC-END -->
+  </div>
+</section>
+
 <section id="publications">
   <div class="wrap">
     <div class="pub-header rv">
@@ -1308,7 +1319,45 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeProjModal();
 });
 
-// Wire up click handlers and data attributes on project tiles
+// // Load Insights homepage cards
+(function() {
+  var _INS = 'https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/insights/';
+  var _B = 'https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/';
+  function imgU(s){ return s && s.startsWith('/') ? _B + s.slice(1) : s; }
+  function fmtD(d){
+    if(!d) return '';
+    var m=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var p=d.split('-'); return m[parseInt(p[1],10)-1]+' '+p[0];
+  }
+  fetch(_B + '_data/insights-index.json?t=' + Date.now())
+    .then(function(r){ return r.ok ? r.json() : Promise.reject(); })
+    .then(function(idx){
+      var slugs=(idx.posts||[]).slice(0,3);
+      if(!slugs.length) return;
+      var posts=[],loaded=0;
+      slugs.forEach(function(slug,i){
+        fetch(_INS+slug+'.json?t='+Date.now())
+          .then(function(r){ return r.json(); })
+          .then(function(p){
+            p.slug=slug; posts[i]=p; loaded++;
+            if(loaded===slugs.length){
+              var grid=document.getElementById('ins-grid-hp');
+              if(grid) grid.innerHTML=posts.filter(Boolean).map(function(post){
+                var url='/insights/post.html?slug='+encodeURIComponent(post.slug);
+                return '<a href="'+url+'" class="ins-card-hp">'+
+                  '<img src="'+imgU(post.cover_image)+'" alt="'+post.title+'" loading="lazy"/>'+
+                  '<div class="ic-meta">'+( post.category||'')+( post.date?' &middot; '+fmtD(post.date):'')+'</div>'+
+                  '<div class="ic-title">'+post.title+'</div>'+
+                  '<div class="ic-exc">'+( post.excerpt||'')+'</div>'+
+                  '</a>';
+              }).join('');
+            }
+          }).catch(function(){loaded++;});
+      });
+    }).catch(function(){});
+})();
+
+Wire up click handlers and data attributes on project tiles
 function wirePjClicks() {
   document.querySelectorAll('.mosaic .pj:not([data-wired])').forEach(function(pj) {
     pj.setAttribute('data-wired','1');
