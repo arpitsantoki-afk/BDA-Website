@@ -1351,7 +1351,7 @@ document.addEventListener('keydown', function(e) {
             if(loaded===slugs.length){
               var grid=document.getElementById('ins-grid-hp');
               if(grid) grid.innerHTML=posts.filter(Boolean).map(function(post){
-                var url='/insights/post.html?slug='+encodeURIComponent(post.slug);
+                var url='/insights/post.html#'+encodeURIComponent(post.slug);
                 return '<a href="'+url+'" class="ins-card-hp">'+
                   '<img src="'+imgU(post.cover_image)+'" alt="'+post.title+'" loading="lazy"/>'+
                   '<div class="ic-meta">'+( post.category||'')+( post.date?' &middot; '+fmtD(post.date):'')+'</div>'+
