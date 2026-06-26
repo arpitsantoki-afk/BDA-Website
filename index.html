@@ -1338,11 +1338,18 @@ document.addEventListener('keydown', function(e) {
       // Show or hide section and nav links based on enabled flag
       var _isec=document.getElementById('insights');
       if(_isec) _isec.style.display=idx.enabled?'':'none';
-      ['nav-insights','nav-insights-mobile'].forEach(function(id){
-        var el=document.getElementById(id);
-        if(el) el.style.display=idx.enabled?'':'none';
-      });
-      if(!idx.enabled) return;
+      if(!idx.enabled){
+        var _ni=document.getElementById('nav-insights');
+        var _nim=document.getElementById('nav-insights-mobile');
+        if(_ni) _ni.style.display='none';
+        if(_nim) _nim.style.display='none';
+        return;
+      }
+      // enabled=true: restore correct display type per element
+      var _ni=document.getElementById('nav-insights');
+      if(_ni) _ni.style.display='';
+      var _nim=document.getElementById('nav-insights-mobile');
+      if(_nim) _nim.style.display='block';
       var slugs=(idx.posts||[]).slice(0,3);
       if(!slugs.length) return;
       var posts=[],loaded=0;
