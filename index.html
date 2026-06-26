@@ -1332,12 +1332,7 @@ document.addEventListener('keydown', function(e) {
   var _INS = 'https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/insights/';
   var _B = 'https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/';
   function imgU(s){ return s && s.startsWith('/') ? _B + s.slice(1) : s; }
-  function fmtD(d){
-    if(!d) return '';
-    var m=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    var p=d.split('-'); return m[parseInt(p[1],10)-1]+' '+p[0];
-  }
-  fetch(_B + '_data/insights-index.json?t=' + Date.now())
+    fetch(_B + '_data/insights-index.json?t=' + Date.now())
     .then(function(r){ return r.ok ? r.json() : Promise.reject(); })
     .then(function(idx){
       if(!idx.enabled){
@@ -1376,4 +1371,44 @@ document.addEventListener('keydown', function(e) {
           .catch(function(){ loaded++; });
       });
     })
-    .catch(function(){});
+    .catch(function(){});lass="ic-exc">'+( post.excerpt||'')+'</div>'+
+                  '</a>';
+              }).join('');
+            }
+          }).catch(function(){loaded++;});
+      });
+    }).catch(function(){});
+})();
+
+// Wire up click handlers and data attributes on project tiles
+function wirePjClicks() {
+  document.querySelectorAll('.mosaic .pj:not([data-wired])').forEach(function(pj) {
+    pj.setAttribute('data-wired','1');
+    pj.addEventListener('click', function() {
+      var d = pj.dataset;
+      openProjModal(d.slug||'', d.title||'', d.subtitle||'', d.location||'', d.year||'', d.type||'', d.cover||'', d.desc||'');
+    });
+  });
+}
+
+// Observe mosaic for dynamically added tiles
+(function() {
+  var el = document.querySelector('.mosaic');
+  if (!el) return;
+  new MutationObserver(function() { wirePjClicks(); maybeShowExpandBtn(); })
+    .observe(el, {childList:true});
+  wirePjClicks();
+  maybeShowExpandBtn();
+})();
+</script>
+
+<!-- ── PROJECT MODAL ── -->
+<div id="proj-modal" role="dialog" aria-modal="true" aria-label="Project details">
+  <div class="pm-backdrop" onclick="closeProjModal()"></div>
+  <div class="pm-panel" id="pm-panel">
+    <div class="pm-close"><button class="pm-close-btn" onclick="closeProjModal()" aria-label="Close project">&#215;</button></div>
+    <div id="pm-content"></div>
+  </div>
+</div>
+<div id="legal-modal" role="dialog" aria-modal="true"><div class="lm-backdrop" onclick="closeLegalModal()"></div><div class="lm-panel"><button class="lm-close" onclick="closeLegalModal()" aria-label="Close">&#215;</button><div id="lm-content"></div></div></div><script>var _lp = {  privacy: {    t: "Privacy Policy",    b: "<h3>Information We Collect</h3><p>When you submit an enquiry through our website, we collect your name, email address, phone number, and project details. We do not collect any information automatically beyond standard server logs.</p><h3>How We Use Your Information</h3><p>Your information is used solely to respond to your enquiry and to keep you informed about our work with your consent. We do not sell, rent, or share your data with third parties outside The Palm Group.</p><h3>Data Storage</h3><p>Enquiry data is stored securely and retained only as long as necessary. You may request deletion at any time by emailing us.</p><h3>Cookies</h3><p>This website uses no tracking or advertising cookies. Only essential functionality cookies are used.</p><h3>Contact</h3><p>Privacy queries: <a href='mailto:info@bluedoorarchitects.com' style='color:#c9a96e'>info@bluedoorarchitects.com</a></p><p style='margin-top:20px;font-size:0.72rem;opacity:0.6'>Last updated: May 2025</p>"  },  terms: {    t: "Terms of Use",    b: "<h3>Use of This Website</h3><p>This website is operated by Blue Door Architects, a sub-brand of The Palm Group. By accessing it, you agree to these terms. Content is provided for informational purposes only.</p><h3>Intellectual Property</h3><p>All images, text, design work, and renderings are the intellectual property of Blue Door Architects or their respective clients. Reproduction without written permission is prohibited.</p><h3>Project Images</h3><p>Project photographs and visualisations are shared with client consent. If you wish to request removal of any image, please contact us directly.</p><h3>No Warranty</h3><p>We make every effort to keep information accurate but make no warranties regarding completeness or fitness for any particular purpose.</p><h3>Contact</h3><p>Questions: <a href='mailto:info@bluedoorarchitects.com' style='color:#c9a96e'>info@bluedoorarchitects.com</a></p><p style='margin-top:20px;font-size:0.72rem;opacity:0.6'>Last updated: May 2025</p>"  }};function openLegalModal(type){  var d=_lp[type]; if(!d)return;  var m=document.getElementById("legal-modal");  var c=document.getElementById("lm-content");  c.innerHTML="<div class='lm-eyebrow'>Blue Door Architects</div><h2 class='lm-title'>"+d.t+"</h2><div class='lm-body'>"+d.b+"</div>";  m.classList.add("open");  document.body.style.overflow="hidden";}function closeLegalModal(){  var m=document.getElementById("legal-modal");  if(m)m.classList.remove("open");  document.body.style.overflow="";}document.addEventListener("keydown",function(e){if(e.key==="Escape")closeLegalModal();});</script></body>
+</html>
