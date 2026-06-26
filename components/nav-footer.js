@@ -86,4 +86,18 @@ fetch(_B + '_data/settings.json?t=' + Date.now())
   })
   .catch(function() {});
 
+// Hide Insights nav link if section is disabled
+var _B2 = 'https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/';
+fetch(_B2 + '_data/insights-index.json?t=' + Date.now())
+  .then(function(r){ return r.ok ? r.json() : Promise.reject(); })
+  .then(function(idx){
+    if(!idx.enabled){
+      ['nav-insights','nav-insights-mobile'].forEach(function(id){
+        var el = document.getElementById(id);
+        if(el) el.style.display = 'none';
+      });
+    }
+  })
+  .catch(function(){});
+
 })();
