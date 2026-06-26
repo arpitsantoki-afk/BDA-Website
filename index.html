@@ -1337,20 +1337,14 @@ document.addEventListener('keydown', function(e) {
     fetch(_B + '_data/insights-index.json?t=' + Date.now())
     .then(function(r){ return r.ok ? r.json() : Promise.reject(); })
     .then(function(idx){
-      if(!idx.enabled){
-        var sec=document.getElementById('insights');
-        if(sec) sec.style.display='none';
-        var nl=document.getElementById('nav-insights');
-        if(nl) nl.style.display='none';
-        return;
-      }
-      // Show section and nav links (hidden by default)
-      var sec=document.getElementById('insights');
-      if(sec) sec.style.display='';
+      // Show or hide section and nav links based on enabled flag
+      var _isec=document.getElementById('insights');
+      if(_isec) _isec.style.display=idx.enabled?'':'none';
       ['nav-insights','nav-insights-mobile'].forEach(function(id){
         var el=document.getElementById(id);
-        if(el) el.style.display='';
+        if(el) el.style.display=idx.enabled?'':'none';
       });
+      if(!idx.enabled) return;
       var slugs=(idx.posts||[]).slice(0,3);
       if(!slugs.length) return;
       var posts=[],loaded=0;
