@@ -19,6 +19,11 @@ var navWrap = document.createElement('div');
 navWrap.innerHTML = NAV_HTML;
 var navEl = navWrap.firstElementChild;
 document.body.insertBefore(navEl, document.body.firstChild);
+// Hide insights nav links by default — shown only when enabled flag is true
+var _niEl = document.getElementById('nav-insights');
+var _nimEl = document.getElementById('nav-insights-mobile');
+if(_niEl) _niEl.style.display = 'none';
+if(_nimEl) _nimEl.style.display = 'none';
 
 // Inject footer into slot placeholder
 var ftSlot = document.getElementById('footer-slot');
