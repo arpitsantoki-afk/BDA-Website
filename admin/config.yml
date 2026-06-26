@@ -242,6 +242,20 @@ collections:
       - { label: "Show on Website", name: "active", widget: "boolean", default: true }
       - { label: "Display Order", name: "order", widget: "number", default: 1, hint: "Lower = shown first" }
 
+  - name: "insights_settings"
+    label: "Insights Settings"
+    files:
+      - name: "insights_index"
+        label: "Insights — Visibility & Post Order"
+        file: "_data/insights-index.json"
+        fields:
+          - { label: "Show Insights on website", name: "enabled", widget: "boolean", default: false, hint: "Toggle OFF to hide the Insights section and nav link sitewide while under construction." }
+          - label: "Post Order"
+            name: "posts"
+            widget: "list"
+            hint: "Slugs in display order. Top = featured post on homepage."
+            field: { label: "Post Slug", name: "post", widget: "string" }
+
   - name: "insights"
     label: "Insights"
     label_singular: "Post"
