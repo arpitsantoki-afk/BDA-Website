@@ -78,10 +78,6 @@ function renderBody(text){
     else out += '<p>'+para.replace(/\n/g,'<br/>')+'</p>';
   });
   return out;
-}'+line.slice(2)+'</h2>';
-    else html += '<p>'+line+'</p>';
-  });
-  return html;
 }
 var slug = decodeURIComponent(window.location.hash.slice(1));
 if(!slug){
