@@ -68,13 +68,17 @@ function fmtD(d){
 }
 function renderBody(text){
   if(!text) return '';
-  var lines = text.split('
-');
-  var html = '';
-  lines.forEach(function(line){
-    line = line.trim(); if(!line) return;
-    if(line.startsWith('## ')) html += '<h2>'+line.slice(3)+'</h2>';
-    else if(line.startsWith('# ')) html += '<h2>'+line.slice(2)+'</h2>';
+  var paras = text.split(/\n\n+/);
+  var out = '';
+  paras.forEach(function(para){
+    para = para.trim();
+    if(!para) return;
+    if(para.indexOf('## ')===0) out += '<h2>'+para.slice(3)+'</h2>';
+    else if(para.indexOf('# ')===0) out += '<h2>'+para.slice(2)+'</h2>';
+    else out += '<p>'+para.replace(/\n/g,'<br/>')+'</p>';
+  });
+  return out;
+}'+line.slice(2)+'</h2>';
     else html += '<p>'+line+'</p>';
   });
   return html;
