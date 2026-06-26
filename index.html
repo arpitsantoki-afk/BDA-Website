@@ -1344,6 +1344,13 @@ document.addEventListener('keydown', function(e) {
         if(nl) nl.style.display='none';
         return;
       }
+      // Show section and nav links (hidden by default)
+      var sec=document.getElementById('insights');
+      if(sec) sec.style.display='';
+      ['nav-insights','nav-insights-mobile'].forEach(function(id){
+        var el=document.getElementById(id);
+        if(el) el.style.display='';
+      });
       var slugs=(idx.posts||[]).slice(0,3);
       if(!slugs.length) return;
       var posts=[],loaded=0;
