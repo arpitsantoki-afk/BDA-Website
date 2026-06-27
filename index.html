@@ -1208,7 +1208,7 @@ setTimeout(function(){
       var btn = enquiryForm.querySelector('button[type="submit"]');
       if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
       var data = new FormData(enquiryForm);
-      fetch('https://api.web3forms.com/submit', {
+      fetch('/api/inquiry', {
         method: 'POST',
         body: data
       })
