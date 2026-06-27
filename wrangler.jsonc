@@ -11,5 +11,12 @@
   },
   "compatibility_flags": [
     "nodejs_compat"
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "bluedoor-accounts",
+      "database_id": "ebaaa404-6232-4331-9d18-5d1bb5ec87cd"
+    }
   ]
 }
