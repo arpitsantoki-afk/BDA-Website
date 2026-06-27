@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Inquiries — Blue Door Architects</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f0f0d;color:#f0ebe3;min-height:100vh}
+  .top{background:#1a1a16;border-bottom:1px solid rgba(255,255,255,0.08);padding:16px 32px;display:flex;align-items:center;justify-content:space-between}
+  .top-left{display:flex;align-items:center;gap:16px}
+  .top h1{font-size:0.85rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.55);font-weight:400}
+  .logo{font-family:Georgia,serif;font-size:1rem;letter-spacing:0.12em;color:#c9a96e}
+  .back{font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.35);text-decoration:none;padding:6px 12px;border:1px solid rgba(255,255,255,0.12);border-radius:2px;transition:all 0.2s}
+  .back:hover{color:white;border-color:rgba(255,255,255,0.3)}
+  .container{max-width:1200px;margin:0 auto;padding:32px}
+  .stats{display:flex;gap:24px;margin-bottom:32px}
+  .stat{background:#1a1a16;border:1px solid rgba(255,255,255,0.08);padding:20px 28px;border-radius:2px}
+  .stat-n{font-family:Georgia,serif;font-size:2rem;color:#c9a96e;line-height:1}
+  .stat-l{font-size:0.62rem;letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-top:6px}
+  .toolbar{display:flex;gap:12px;margin-bottom:20px;align-items:center}
+  .toolbar input{background:#1a1a16;border:1px solid rgba(255,255,255,0.12);color:#f0ebe3;padding:8px 14px;border-radius:2px;font-size:0.8rem;width:260px;outline:none}
+  .toolbar input:focus{border-color:rgba(201,169,110,0.5)}
+  .filter-btn{font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.45);background:none;border:1px solid rgba(255,255,255,0.1);padding:7px 14px;border-radius:2px;cursor:pointer;transition:all 0.2s}
+  .filter-btn.active,.filter-btn:hover{color:#c9a96e;border-color:rgba(201,169,110,0.4)}
+  .count{font-size:0.72rem;color:rgba(255,255,255,0.3);margin-left:auto}
+  table{width:100%;border-collapse:collapse}
+  th{font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.3);padding:10px 16px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.06)}
+  td{padding:16px;border-bottom:1px solid rgba(255,255,255,0.05);font-size:0.82rem;vertical-align:top}
+  tr:hover td{background:rgba(255,255,255,0.02)}
+  tr.unread td{background:rgba(201,169,110,0.04)}
+  tr.unread td:first-child{border-left:2px solid #c9a96e}
+  .td-name{font-weight:500;color:#f0ebe3}
+  .td-email{color:rgba(255,255,255,0.5);font-size:0.75rem}
+  .td-phone{color:rgba(255,255,255,0.5);font-size:0.75rem}
+  .td-msg{color:rgba(255,255,255,0.65);max-width:400px;line-height:1.6}
+  .td-date{color:rgba(255,255,255,0.3);font-size:0.72rem;white-space:nowrap}
+  .read-btn{font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.25);background:none;border:none;cursor:pointer;padding:4px 0;transition:color 0.2s}
+  .read-btn:hover{color:#c9a96e}
+  .badge-new{font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;background:rgba(201,169,110,0.15);color:#c9a96e;padding:2px 7px;border-radius:10px;margin-left:6px}
+  .loading{text-align:center;padding:80px;color:rgba(255,255,255,0.3);font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase}
+  .error{background:rgba(220,50,50,0.1);border:1px solid rgba(220,50,50,0.2);padding:20px;border-radius:2px;color:#ff8080;font-size:0.82rem;margin-bottom:24px}
+  #auth-wall{position:fixed;inset:0;background:#0f0f0d;display:flex;align-items:center;justify-content:center;z-index:100}
+  .auth-box{text-align:center;padding:48px}
+  .auth-box p{font-size:0.8rem;color:rgba(255,255,255,0.4);margin-bottom:24px;line-height:1.7}
+  .auth-box a{display:inline-block;background:#c9a96e;color:#0f0f0d;padding:12px 28px;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;text-decoration:none;border-radius:1px}
+  .empty{text-align:center;padding:80px;color:rgba(255,255,255,0.25);font-size:0.8rem}
+</style>
+</head>
+<body>
+
+<div id="auth-wall">
+  <div class="auth-box">
+    <div class="logo" style="margin-bottom:24px;font-size:1.2rem">BLUE DOOR ARCHITECTS</div>
+    <p>You need to be logged into the CMS<br>to access the inquiries dashboard.</p>
+    <a href="/admin/">Go to CMS Login</a>
+  </div>
+</div>
+
+<div id="app" style="display:none">
+  <div class="top">
+    <div class="top-left">
+      <span class="logo">BDA</span>
+      <h1>Inquiries</h1>
+    </div>
+    <a href="/admin/" class="back">← CMS</a>
+  </div>
+  <div class="container">
+    <div class="stats">
+      <div class="stat"><div class="stat-n" id="stat-total">—</div><div class="stat-l">Total Inquiries</div></div>
+      <div class="stat"><div class="stat-n" id="stat-unread">—</div><div class="stat-l">Unread</div></div>
+      <div class="stat"><div class="stat-n" id="stat-today">—</div><div class="stat-l">Today</div></div>
+    </div>
+    <div class="toolbar">
+      <input type="text" id="search" placeholder="Search name, email, phone, message…" oninput="filterRows()"/>
+      <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
+      <button class="filter-btn" onclick="setFilter('unread',this)">Unread</button>
+      <span class="count" id="row-count"></span>
+    </div>
+    <div id="error" class="error" style="display:none"></div>
+    <div id="loading" class="loading">Loading inquiries…</div>
+    <table id="table" style="display:none">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Name</th>
+          <th>Contact</th>
+          <th>Message</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+    <div id="empty" class="empty" style="display:none">No inquiries yet.</div>
+  </div>
+</div>
+
+<script>
+var ghToken = null;
+var allInquiries = [];
+var currentFilter = 'all';
+
+// ── Auth check ──
+function getGhToken() {
+  // Decap CMS stores token in localStorage under netlify-cms-user or similar keys
+  var keys = ['netlify-cms-user', 'decap-cms-user', 'github-token'];
+  for (var k of keys) {
+    try {
+      var v = localStorage.getItem(k);
+      if (v) {
+        var parsed = JSON.parse(v);
+        if (parsed && parsed.token) return parsed.token;
+        if (typeof v === 'string' && v.startsWith('ghp_')) return v;
+      }
+    } catch(e) {}
+  }
+  // Search all localStorage keys for GitHub token pattern
+  for (var i = 0; i < localStorage.length; i++) {
+    var key = localStorage.key(i);
+    try {
+      var val = localStorage.getItem(key);
+      if (!val) continue;
+      var obj = JSON.parse(val);
+      if (obj && obj.token && obj.token.length > 10) return obj.token;
+    } catch(e) {
+      if (val && (val.startsWith('ghp_') || val.startsWith('gho_'))) return val;
+    }
+  }
+  return null;
+}
+
+function init() {
+  ghToken = getGhToken();
+  if (!ghToken) {
+    document.getElementById('auth-wall').style.display = 'flex';
+    return;
+  }
+  document.getElementById('auth-wall').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  loadInquiries();
+}
+
+function loadInquiries() {
+  fetch('/api/inquiries', {
+    headers: { 'Authorization': 'Bearer ' + ghToken }
+  })
+  .then(function(r) {
+    if (r.status === 401 || r.status === 403) {
+      document.getElementById('auth-wall').style.display = 'flex';
+      document.getElementById('app').style.display = 'none';
+      return null;
+    }
+    return r.json();
+  })
+  .then(function(data) {
+    if (!data) return;
+    allInquiries = data.inquiries || [];
+    renderStats();
+    renderTable();
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('table').style.display = allInquiries.length ? 'table' : 'none';
+    document.getElementById('empty').style.display = allInquiries.length ? 'none' : 'block';
+  })
+  .catch(function(e) {
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('error').style.display = 'block';
+    document.getElementById('error').textContent = 'Error loading inquiries: ' + e.message;
+  });
+}
+
+function renderStats() {
+  var today = new Date().toISOString().slice(0,10);
+  var unread = allInquiries.filter(function(i){ return !i.read; }).length;
+  var todayCount = allInquiries.filter(function(i){ return i.created_at && i.created_at.startsWith(today); }).length;
+  document.getElementById('stat-total').textContent = allInquiries.length;
+  document.getElementById('stat-unread').textContent = unread;
+  document.getElementById('stat-today').textContent = todayCount;
+}
+
+function formatDate(iso) {
+  if (!iso) return '—';
+  var d = new Date(iso);
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear()
+    + '<br><span style="color:rgba(255,255,255,0.2)">' + d.toTimeString().slice(0,5) + '</span>';
+}
+
+function renderTable() {
+  var search = document.getElementById('search').value.toLowerCase();
+  var rows = allInquiries.filter(function(inq) {
+    if (currentFilter === 'unread' && inq.read) return false;
+    if (!search) return true;
+    return (inq.name||'').toLowerCase().includes(search)
+      || (inq.email||'').toLowerCase().includes(search)
+      || (inq.phone||'').toLowerCase().includes(search)
+      || (inq.message||'').toLowerCase().includes(search);
+  });
+
+  document.getElementById('row-count').textContent = rows.length + ' result' + (rows.length !== 1 ? 's' : '');
+
+  var tbody = document.getElementById('tbody');
+  tbody.innerHTML = rows.map(function(inq) {
+    return '<tr class="' + (inq.read ? '' : 'unread') + '" id="row-' + inq.id + '">'
+      + '<td class="td-date">' + formatDate(inq.created_at) + '</td>'
+      + '<td><div class="td-name">' + esc(inq.name) + (inq.read ? '' : '<span class="badge-new">New</span>') + '</div></td>'
+      + '<td><div class="td-email">' + esc(inq.email) + '</div><div class="td-phone">' + esc(inq.phone||'—') + '</div></td>'
+      + '<td class="td-msg">' + esc(inq.message) + '</td>'
+      + '<td><button class="read-btn" onclick="toggleRead(' + inq.id + ',' + (inq.read?'false':'true') + ')">'
+      + (inq.read ? 'Mark unread' : 'Mark read') + '</button></td>'
+      + '</tr>';
+  }).join('');
+}
+
+function esc(str) {
+  return (str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function filterRows() { renderTable(); }
+
+function setFilter(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  renderTable();
+}
+
+function toggleRead(id, markRead) {
+  fetch('/api/inquiries', {
+    method: 'PATCH',
+    headers: { 'Authorization': 'Bearer ' + ghToken, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id: id, read: markRead })
+  }).then(function() {
+    var inq = allInquiries.find(function(i){ return i.id === id; });
+    if (inq) inq.read = markRead;
+    renderStats();
+    renderTable();
+  });
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
