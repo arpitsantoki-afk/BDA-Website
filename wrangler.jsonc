@@ -1,20 +1,11 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "bda-website",
-  "main": "worker.js",
   "compatibility_date": "2026-06-12",
   "observability": { "enabled": true },
   "assets": {
     "directory": ".",
-    "not_found_handling": "single-page-application",
-    "binding": "ASSETS"
+    "not_found_handling": "single-page-application"
   },
-  "compatibility_flags": ["nodejs_compat"],
-  "d1_databases": [
-    {
-      "binding": "DB",
-      "database_name": "bluedoor-db",
-      "database_id": "ebaaa404-6232-4331-9d18-5d1bb5ec87cd"
-    }
-  ]
+  "compatibility_flags": ["nodejs_compat"]
 }
