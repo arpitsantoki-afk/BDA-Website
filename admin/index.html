@@ -6,42 +6,67 @@
   <meta name="robots" content="noindex"/>
   <title>Blue Door Architects — Content Manager</title>
   <style>
-    #bda-inq-btn{
-      position:fixed;
-      top:0;
-      left:50%;
-      transform:translateX(-50%);
-      z-index:99999;
-      display:none;
-      background:#c9a96e;
-      color:#1b1c1e;
-      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-      font-size:11px;
-      letter-spacing:0.1em;
-      text-transform:uppercase;
-      padding:0 20px;
-      height:48px;
-      line-height:48px;
-      text-decoration:none;
-      font-weight:500;
-      cursor:pointer;
-      transition:opacity .15s;
-      border-radius:0 0 4px 4px;
+    .bda-inq-injected {
+      display:inline-flex !important;
+      align-items:center !important;
+      background:#c9a96e !important;
+      color:#1b1c1e !important;
+      font-size:11px !important;
+      letter-spacing:0.1em !important;
+      text-transform:uppercase !important;
+      padding:6px 14px !important;
+      border-radius:4px !important;
+      text-decoration:none !important;
+      font-weight:600 !important;
+      margin:0 auto !important;
+      cursor:pointer !important;
+      font-family:inherit !important;
     }
-    #bda-inq-btn:hover{opacity:0.88}
+    .bda-inq-injected:hover{ opacity:0.85 !important; }
   </style>
 </head>
 <body>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-  <a id="bda-inq-btn" href="/admin/inquiries.html">📋 Inquiries</a>
   <script>
-    function showInqBtn() {
-      var btn = document.getElementById('bda-inq-btn');
-      if (btn) btn.style.display = 'block';
+    // Use MutationObserver to detect when Decap renders its header nav
+    function injectBtn() {
+      // Decap CMS header nav items are in a <nav> or header element
+      // Try multiple selectors Decap uses
+      var selectors = [
+        'header nav',
+        '[class*="AppHeaderContent"]',
+        '[class*="AppHeader"] nav',
+        '[class*="Header"] ul',
+        'header ul',
+        'header > div > div',
+      ];
+      for (var i = 0; i < selectors.length; i++) {
+        var el = document.querySelector(selectors[i]);
+        if (el && !document.getElementById('bda-inq-link')) {
+          var a = document.createElement('a');
+          a.id = 'bda-inq-link';
+          a.href = '/admin/inquiries.html';
+          a.className = 'bda-inq-injected';
+          a.textContent = '📋 Inquiries';
+          // Insert as middle child
+          var children = el.children;
+          var mid = Math.floor(children.length / 2);
+          el.insertBefore(a, children[mid] || null);
+          return true;
+        }
+      }
+      return false;
     }
-    setTimeout(showInqBtn, 500);
-    setTimeout(showInqBtn, 1500);
-    setTimeout(showInqBtn, 3000);
+
+    var observer = new MutationObserver(function() {
+      if (injectBtn()) observer.disconnect();
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    // Fallback timeouts
+    [500, 1000, 2000, 4000].forEach(function(t) {
+      setTimeout(injectBtn, t);
+    });
   </script>
 </body>
 </html>
