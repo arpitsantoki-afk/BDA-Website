@@ -276,11 +276,17 @@ function loadAll() {
   document.getElementById('empty').style.display='none';
 
   // Load all (including trashed for sidebar counts)
-  var activeData = null, trashData = null;
+  // Fetch active and trashed in parallel, combine once both done
+  var results = {};
+  var fetched = 0;
 
-  function onBothLoaded() {
-    if (!activeData || !trashData) return;
-    allInquiries = (activeData.inquiries || []).concat(trashData.inquiries || []);
+  function onFetchDone() {
+    fetched++;
+    if (fetched < 2) return; // wait for both
+    var active  = results.active  || [];
+    var trashed = results.trashed || [];
+    // Combine — active has trashed=0, trashed has trashed=1, no overlap
+    allInquiries = active.concat(trashed);
     updateCounts();
     renderStats();
     renderTable();
@@ -298,18 +304,19 @@ function loadAll() {
     })
     .then(function(data) {
       if (!data) return;
-      activeData = data;
-      onBothLoaded();
+      results.active = data.inquiries || [];
+      onFetchDone();
     })
     .catch(function(e) {
-      document.getElementById('loading').style.display='none';
-      showError('Error loading inquiries: ' + e.message);
+      results.active = [];
+      onFetchDone();
+      showError('Error: ' + e.message);
     });
 
   fetch(API + '/inquiries?limit=500&trashed=1', { headers: { 'Authorization': 'Bearer ' + ghToken } })
     .then(function(r) { return r.json(); })
-    .then(function(data) { trashData = data; onBothLoaded(); })
-    .catch(function() { trashData = { inquiries: [] }; onBothLoaded(); });
+    .then(function(data) { results.trashed = data.inquiries || []; onFetchDone(); })
+    .catch(function() { results.trashed = []; onFetchDone(); });
 }
 
 function updateCounts() {
