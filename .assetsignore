@@ -6,3 +6,6 @@ wrangler.toml
 node_modules
 *.log
 .env
+worker.js
+functions
+_routes.json
