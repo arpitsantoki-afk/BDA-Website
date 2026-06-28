@@ -1208,7 +1208,7 @@ setTimeout(function(){
       var btn = enquiryForm.querySelector('button[type="submit"]');
       if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
       var data = new FormData(enquiryForm);
-      fetch('/api/inquiry', {
+      fetch('https://bda-inquiry-api.info-unikraft.workers.dev/inquiry', {
         method: 'POST',
         body: data
       })
