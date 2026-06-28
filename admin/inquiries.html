@@ -188,8 +188,8 @@ input[type=checkbox]{accent-color:var(--gold);width:14px;height:14px;cursor:poin
           <span class="sel-count" id="sel-count"></span>
           <button class="btn" id="btn-export" onclick="exportExcel()" disabled>Export Excel</button>
           <button class="btn danger" id="btn-trash" onclick="bulkTrash()" disabled>Move to Trash</button>
-          <button class="btn danger" id="btn-delete" onclick="bulkDelete(false)" style="display:none">Delete Forever</button>
-          <button class="btn" id="btn-restore" onclick="bulkRestore()" style="display:none">Restore</button>
+          <button class="btn danger" id="btn-delete" onclick="bulkDelete()" disabled style="display:none">Delete Forever</button>
+          <button class="btn" id="btn-restore" onclick="bulkRestore()" disabled style="display:none">Restore</button>
         </div>
       </div>
 
@@ -276,6 +276,17 @@ function loadAll() {
   document.getElementById('empty').style.display='none';
 
   // Load all (including trashed for sidebar counts)
+  var activeData = null, trashData = null;
+
+  function onBothLoaded() {
+    if (!activeData || !trashData) return;
+    allInquiries = (activeData.inquiries || []).concat(trashData.inquiries || []);
+    updateCounts();
+    renderStats();
+    renderTable();
+    document.getElementById('loading').style.display='none';
+  }
+
   fetch(API + '/inquiries?limit=500', { headers: { 'Authorization': 'Bearer ' + ghToken } })
     .then(function(r) {
       if (r.status === 401 || r.status === 403) {
@@ -287,21 +298,18 @@ function loadAll() {
     })
     .then(function(data) {
       if (!data) return;
-      // Also fetch trashed
-      return fetch(API + '/inquiries?limit=500&trashed=1', { headers: { 'Authorization': 'Bearer ' + ghToken } })
-        .then(function(r2) { return r2.json(); })
-        .then(function(data2) {
-          allInquiries = (data.inquiries || []).concat(data2.inquiries || []);
-          updateCounts();
-          renderStats();
-          renderTable();
-          document.getElementById('loading').style.display='none';
-        });
+      activeData = data;
+      onBothLoaded();
     })
     .catch(function(e) {
       document.getElementById('loading').style.display='none';
       showError('Error loading inquiries: ' + e.message);
     });
+
+  fetch(API + '/inquiries?limit=500&trashed=1', { headers: { 'Authorization': 'Bearer ' + ghToken } })
+    .then(function(r) { return r.json(); })
+    .then(function(data) { trashData = data; onBothLoaded(); })
+    .catch(function() { trashData = { inquiries: [] }; onBothLoaded(); });
 }
 
 function updateCounts() {
@@ -418,10 +426,10 @@ function toggleSelectAll(cb) {
 function updateSelCount() {
   var n = selectedIds.size;
   document.getElementById('sel-count').textContent = n ? n + ' selected' : '';
-  document.getElementById('btn-export').disabled = n === 0;
-  document.getElementById('btn-trash').disabled  = n === 0;
-  document.getElementById('btn-delete').disabled = n === 0;
-  document.getElementById('btn-restore').disabled= n === 0;
+  document.getElementById('btn-export').disabled  = false;
+  document.getElementById('btn-trash').disabled   = n === 0;
+  document.getElementById('btn-delete').disabled  = n === 0;
+  document.getElementById('btn-restore').disabled = n === 0;
 }
 
 // ── Actions ──
@@ -525,8 +533,14 @@ function clearDates() {
 
 // ── Excel Export ──
 function exportExcel() {
-  var ids = Array.from(selectedIds);
-  var rows = allInquiries.filter(function(i){ return ids.includes(i.id); });
+  var rows;
+  if (selectedIds.size > 0) {
+    // Export selected only
+    rows = allInquiries.filter(function(i){ return Array.from(selectedIds).map(Number).includes(Number(i.id)); });
+  } else {
+    // Export all currently visible
+    rows = getFiltered();
+  }
   var headers = ['Name','Email','Phone','Message','Status','Date','Notes'];
   var csv = [headers.join(',')].concat(rows.map(function(inq) {
     var comments = [];
