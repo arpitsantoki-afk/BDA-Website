@@ -1,6 +1,4 @@
 // BDA Website Worker — handles /api/* routes alongside static assets
-import { auth } from "./functions/api/auth.js";
-
 const WEB3FORMS_KEY = "072310a8-f9f4-4894-9fdc-dd3072db2002";
 
 async function handleInquiry(request, env) {
