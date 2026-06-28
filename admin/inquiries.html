@@ -121,6 +121,8 @@ tr.unread td:nth-child(2){border-left:2px solid var(--gold)}
 .auth-box a{display:inline-block;background:var(--gold);color:#1b1c1e;padding:10px 24px;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;border-radius:var(--radius)}
 
 input[type=checkbox]{accent-color:var(--gold);width:14px;height:14px;cursor:pointer}
+.layout{height:calc(100vh - 48px)}
+#debug-panel.open{display:block!important}
 </style>
 </head>
 <body>
@@ -138,8 +140,18 @@ input[type=checkbox]{accent-color:var(--gold);width:14px;height:14px;cursor:poin
     <span class="hdr-logo">BDA</span>
     <span class="hdr-sep">|</span>
     <span class="hdr-title">Inquiries</span>
+    <button onclick="loadAll()" class="hdr-back" style="background:none;border:1px solid var(--border);cursor:pointer;margin-left:8px" title="Refresh">↻ Sync</button>
+    <button onclick="toggleDebug()" class="hdr-back" style="background:none;border:1px solid var(--border);cursor:pointer;margin-left:4px" title="Debug Console">⚙ Debug</button>
     <a href="/admin/" class="hdr-back">← CMS</a>
   </header>
+  <!-- Debug Console -->
+  <div id="debug-panel" style="display:none;position:fixed;bottom:0;left:0;right:0;height:200px;background:#0a0a0a;border-top:1px solid #333;z-index:999;font-family:monospace;font-size:11px;overflow-y:auto;padding:8px 12px;color:#0f0">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+      <span style="color:#666;font-size:10px;letter-spacing:0.1em">DEBUG CONSOLE</span>
+      <button onclick="document.getElementById('debug-log').innerHTML=''" style="background:none;border:1px solid #333;color:#666;padding:2px 8px;cursor:pointer;font-size:10px">Clear</button>
+    </div>
+    <div id="debug-log"></div>
+  </div>
 
   <div class="layout">
     <!-- Sidebar -->
@@ -276,25 +288,13 @@ function loadAll() {
   document.getElementById('empty').style.display='none';
 
   // Load all (including trashed for sidebar counts)
-  // Fetch active and trashed in parallel, combine once both done
-  var results = {};
-  var fetched = 0;
+  dbg('loadAll() called');
+  allInquiries = []; // reset first
 
-  function onFetchDone() {
-    fetched++;
-    if (fetched < 2) return; // wait for both
-    var active  = results.active  || [];
-    var trashed = results.trashed || [];
-    // Combine — active has trashed=0, trashed has trashed=1, no overlap
-    allInquiries = active.concat(trashed);
-    updateCounts();
-    renderStats();
-    renderTable();
-    document.getElementById('loading').style.display='none';
-  }
-
+  // Sequential: fetch active first, then trashed
   fetch(API + '/inquiries?limit=500', { headers: { 'Authorization': 'Bearer ' + ghToken } })
     .then(function(r) {
+      dbg('Active fetch status: ' + r.status);
       if (r.status === 401 || r.status === 403) {
         document.getElementById('auth-wall').style.display='flex';
         document.getElementById('app').style.display='none';
@@ -304,19 +304,34 @@ function loadAll() {
     })
     .then(function(data) {
       if (!data) return;
-      results.active = data.inquiries || [];
-      onFetchDone();
+      dbg('Active inquiries: ' + (data.inquiries||[]).length);
+      allInquiries = data.inquiries || [];
+
+      // Now fetch trashed
+      return fetch(API + '/inquiries?limit=500&trashed=1', { headers: { 'Authorization': 'Bearer ' + ghToken } });
+    })
+    .then(function(r2) {
+      if (!r2) return null;
+      dbg('Trashed fetch status: ' + r2.status);
+      return r2.json();
+    })
+    .then(function(data2) {
+      if (data2) {
+        dbg('Trashed inquiries: ' + (data2.inquiries||[]).length);
+        allInquiries = allInquiries.concat(data2.inquiries || []);
+      }
+      dbg('Total allInquiries: ' + allInquiries.length);
+      dbg('IDs: ' + allInquiries.map(function(i){return i.id;}).join(', '));
+      updateCounts();
+      renderStats();
+      renderTable();
+      document.getElementById('loading').style.display='none';
     })
     .catch(function(e) {
-      results.active = [];
-      onFetchDone();
-      showError('Error: ' + e.message);
+      dbg('ERROR: ' + e.message);
+      document.getElementById('loading').style.display='none';
+      showError('Error loading: ' + e.message);
     });
-
-  fetch(API + '/inquiries?limit=500&trashed=1', { headers: { 'Authorization': 'Bearer ' + ghToken } })
-    .then(function(r) { return r.json(); })
-    .then(function(data) { results.trashed = data.inquiries || []; onFetchDone(); })
-    .catch(function() { results.trashed = []; onFetchDone(); });
 }
 
 function updateCounts() {
@@ -622,6 +637,19 @@ function closePanelOnOverlay(e) { if (e.target === document.getElementById('pane
 // ── Helpers ──
 function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function showError(msg) { var el=document.getElementById('error'); el.textContent=msg; el.style.display='block'; }
+
+function dbg(msg) {
+  var log = document.getElementById('debug-log');
+  if (!log) return;
+  var t = new Date().toTimeString().slice(0,8);
+  log.innerHTML += '<div><span style="color:#666">['+t+']</span> ' + msg + '</div>';
+  log.scrollTop = log.scrollHeight;
+}
+
+function toggleDebug() {
+  var p = document.getElementById('debug-panel');
+  p.classList.toggle('open');
+}
 
 window.addEventListener('DOMContentLoaded', init);
 </script>
