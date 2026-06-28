@@ -123,6 +123,7 @@ export default {
     const path = url.pathname;
 
     // Handle API routes first
+    if (path === "/api/test") return json({ ok: true, path, method: request.method, assets: !!env.ASSETS, db: !!env.DB });
     if (path === "/api/inquiry")   return handleInquiry(request, env);
     if (path === "/api/inquiries") return handleInquiries(request, env);
 
