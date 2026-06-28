@@ -141,7 +141,7 @@ function init() {
 }
 
 function loadInquiries() {
-  fetch('/api/inquiries', {
+  fetch('https://bda-inquiry-api.info-unikraft.workers.dev/inquiries', {
     headers: { 'Authorization': 'Bearer ' + ghToken }
   })
   .then(function(r) {
@@ -225,7 +225,7 @@ function setFilter(f, btn) {
 }
 
 function toggleRead(id, markRead) {
-  fetch('/api/inquiries', {
+  fetch('https://bda-inquiry-api.info-unikraft.workers.dev/inquiries', {
     method: 'PATCH',
     headers: { 'Authorization': 'Bearer ' + ghToken, 'Content-Type': 'application/json' },
     body: JSON.stringify({ id: id, read: markRead })
