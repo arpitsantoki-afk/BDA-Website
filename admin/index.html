@@ -5,8 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="robots" content="noindex"/>
   <title>Blue Door Architects — Content Manager</title>
+  <style>
+    #bda-inq-btn{
+      position:fixed;top:0;right:0;z-index:99999;
+      display:none;
+      background:#c9a96e;color:#1b1c1e;
+      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+      font-size:11px;letter-spacing:0.1em;text-transform:uppercase;
+      padding:0 16px;height:48px;line-height:48px;
+      text-decoration:none;border-left:1px solid rgba(0,0,0,0.15);
+      font-weight:500;cursor:pointer;transition:opacity .15s;
+    }
+    #bda-inq-btn:hover{opacity:0.88}
+  </style>
 </head>
 <body>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <a id="bda-inq-btn" href="/admin/inquiries.html">Inquiries</a>
+  <script>
+    // Show button once CMS has rendered its header
+    function showInqBtn() {
+      var btn = document.getElementById('bda-inq-btn');
+      if (btn) btn.style.display = 'block';
+    }
+    // Try immediately and after short delays
+    setTimeout(showInqBtn, 500);
+    setTimeout(showInqBtn, 1500);
+    setTimeout(showInqBtn, 3000);
+  </script>
 </body>
 </html>
