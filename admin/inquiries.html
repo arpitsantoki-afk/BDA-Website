@@ -5,116 +5,248 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Inquiries — Blue Door Architects</title>
 <style>
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f0f0d;color:#f0ebe3;min-height:100vh}
-  .top{background:#1a1a16;border-bottom:1px solid rgba(255,255,255,0.08);padding:16px 32px;display:flex;align-items:center;justify-content:space-between}
-  .top-left{display:flex;align-items:center;gap:16px}
-  .top h1{font-size:0.85rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.55);font-weight:400}
-  .logo{font-family:Georgia,serif;font-size:1rem;letter-spacing:0.12em;color:#c9a96e}
-  .back{font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.35);text-decoration:none;padding:6px 12px;border:1px solid rgba(255,255,255,0.12);border-radius:2px;transition:all 0.2s}
-  .back:hover{color:white;border-color:rgba(255,255,255,0.3)}
-  .container{max-width:1200px;margin:0 auto;padding:32px}
-  .stats{display:flex;gap:24px;margin-bottom:32px}
-  .stat{background:#1a1a16;border:1px solid rgba(255,255,255,0.08);padding:20px 28px;border-radius:2px}
-  .stat-n{font-family:Georgia,serif;font-size:2rem;color:#c9a96e;line-height:1}
-  .stat-l{font-size:0.62rem;letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-top:6px}
-  .toolbar{display:flex;gap:12px;margin-bottom:20px;align-items:center}
-  .toolbar input{background:#1a1a16;border:1px solid rgba(255,255,255,0.12);color:#f0ebe3;padding:8px 14px;border-radius:2px;font-size:0.8rem;width:260px;outline:none}
-  .toolbar input:focus{border-color:rgba(201,169,110,0.5)}
-  .filter-btn{font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.45);background:none;border:1px solid rgba(255,255,255,0.1);padding:7px 14px;border-radius:2px;cursor:pointer;transition:all 0.2s}
-  .filter-btn.active,.filter-btn:hover{color:#c9a96e;border-color:rgba(201,169,110,0.4)}
-  .count{font-size:0.72rem;color:rgba(255,255,255,0.3);margin-left:auto}
-  table{width:100%;border-collapse:collapse}
-  th{font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.3);padding:10px 16px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.06)}
-  td{padding:16px;border-bottom:1px solid rgba(255,255,255,0.05);font-size:0.82rem;vertical-align:top}
-  tr:hover td{background:rgba(255,255,255,0.02)}
-  tr.unread td{background:rgba(201,169,110,0.04)}
-  tr.unread td:first-child{border-left:2px solid #c9a96e}
-  .td-name{font-weight:500;color:#f0ebe3}
-  .td-email{color:rgba(255,255,255,0.5);font-size:0.75rem}
-  .td-phone{color:rgba(255,255,255,0.5);font-size:0.75rem}
-  .td-msg{color:rgba(255,255,255,0.65);max-width:400px;line-height:1.6}
-  .td-date{color:rgba(255,255,255,0.3);font-size:0.72rem;white-space:nowrap}
-  .read-btn{font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.25);background:none;border:none;cursor:pointer;padding:4px 0;transition:color 0.2s}
-  .read-btn:hover{color:#c9a96e}
-  .badge-new{font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;background:rgba(201,169,110,0.15);color:#c9a96e;padding:2px 7px;border-radius:10px;margin-left:6px}
-  .loading{text-align:center;padding:80px;color:rgba(255,255,255,0.3);font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase}
-  .error{background:rgba(220,50,50,0.1);border:1px solid rgba(220,50,50,0.2);padding:20px;border-radius:2px;color:#ff8080;font-size:0.82rem;margin-bottom:24px}
-  #auth-wall{position:fixed;inset:0;background:#0f0f0d;display:flex;align-items:center;justify-content:center;z-index:100}
-  .auth-box{text-align:center;padding:48px}
-  .auth-box p{font-size:0.8rem;color:rgba(255,255,255,0.4);margin-bottom:24px;line-height:1.7}
-  .auth-box a{display:inline-block;background:#c9a96e;color:#0f0f0d;padding:12px 28px;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;text-decoration:none;border-radius:1px}
-  .empty{text-align:center;padding:80px;color:rgba(255,255,255,0.25);font-size:0.8rem}
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#1b1c1e;--surface:#242628;--surface2:#2c2e31;--border:rgba(255,255,255,0.08);
+  --text:#e8e6e1;--muted:rgba(255,255,255,0.45);--gold:#c9a96e;--gold2:rgba(201,169,110,0.15);
+  --red:#e05c5c;--green:#5cb85c;--radius:4px;--font:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;font-size:13px}
+
+/* ── Header ── */
+.hdr{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;gap:16px;height:48px;position:sticky;top:0;z-index:100}
+.hdr-logo{font-family:Georgia,serif;font-size:13px;letter-spacing:0.14em;color:var(--gold);font-weight:400}
+.hdr-sep{color:var(--border);font-size:18px}
+.hdr-title{font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted)}
+.hdr-back{margin-left:auto;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:5px 10px;border:1px solid var(--border);border-radius:var(--radius);transition:all .15s}
+.hdr-back:hover{color:var(--text);border-color:rgba(255,255,255,0.25)}
+
+/* ── Layout ── */
+.layout{display:flex;height:calc(100vh - 48px)}
+.sidebar{width:220px;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0}
+.main{flex:1;overflow-y:auto;padding:20px}
+
+/* ── Sidebar ── */
+.sb-section{padding:12px 0}
+.sb-label{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);padding:4px 16px 8px;display:block}
+.sb-btn{display:flex;align-items:center;gap:8px;padding:7px 16px;font-size:12px;color:var(--muted);cursor:pointer;background:none;border:none;width:100%;text-align:left;transition:all .15s;border-radius:0}
+.sb-btn:hover{color:var(--text);background:rgba(255,255,255,0.04)}
+.sb-btn.active{color:var(--gold);background:var(--gold2)}
+.sb-count{margin-left:auto;font-size:10px;background:var(--surface2);padding:1px 6px;border-radius:10px;color:var(--muted)}
+.sb-btn.active .sb-count{background:rgba(201,169,110,0.2);color:var(--gold)}
+.sb-divider{border:none;border-top:1px solid var(--border);margin:4px 0}
+
+/* ── Stats ── */
+.stats{display:flex;gap:12px;margin-bottom:16px}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px 16px;flex:1}
+.stat-n{font-family:Georgia,serif;font-size:1.6rem;color:var(--gold);line-height:1}
+.stat-l{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+
+/* ── Toolbar ── */
+.toolbar{display:flex;gap:8px;margin-bottom:12px;align-items:center;flex-wrap:wrap}
+.search{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:7px 12px;border-radius:var(--radius);font-size:12px;width:220px;outline:none}
+.search:focus{border-color:rgba(201,169,110,0.4)}
+.date-input{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:6px 10px;border-radius:var(--radius);font-size:12px;outline:none}
+.date-input:focus{border-color:rgba(201,169,110,0.4)}
+.date-sep{color:var(--muted);font-size:11px}
+.btn{font-size:11px;letter-spacing:0.08em;padding:6px 12px;border-radius:var(--radius);cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--muted);transition:all .15s;text-transform:uppercase}
+.btn:hover{color:var(--text);border-color:rgba(255,255,255,0.2)}
+.btn.primary{background:var(--gold);color:#1b1c1e;border-color:var(--gold)}
+.btn.primary:hover{opacity:0.9}
+.btn.danger{color:var(--red);border-color:rgba(224,92,92,0.3)}
+.btn.danger:hover{background:rgba(224,92,92,0.1)}
+.btn:disabled{opacity:0.35;cursor:default}
+.ml-auto{margin-left:auto}
+.sel-count{font-size:11px;color:var(--muted);padding:6px 0}
+
+/* ── Table ── */
+.tbl-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+table{width:100%;border-collapse:collapse}
+th{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);background:var(--surface2);white-space:nowrap}
+th.check-col,td.check-col{width:36px;padding:10px 12px}
+td{padding:12px;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,255,255,0.02)}
+tr.selected td{background:var(--gold2)}
+tr.unread td:nth-child(2){border-left:2px solid var(--gold)}
+.td-name{font-weight:500;color:var(--text);margin-bottom:2px}
+.td-sub{font-size:11px;color:var(--muted)}
+.td-msg{color:rgba(255,255,255,0.6);line-height:1.5;max-width:300px;font-size:12px}
+.td-date{color:var(--muted);font-size:11px;white-space:nowrap}
+.td-actions{display:flex;gap:6px;align-items:flex-start;flex-wrap:wrap}
+
+/* ── Badges ── */
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;padding:2px 8px;border-radius:10px;border:1px solid}
+.badge-hot{color:#e07878;border-color:rgba(224,120,120,0.3);background:rgba(224,120,120,0.08)}
+.badge-cold{color:#78abe0;border-color:rgba(120,171,224,0.3);background:rgba(120,171,224,0.08)}
+.badge-new{color:var(--gold);border-color:var(--gold2);background:var(--gold2)}
+.dot{width:6px;height:6px;border-radius:50%;background:currentColor;display:inline-block}
+
+/* ── Row actions ── */
+.act-btn{font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);background:none;border:1px solid var(--border);padding:3px 8px;border-radius:var(--radius);cursor:pointer;transition:all .15s;white-space:nowrap}
+.act-btn:hover{color:var(--text);border-color:rgba(255,255,255,0.2)}
+.act-btn.danger:hover{color:var(--red);border-color:rgba(224,92,92,0.3)}
+.act-btn.gold{color:var(--gold);border-color:rgba(201,169,110,0.3)}
+
+/* ── Comments panel ── */
+.panel-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;display:none;align-items:center;justify-content:flex-end}
+.panel-overlay.open{display:flex}
+.panel{background:var(--surface);border-left:1px solid var(--border);width:420px;height:100%;display:flex;flex-direction:column;overflow:hidden}
+.panel-hdr{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.panel-hdr h3{font-size:13px;font-weight:500;color:var(--text)}
+.panel-close{background:none;border:none;color:var(--muted);cursor:pointer;font-size:18px;line-height:1;padding:0}
+.panel-info{padding:16px 20px;border-bottom:1px solid var(--border);font-size:12px;line-height:1.7}
+.panel-info .pi-name{font-size:14px;font-weight:500;margin-bottom:4px}
+.panel-info .pi-sub{color:var(--muted)}
+.panel-body{flex:1;overflow-y:auto;padding:16px 20px}
+.panel-body h4{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.comment-item{background:var(--surface2);border-radius:var(--radius);padding:10px 12px;margin-bottom:8px}
+.comment-date{font-size:10px;color:var(--muted);margin-bottom:4px}
+.comment-text{font-size:12px;line-height:1.6;color:var(--text)}
+.no-comments{font-size:12px;color:var(--muted);text-align:center;padding:24px 0}
+.panel-footer{padding:16px 20px;border-top:1px solid var(--border)}
+.comment-input{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:var(--radius);font-size:12px;font-family:var(--font);resize:vertical;min-height:80px;outline:none;margin-bottom:8px}
+.comment-input:focus{border-color:rgba(201,169,110,0.4)}
+
+/* ── Empty / Loading ── */
+.empty{text-align:center;padding:60px;color:var(--muted);font-size:12px;letter-spacing:0.08em;text-transform:uppercase}
+.loading{text-align:center;padding:60px;color:var(--muted);font-size:12px;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+
+/* ── Auth wall ── */
+#auth-wall{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:999}
+.auth-box{text-align:center;max-width:320px}
+.auth-logo{font-family:Georgia,serif;font-size:1.1rem;letter-spacing:0.14em;color:var(--gold);margin-bottom:20px}
+.auth-box p{font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:24px}
+.auth-box a{display:inline-block;background:var(--gold);color:#1b1c1e;padding:10px 24px;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;border-radius:var(--radius)}
+
+input[type=checkbox]{accent-color:var(--gold);width:14px;height:14px;cursor:pointer}
 </style>
 </head>
 <body>
 
 <div id="auth-wall">
   <div class="auth-box">
-    <div class="logo" style="margin-bottom:24px;font-size:1.2rem">BLUE DOOR ARCHITECTS</div>
+    <div class="auth-logo">BLUE DOOR ARCHITECTS</div>
     <p>You need to be logged into the CMS<br>to access the inquiries dashboard.</p>
-    <a href="/admin/">Go to CMS Login</a>
+    <a href="/admin/">Go to CMS Login →</a>
   </div>
 </div>
 
 <div id="app" style="display:none">
-  <div class="top">
-    <div class="top-left">
-      <span class="logo">BDA</span>
-      <h1>Inquiries</h1>
-    </div>
-    <a href="/admin/" class="back">← CMS</a>
+  <header class="hdr">
+    <span class="hdr-logo">BDA</span>
+    <span class="hdr-sep">|</span>
+    <span class="hdr-title">Inquiries</span>
+    <a href="/admin/" class="hdr-back">← CMS</a>
+  </header>
+
+  <div class="layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sb-section">
+        <span class="sb-label">View</span>
+        <button class="sb-btn active" onclick="setView('all',this)">
+          All Inquiries <span class="sb-count" id="cnt-all">0</span>
+        </button>
+        <button class="sb-btn" onclick="setView('unread',this)">
+          Unread <span class="sb-count" id="cnt-unread">0</span>
+        </button>
+        <button class="sb-btn" onclick="setView('hot',this)">
+          <span class="dot" style="color:#e07878"></span> Hot <span class="sb-count" id="cnt-hot">0</span>
+        </button>
+        <button class="sb-btn" onclick="setView('cold',this)">
+          <span class="dot" style="color:#78abe0"></span> Cold <span class="sb-count" id="cnt-cold">0</span>
+        </button>
+      </div>
+      <hr class="sb-divider"/>
+      <div class="sb-section">
+        <button class="sb-btn" onclick="setView('trash',this)">
+          🗑 Trash <span class="sb-count" id="cnt-trash">0</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+      <!-- Stats -->
+      <div class="stats">
+        <div class="stat"><div class="stat-n" id="stat-total">—</div><div class="stat-l">Total</div></div>
+        <div class="stat"><div class="stat-n" id="stat-unread">—</div><div class="stat-l">Unread</div></div>
+        <div class="stat"><div class="stat-n" id="stat-today">—</div><div class="stat-l">Today</div></div>
+        <div class="stat"><div class="stat-n" id="stat-hot">—</div><div class="stat-l">Hot</div></div>
+      </div>
+
+      <!-- Toolbar -->
+      <div class="toolbar">
+        <input class="search" type="text" id="search" placeholder="Search…" oninput="renderTable()"/>
+        <input class="date-input" type="date" id="date-from" onchange="renderTable()"/>
+        <span class="date-sep">to</span>
+        <input class="date-input" type="date" id="date-to" onchange="renderTable()"/>
+        <button class="btn" onclick="clearDates()">Clear</button>
+        <div class="ml-auto" style="display:flex;gap:8px;align-items:center">
+          <span class="sel-count" id="sel-count"></span>
+          <button class="btn" id="btn-export" onclick="exportExcel()" disabled>Export Excel</button>
+          <button class="btn danger" id="btn-trash" onclick="bulkTrash()" disabled>Move to Trash</button>
+          <button class="btn danger" id="btn-delete" onclick="bulkDelete(false)" style="display:none">Delete Forever</button>
+          <button class="btn" id="btn-restore" onclick="bulkRestore()" style="display:none">Restore</button>
+        </div>
+      </div>
+
+      <!-- Error -->
+      <div id="error" style="display:none;background:rgba(224,92,92,0.1);border:1px solid rgba(224,92,92,0.2);padding:12px 16px;border-radius:4px;font-size:12px;color:#e07878;margin-bottom:12px"></div>
+
+      <!-- Table -->
+      <div class="tbl-wrap">
+        <div id="loading" class="loading">Loading inquiries…</div>
+        <table id="table" style="display:none">
+          <thead>
+            <tr>
+              <th class="check-col"><input type="checkbox" id="select-all" onchange="toggleSelectAll(this)"/></th>
+              <th>Contact</th>
+              <th>Message</th>
+              <th>Status</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+        <div id="empty" class="empty" style="display:none">No inquiries found.</div>
+      </div>
+    </main>
   </div>
-  <div class="container">
-    <div class="stats">
-      <div class="stat"><div class="stat-n" id="stat-total">—</div><div class="stat-l">Total Inquiries</div></div>
-      <div class="stat"><div class="stat-n" id="stat-unread">—</div><div class="stat-l">Unread</div></div>
-      <div class="stat"><div class="stat-n" id="stat-today">—</div><div class="stat-l">Today</div></div>
+</div>
+
+<!-- Comments Panel -->
+<div class="panel-overlay" id="panel-overlay" onclick="closePanelOnOverlay(event)">
+  <div class="panel">
+    <div class="panel-hdr">
+      <h3>Follow-up Notes</h3>
+      <button class="panel-close" onclick="closePanel()">×</button>
     </div>
-    <div class="toolbar">
-      <input type="text" id="search" placeholder="Search name, email, phone, message…" oninput="filterRows()"/>
-      <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
-      <button class="filter-btn" onclick="setFilter('unread',this)">Unread</button>
-      <span class="count" id="row-count"></span>
+    <div class="panel-info" id="panel-info"></div>
+    <div class="panel-body">
+      <h4>Notes History</h4>
+      <div id="panel-comments"></div>
     </div>
-    <div id="error" class="error" style="display:none"></div>
-    <div id="loading" class="loading">Loading inquiries…</div>
-    <table id="table" style="display:none">
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Name</th>
-          <th>Contact</th>
-          <th>Message</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody id="tbody"></tbody>
-    </table>
-    <div id="empty" class="empty" style="display:none">No inquiries yet.</div>
+    <div class="panel-footer">
+      <textarea class="comment-input" id="comment-input" placeholder="Add a follow-up note…"></textarea>
+      <button class="btn primary" onclick="addComment()" style="width:100%">Save Note</button>
+    </div>
   </div>
 </div>
 
 <script>
+const API = 'https://bda-inquiry-api.info-unikraft.workers.dev';
 var ghToken = null;
 var allInquiries = [];
-var currentFilter = 'all';
+var currentView = 'all';
+var selectedIds = new Set();
+var panelInquiry = null;
 
-// ── Auth check ──
-function getGhToken() {
-  // Decap CMS stores token in localStorage under netlify-cms-user or similar keys
-  var keys = ['netlify-cms-user', 'decap-cms-user', 'github-token'];
-  for (var k of keys) {
-    try {
-      var v = localStorage.getItem(k);
-      if (v) {
-        var parsed = JSON.parse(v);
-        if (parsed && parsed.token) return parsed.token;
-        if (typeof v === 'string' && v.startsWith('ghp_')) return v;
-      }
-    } catch(e) {}
-  }
-  // Search all localStorage keys for GitHub token pattern
+// ── Auth ──
+function getToken() {
   for (var i = 0; i < localStorage.length; i++) {
     var key = localStorage.key(i);
     try {
@@ -130,112 +262,345 @@ function getGhToken() {
 }
 
 function init() {
-  ghToken = getGhToken();
-  if (!ghToken) {
-    document.getElementById('auth-wall').style.display = 'flex';
-    return;
-  }
-  document.getElementById('auth-wall').style.display = 'none';
-  document.getElementById('app').style.display = 'block';
-  loadInquiries();
+  ghToken = getToken();
+  if (!ghToken) { document.getElementById('auth-wall').style.display='flex'; return; }
+  document.getElementById('auth-wall').style.display='none';
+  document.getElementById('app').style.display='block';
+  loadAll();
 }
 
-function loadInquiries() {
-  fetch('https://bda-inquiry-api.info-unikraft.workers.dev/inquiries', {
-    headers: { 'Authorization': 'Bearer ' + ghToken }
-  })
-  .then(function(r) {
-    if (r.status === 401 || r.status === 403) {
-      document.getElementById('auth-wall').style.display = 'flex';
-      document.getElementById('app').style.display = 'none';
-      return null;
-    }
-    return r.json();
-  })
-  .then(function(data) {
-    if (!data) return;
-    allInquiries = data.inquiries || [];
-    renderStats();
-    renderTable();
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('table').style.display = allInquiries.length ? 'table' : 'none';
-    document.getElementById('empty').style.display = allInquiries.length ? 'none' : 'block';
-  })
-  .catch(function(e) {
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('error').style.display = 'block';
-    document.getElementById('error').textContent = 'Error loading inquiries: ' + e.message;
-  });
+// ── Data ──
+function loadAll() {
+  document.getElementById('loading').style.display='block';
+  document.getElementById('table').style.display='none';
+  document.getElementById('empty').style.display='none';
+
+  // Load all (including trashed for sidebar counts)
+  fetch(API + '/inquiries?limit=500', { headers: { 'Authorization': 'Bearer ' + ghToken } })
+    .then(function(r) {
+      if (r.status === 401 || r.status === 403) {
+        document.getElementById('auth-wall').style.display='flex';
+        document.getElementById('app').style.display='none';
+        return null;
+      }
+      return r.json();
+    })
+    .then(function(data) {
+      if (!data) return;
+      // Also fetch trashed
+      return fetch(API + '/inquiries?limit=500&trashed=1', { headers: { 'Authorization': 'Bearer ' + ghToken } })
+        .then(function(r2) { return r2.json(); })
+        .then(function(data2) {
+          allInquiries = (data.inquiries || []).concat(data2.inquiries || []);
+          updateCounts();
+          renderStats();
+          renderTable();
+          document.getElementById('loading').style.display='none';
+        });
+    })
+    .catch(function(e) {
+      document.getElementById('loading').style.display='none';
+      showError('Error loading inquiries: ' + e.message);
+    });
+}
+
+function updateCounts() {
+  var active = allInquiries.filter(function(i){ return !i.trashed; });
+  var trashed = allInquiries.filter(function(i){ return i.trashed; });
+  document.getElementById('cnt-all').textContent    = active.length;
+  document.getElementById('cnt-unread').textContent = active.filter(function(i){ return !i.read; }).length;
+  document.getElementById('cnt-hot').textContent    = active.filter(function(i){ return i.status==='hot'||!i.status; }).length;
+  document.getElementById('cnt-cold').textContent   = active.filter(function(i){ return i.status==='cold'; }).length;
+  document.getElementById('cnt-trash').textContent  = trashed.length;
 }
 
 function renderStats() {
+  var active = allInquiries.filter(function(i){ return !i.trashed; });
   var today = new Date().toISOString().slice(0,10);
-  var unread = allInquiries.filter(function(i){ return !i.read; }).length;
-  var todayCount = allInquiries.filter(function(i){ return i.created_at && i.created_at.startsWith(today); }).length;
-  document.getElementById('stat-total').textContent = allInquiries.length;
-  document.getElementById('stat-unread').textContent = unread;
-  document.getElementById('stat-today').textContent = todayCount;
+  document.getElementById('stat-total').textContent  = active.length;
+  document.getElementById('stat-unread').textContent = active.filter(function(i){ return !i.read; }).length;
+  document.getElementById('stat-today').textContent  = active.filter(function(i){ return (i.created_at||'').startsWith(today); }).length;
+  document.getElementById('stat-hot').textContent    = active.filter(function(i){ return i.status==='hot'||!i.status; }).length;
 }
 
-function formatDate(iso) {
-  if (!iso) return '—';
-  var d = new Date(iso);
-  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  return d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear()
-    + '<br><span style="color:rgba(255,255,255,0.2)">' + d.toTimeString().slice(0,5) + '</span>';
+function getFiltered() {
+  var search  = document.getElementById('search').value.toLowerCase();
+  var from    = document.getElementById('date-from').value;
+  var to      = document.getElementById('date-to').value;
+  var inTrash = currentView === 'trash';
+
+  return allInquiries.filter(function(inq) {
+    if (!!inq.trashed !== inTrash) return false;
+    if (currentView === 'unread' && inq.read) return false;
+    if (currentView === 'hot'    && inq.status !== 'hot' && inq.status) return false;
+    if (currentView === 'cold'   && inq.status !== 'cold') return false;
+    if (from && inq.created_at < from) return false;
+    if (to   && inq.created_at > to + 'T23:59:59Z') return false;
+    if (search) {
+      var s = (inq.name||'') + (inq.email||'') + (inq.phone||'') + (inq.message||'');
+      if (!s.toLowerCase().includes(search)) return false;
+    }
+    return true;
+  });
 }
 
 function renderTable() {
-  var search = document.getElementById('search').value.toLowerCase();
-  var rows = allInquiries.filter(function(inq) {
-    if (currentFilter === 'unread' && inq.read) return false;
-    if (!search) return true;
-    return (inq.name||'').toLowerCase().includes(search)
-      || (inq.email||'').toLowerCase().includes(search)
-      || (inq.phone||'').toLowerCase().includes(search)
-      || (inq.message||'').toLowerCase().includes(search);
-  });
+  var rows = getFiltered();
+  var inTrash = currentView === 'trash';
 
-  document.getElementById('row-count').textContent = rows.length + ' result' + (rows.length !== 1 ? 's' : '');
+  // Update toolbar buttons
+  document.getElementById('btn-trash').style.display  = inTrash ? 'none' : '';
+  document.getElementById('btn-delete').style.display = inTrash ? '' : 'none';
+  document.getElementById('btn-restore').style.display= inTrash ? '' : 'none';
 
   var tbody = document.getElementById('tbody');
   tbody.innerHTML = rows.map(function(inq) {
-    return '<tr class="' + (inq.read ? '' : 'unread') + '" id="row-' + inq.id + '">'
-      + '<td class="td-date">' + formatDate(inq.created_at) + '</td>'
-      + '<td><div class="td-name">' + esc(inq.name) + (inq.read ? '' : '<span class="badge-new">New</span>') + '</div></td>'
-      + '<td><div class="td-email">' + esc(inq.email) + '</div><div class="td-phone">' + esc(inq.phone||'—') + '</div></td>'
-      + '<td class="td-msg">' + esc(inq.message) + '</td>'
-      + '<td><button class="read-btn" onclick="toggleRead(' + inq.id + ',' + (inq.read?'false':'true') + ')">'
-      + (inq.read ? 'Mark unread' : 'Mark read') + '</button></td>'
+    var isHot  = !inq.status || inq.status === 'hot';
+    var isNew  = !inq.read;
+    var sel    = selectedIds.has(inq.id);
+    var dt     = inq.created_at ? new Date(inq.created_at) : null;
+    var dateStr = dt ? dt.getDate() + ' ' + ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][dt.getMonth()] + ' ' + dt.getFullYear() : '—';
+    var comments = [];
+    try { comments = JSON.parse(inq.comments || '[]'); } catch(e) {}
+
+    return '<tr class="'+(sel?'selected ':'')+(isNew?'unread':'')+'" id="row-'+inq.id+'">'
+      + '<td class="check-col"><input type="checkbox" '+(sel?'checked':'')+' onchange="toggleSelect('+inq.id+',this)"/></td>'
+      + '<td>'
+        + '<div class="td-name">'+esc(inq.name)+(isNew?' <span class="badge badge-new">New</span>':'')+' </div>'
+        + '<div class="td-sub">'+esc(inq.email)+'</div>'
+        + '<div class="td-sub">'+esc(inq.phone||'')+'</div>'
+      + '</td>'
+      + '<td><div class="td-msg">'+esc((inq.message||'').slice(0,120))+(inq.message&&inq.message.length>120?'…':'')+'</div></td>'
+      + '<td>'
+        + '<span class="badge '+(isHot?'badge-hot':'badge-cold')+'"><span class="dot"></span>'+(isHot?'Hot':'Cold')+'</span>'
+      + '</td>'
+      + '<td><div class="td-date">'+dateStr+'</div>'
+        + (comments.length ? '<div class="td-sub" style="margin-top:4px">💬 '+comments.length+' note'+(comments.length>1?'s':'')+'</div>' : '')
+      + '</td>'
+      + '<td><div class="td-actions">'
+        + (!inTrash ? (
+            '<button class="act-btn" onclick="toggleRead('+inq.id+','+(isNew?'true':'false')+')">'+(isNew?'Mark read':'Unread')+'</button>'
+          + '<button class="act-btn '+(isHot?'':'gold')+'" onclick="toggleStatus('+inq.id+',\''+(isHot?'cold':'hot')+'\')">'+(isHot?'Mark cold':'Mark hot')+'</button>'
+          + '<button class="act-btn" onclick="openPanel('+inq.id+')">Notes'+(comments.length?' ('+comments.length+')':'')+'</button>'
+          + '<button class="act-btn danger" onclick="trashOne('+inq.id+')">Trash</button>'
+        ) : (
+            '<button class="act-btn gold" onclick="restoreOne('+inq.id+')">Restore</button>'
+          + '<button class="act-btn danger" onclick="deleteOne('+inq.id+')">Delete</button>'
+        ))
+      + '</div></td>'
       + '</tr>';
   }).join('');
+
+  document.getElementById('table').style.display = rows.length ? 'table' : 'none';
+  document.getElementById('empty').style.display = rows.length ? 'none' : 'block';
+  updateSelCount();
 }
 
-function esc(str) {
-  return (str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+// ── Selection ──
+function toggleSelect(id, cb) {
+  if (cb.checked) selectedIds.add(id); else selectedIds.delete(id);
+  var row = document.getElementById('row-'+id);
+  if (row) row.classList.toggle('selected', cb.checked);
+  updateSelCount();
 }
 
-function filterRows() { renderTable(); }
+function toggleSelectAll(cb) {
+  getFiltered().forEach(function(inq) {
+    if (cb.checked) selectedIds.add(inq.id); else selectedIds.delete(inq.id);
+    var row = document.getElementById('row-'+inq.id);
+    if (row) row.classList.toggle('selected', cb.checked);
+    var chk = row && row.querySelector('input[type=checkbox]');
+    if (chk) chk.checked = cb.checked;
+  });
+  updateSelCount();
+}
 
-function setFilter(f, btn) {
-  currentFilter = f;
-  document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
-  btn.classList.add('active');
-  renderTable();
+function updateSelCount() {
+  var n = selectedIds.size;
+  document.getElementById('sel-count').textContent = n ? n + ' selected' : '';
+  document.getElementById('btn-export').disabled = n === 0;
+  document.getElementById('btn-trash').disabled  = n === 0;
+  document.getElementById('btn-delete').disabled = n === 0;
+  document.getElementById('btn-restore').disabled= n === 0;
+}
+
+// ── Actions ──
+function patch(id, data) {
+  return fetch(API + '/inquiries', {
+    method: 'PATCH',
+    headers: { 'Authorization': 'Bearer ' + ghToken, 'Content-Type': 'application/json' },
+    body: JSON.stringify(Object.assign({ id: id }, data))
+  });
 }
 
 function toggleRead(id, markRead) {
-  fetch('https://bda-inquiry-api.info-unikraft.workers.dev/inquiries', {
-    method: 'PATCH',
+  var inq = allInquiries.find(function(i){ return i.id===id; });
+  if (inq) inq.read = markRead;
+  patch(id, { read: markRead }).then(function() { renderTable(); updateCounts(); renderStats(); });
+}
+
+function toggleStatus(id, status) {
+  var inq = allInquiries.find(function(i){ return i.id===id; });
+  if (inq) inq.status = status;
+  patch(id, { status: status }).then(function() { renderTable(); updateCounts(); renderStats(); });
+}
+
+function trashOne(id) {
+  var inq = allInquiries.find(function(i){ return i.id===id; });
+  if (inq) inq.trashed = 1;
+  patch(id, { trashed: true }).then(function() { renderTable(); updateCounts(); renderStats(); });
+}
+
+function restoreOne(id) {
+  var inq = allInquiries.find(function(i){ return i.id===id; });
+  if (inq) inq.trashed = 0;
+  patch(id, { trashed: false }).then(function() { renderTable(); updateCounts(); renderStats(); });
+}
+
+function deleteOne(id) {
+  if (!confirm('Permanently delete this inquiry? This cannot be undone.')) return;
+  fetch(API + '/inquiries', {
+    method: 'DELETE',
     headers: { 'Authorization': 'Bearer ' + ghToken, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ id: id, read: markRead })
+    body: JSON.stringify({ ids: [id] })
   }).then(function() {
-    var inq = allInquiries.find(function(i){ return i.id === id; });
-    if (inq) inq.read = markRead;
-    renderStats();
+    allInquiries = allInquiries.filter(function(i){ return i.id !== id; });
+    renderTable(); updateCounts(); renderStats();
+  });
+}
+
+function bulkTrash() {
+  if (!selectedIds.size) return;
+  var ids = Array.from(selectedIds);
+  ids.forEach(function(id) {
+    var inq = allInquiries.find(function(i){ return i.id===id; });
+    if (inq) inq.trashed = 1;
+    patch(id, { trashed: true });
+  });
+  selectedIds.clear();
+  renderTable(); updateCounts(); renderStats();
+}
+
+function bulkRestore() {
+  if (!selectedIds.size) return;
+  var ids = Array.from(selectedIds);
+  ids.forEach(function(id) {
+    var inq = allInquiries.find(function(i){ return i.id===id; });
+    if (inq) inq.trashed = 0;
+    patch(id, { trashed: false });
+  });
+  selectedIds.clear();
+  renderTable(); updateCounts(); renderStats();
+}
+
+function bulkDelete() {
+  if (!selectedIds.size) return;
+  if (!confirm('Permanently delete ' + selectedIds.size + ' inquiries? This cannot be undone.')) return;
+  var ids = Array.from(selectedIds);
+  fetch(API + '/inquiries', {
+    method: 'DELETE',
+    headers: { 'Authorization': 'Bearer ' + ghToken, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ ids: ids })
+  }).then(function() {
+    allInquiries = allInquiries.filter(function(i){ return !ids.includes(i.id); });
+    selectedIds.clear();
+    renderTable(); updateCounts(); renderStats();
+  });
+}
+
+// ── Views ──
+function setView(view, btn) {
+  currentView = view;
+  document.querySelectorAll('.sb-btn').forEach(function(b){ b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+  selectedIds.clear();
+  renderTable();
+}
+
+function clearDates() {
+  document.getElementById('date-from').value = '';
+  document.getElementById('date-to').value = '';
+  renderTable();
+}
+
+// ── Excel Export ──
+function exportExcel() {
+  var ids = Array.from(selectedIds);
+  var rows = allInquiries.filter(function(i){ return ids.includes(i.id); });
+  var headers = ['Name','Email','Phone','Message','Status','Date','Notes'];
+  var csv = [headers.join(',')].concat(rows.map(function(inq) {
+    var comments = [];
+    try { comments = JSON.parse(inq.comments||'[]'); } catch(e){}
+    var notes = comments.map(function(c){ return c.date.slice(0,10)+': '+c.text; }).join(' | ');
+    return [
+      '"'+(inq.name||'').replace(/"/g,'""')+'"',
+      '"'+(inq.email||'').replace(/"/g,'""')+'"',
+      '"'+(inq.phone||'').replace(/"/g,'""')+'"',
+      '"'+(inq.message||'').replace(/"/g,'""').replace(/\n/g,' ')+'"',
+      '"'+(inq.status||'hot')+'"',
+      '"'+(inq.created_at||'').slice(0,10)+'"',
+      '"'+notes.replace(/"/g,'""')+'"'
+    ].join(',');
+  })).join('\n');
+  var blob = new Blob([csv], { type: 'text/csv' });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'bda-inquiries-' + new Date().toISOString().slice(0,10) + '.csv';
+  a.click();
+}
+
+// ── Comments Panel ──
+function openPanel(id) {
+  panelInquiry = allInquiries.find(function(i){ return i.id===id; });
+  if (!panelInquiry) return;
+
+  document.getElementById('panel-info').innerHTML =
+    '<div class="pi-name">'+esc(panelInquiry.name)+'</div>'
+    +'<div class="pi-sub">'+esc(panelInquiry.email)+' &middot; '+esc(panelInquiry.phone||'')+'</div>'
+    +'<div style="margin-top:8px;font-size:12px;color:var(--text)">'+esc((panelInquiry.message||'').slice(0,200))+'</div>';
+
+  renderComments();
+  document.getElementById('comment-input').value = '';
+  document.getElementById('panel-overlay').classList.add('open');
+}
+
+function renderComments() {
+  if (!panelInquiry) return;
+  var comments = [];
+  try { comments = JSON.parse(panelInquiry.comments||'[]'); } catch(e){}
+  var el = document.getElementById('panel-comments');
+  if (!comments.length) {
+    el.innerHTML = '<div class="no-comments">No notes yet.</div>';
+    return;
+  }
+  el.innerHTML = comments.slice().reverse().map(function(c) {
+    var d = c.date ? new Date(c.date) : null;
+    var ds = d ? d.getDate()+' '+['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]+' '+d.getFullYear()+' '+d.toTimeString().slice(0,5) : '';
+    return '<div class="comment-item"><div class="comment-date">'+ds+'</div><div class="comment-text">'+esc(c.text)+'</div></div>';
+  }).join('');
+}
+
+function addComment() {
+  var text = document.getElementById('comment-input').value.trim();
+  if (!text || !panelInquiry) return;
+  var comment = { text: text, date: new Date().toISOString() };
+  patch(panelInquiry.id, { comment: comment }).then(function() {
+    var comments = [];
+    try { comments = JSON.parse(panelInquiry.comments||'[]'); } catch(e){}
+    comments.push(comment);
+    panelInquiry.comments = JSON.stringify(comments);
+    document.getElementById('comment-input').value = '';
+    renderComments();
     renderTable();
   });
 }
+
+function closePanel() { document.getElementById('panel-overlay').classList.remove('open'); }
+function closePanelOnOverlay(e) { if (e.target === document.getElementById('panel-overlay')) closePanel(); }
+
+// ── Helpers ──
+function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function showError(msg) { var el=document.getElementById('error'); el.textContent=msg; el.style.display='block'; }
 
 window.addEventListener('DOMContentLoaded', init);
 </script>
