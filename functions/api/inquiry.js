@@ -1,8 +1,24 @@
 // Cloudflare Pages Function — POST /api/inquiry
 const WEB3FORMS_KEY = "072310a8-f9f4-4894-9fdc-dd3072db2002";
 
-export async function onRequestPost(context) {
+export async function onRequest(context) {
   const { request, env } = context;
+
+  if (request.method === "OPTIONS") {
+    return new Response(null, {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type"
+      }
+    });
+  }
+
+  if (request.method !== "POST") {
+    return new Response(JSON.stringify({ error: "Method not allowed" }), {
+      status: 405, headers: { "Content-Type": "application/json" }
+    });
+  }
 
   let body;
   const ct = request.headers.get("content-type") || "";
@@ -62,18 +78,7 @@ export async function onRequestPost(context) {
     console.error("Web3Forms error:", e.message);
   }
 
-  // Always return success so user never sees an error
   return new Response(JSON.stringify({ success: true }), {
     headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
-  });
-}
-
-export async function onRequestOptions() {
-  return new Response(null, {
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "POST, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type"
-    }
   });
 }
