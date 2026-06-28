@@ -122,10 +122,14 @@ export default {
     const url = new URL(request.url);
     const path = url.pathname;
 
+    // Handle API routes first
     if (path === "/api/inquiry")   return handleInquiry(request, env);
     if (path === "/api/inquiries") return handleInquiries(request, env);
 
-    // All other routes handled by static assets (SPA)
-    return env.ASSETS.fetch(request);
+    // Pass everything else to static assets
+    if (env.ASSETS) return env.ASSETS.fetch(request);
+
+    // Fallback: fetch from origin
+    return fetch(request);
   }
 };
