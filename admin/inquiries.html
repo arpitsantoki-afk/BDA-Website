@@ -429,30 +429,30 @@ function patch(id, data) {
   return fetch(API + '/inquiries', {
     method: 'PATCH',
     headers: { 'Authorization': 'Bearer ' + ghToken, 'Content-Type': 'application/json' },
-    body: JSON.stringify(Object.assign({ id: id }, data))
+    body: JSON.stringify(Object.assign({ id: parseInt(id, 10) }, data))
   });
 }
 
 function toggleRead(id, markRead) {
-  var inq = allInquiries.find(function(i){ return i.id===id; });
+  var inq = allInquiries.find(function(i){ return i.id==id; });
   if (inq) inq.read = markRead;
   patch(id, { read: markRead }).then(function() { renderTable(); updateCounts(); renderStats(); });
 }
 
 function toggleStatus(id, status) {
-  var inq = allInquiries.find(function(i){ return i.id===id; });
+  var inq = allInquiries.find(function(i){ return i.id==id; });
   if (inq) inq.status = status;
   patch(id, { status: status }).then(function() { renderTable(); updateCounts(); renderStats(); });
 }
 
 function trashOne(id) {
-  var inq = allInquiries.find(function(i){ return i.id===id; });
+  var inq = allInquiries.find(function(i){ return i.id==id; });
   if (inq) inq.trashed = 1;
   patch(id, { trashed: true }).then(function() { renderTable(); updateCounts(); renderStats(); });
 }
 
 function restoreOne(id) {
-  var inq = allInquiries.find(function(i){ return i.id===id; });
+  var inq = allInquiries.find(function(i){ return i.id==id; });
   if (inq) inq.trashed = 0;
   patch(id, { trashed: false }).then(function() { renderTable(); updateCounts(); renderStats(); });
 }
@@ -473,7 +473,7 @@ function bulkTrash() {
   if (!selectedIds.size) return;
   var ids = Array.from(selectedIds);
   ids.forEach(function(id) {
-    var inq = allInquiries.find(function(i){ return i.id===id; });
+    var inq = allInquiries.find(function(i){ return i.id==id; });
     if (inq) inq.trashed = 1;
     patch(id, { trashed: true });
   });
@@ -485,7 +485,7 @@ function bulkRestore() {
   if (!selectedIds.size) return;
   var ids = Array.from(selectedIds);
   ids.forEach(function(id) {
-    var inq = allInquiries.find(function(i){ return i.id===id; });
+    var inq = allInquiries.find(function(i){ return i.id==id; });
     if (inq) inq.trashed = 0;
     patch(id, { trashed: false });
   });
@@ -502,7 +502,7 @@ function bulkDelete() {
     headers: { 'Authorization': 'Bearer ' + ghToken, 'Content-Type': 'application/json' },
     body: JSON.stringify({ ids: ids })
   }).then(function() {
-    allInquiries = allInquiries.filter(function(i){ return !ids.includes(i.id); });
+    allInquiries = allInquiries.filter(function(i){ return !ids.map(Number).includes(Number(i.id)); });
     selectedIds.clear();
     renderTable(); updateCounts(); renderStats();
   });
@@ -551,7 +551,7 @@ function exportExcel() {
 
 // ── Comments Panel ──
 function openPanel(id) {
-  panelInquiry = allInquiries.find(function(i){ return i.id===id; });
+  panelInquiry = allInquiries.find(function(i){ return i.id==id; });
   if (!panelInquiry) return;
 
   document.getElementById('panel-info').innerHTML =
