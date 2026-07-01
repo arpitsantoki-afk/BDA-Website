@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="theme-color" content="#131416"/>
 <title>BDA Inquiries — Login</title>
-<link rel="manifest" href="/manifest.json"/>
+<link rel="manifest" href="https://inquiries.bluedoorarchitects.com/manifest.json"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#131416;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
@@ -53,7 +53,7 @@ if (existing) {
   fetch(API + '/auth/me', { headers: { 'X-Session-Token': existing } })
     .then(function(r) { return r.json(); })
     .then(function(d) {
-      if (d.email) window.location.href = '/';
+      if (d.email) window.location.href = 'https://inquiries.bluedoorarchitects.com/';
     }).catch(function(){});
 }
 
@@ -100,7 +100,7 @@ function handleCredential(response) {
     if (d.success) {
       localStorage.setItem('bda_inq_token', d.token);
       localStorage.setItem('bda_inq_user', JSON.stringify({ email: d.email, name: d.name, role: d.role }));
-      window.location.href = '/';
+      window.location.href = 'https://inquiries.bluedoorarchitects.com/';
     } else {
       showError(d.error || 'Login failed. You may not have access.');
       document.getElementById('g-btn').disabled = false;
