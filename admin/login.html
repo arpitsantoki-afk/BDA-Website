@@ -5,135 +5,103 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <meta name="mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="theme-color" content="#131416"/>
 <title>BDA Inquiries — Login</title>
-<link rel="manifest" href="https://inquiries.bluedoorarchitects.com/manifest.json"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#131416;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
 .card{background:#1c1e21;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:48px 40px;width:100%;max-width:380px;text-align:center}
-.logo{font-family:Georgia,serif;font-size:13px;letter-spacing:0.2em;color:#c9a96e;margin-bottom:8px}
+.logo{font-family:Georgia,serif;font-size:13px;letter-spacing:0.2em;color:#c9a96e;margin-bottom:6px}
 .logo-sub{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:40px}
 .title{font-size:20px;font-weight:300;color:#e8e6e1;margin-bottom:8px}
 .subtitle{font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:36px;line-height:1.6}
-.g-btn{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;padding:13px 20px;background:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px;font-weight:500;color:#3c4043;transition:box-shadow .2s,opacity .2s}
-.g-btn:hover{box-shadow:0 2px 8px rgba(0,0,0,0.3)}
-.g-btn:disabled{opacity:0.6;cursor:default}
-.g-btn svg{flex-shrink:0}
-.error{margin-top:16px;padding:12px;background:rgba(224,92,92,0.1);border:1px solid rgba(224,92,92,0.2);border-radius:6px;font-size:12px;color:#e07878;display:none}
-.loading{margin-top:20px;font-size:12px;color:rgba(255,255,255,0.3);display:none}
+.btn-wrap{display:flex;justify-content:center;margin-bottom:16px}
+.error{padding:12px;background:rgba(224,92,92,0.1);border:1px solid rgba(224,92,92,0.2);border-radius:6px;font-size:12px;color:#e07878;display:none;margin-bottom:12px;line-height:1.5}
+.loading{font-size:12px;color:rgba(255,255,255,0.3);display:none;margin-bottom:12px}
 .footer{margin-top:40px;font-size:10px;color:rgba(255,255,255,0.2);letter-spacing:0.1em}
 </style>
 </head>
 <body>
 <div class="card">
   <div class="logo">BLUE DOOR ARCHITECTS</div>
-  <div class="logo-sub">Inquiries</div>
-  <div class="title">Welcome back</div>
-  <div class="subtitle">Sign in with your Google account<br>to access the inquiries dashboard.</div>
-
-  <button class="g-btn" id="g-btn" onclick="signIn()">
-    <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M16.51 8H8.98v3h4.3c-.18 1-.74 1.48-1.6 2.04v2.01h2.6a7.8 7.8 0 002.38-5.88c0-.57-.05-.66-.15-1.18z"/><path fill="#34A853" d="M8.98 17c2.16 0 3.97-.72 5.3-1.94l-2.6-2a4.8 4.8 0 01-7.18-2.54H1.83v2.07A8 8 0 008.98 17z"/><path fill="#FBBC05" d="M4.5 10.52a4.8 4.8 0 010-3.04V5.41H1.83a8 8 0 000 7.18l2.67-2.07z"/><path fill="#EA4335" d="M8.98 4.18c1.17 0 2.23.4 3.06 1.2l2.3-2.3A8 8 0 001.83 5.4L4.5 7.49a4.77 4.77 0 014.48-3.3z"/></svg>
-    Sign in with Google
-  </button>
+  <div class="logo-sub">Inquiries Dashboard</div>
+  <div class="title">Welcome</div>
+  <div class="subtitle">Sign in with your Google account<br>to access the dashboard.</div>
   <div class="error" id="error"></div>
-  <div class="loading" id="loading">Signing in…</div>
+  <div class="loading" id="loading">Verifying…</div>
+  <div class="btn-wrap" id="g-btn-wrap"></div>
   <div class="footer">Blue Door Architects · Gandhinagar</div>
 </div>
 
-<script src="https://accounts.google.com/gsi/client" async></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <script>
-const API = 'https://inquiries.bluedoorarchitects.com';
-const CLIENT_ID = '449634347678-tkbk083eu1igcil0rq58tgvdrs54l4nm.apps.googleusercontent.com';
+var API = 'https://inquiries.bluedoorarchitects.com';
+var CLIENT_ID = '449634347678-tkbk083eu1igcil0rq58tgvdrs54l4nm.apps.googleusercontent.com';
 
-// Check if already logged in
+// If already logged in, verify and redirect
 var existing = localStorage.getItem('bda_inq_token');
 if (existing) {
   fetch(API + '/auth/me', { headers: { 'X-Session-Token': existing } })
-    .then(function(r) { return r.json(); })
-    .then(function(d) {
-      if (d.email) window.location.href = 'https://inquiries.bluedoorarchitects.com/';
-    }).catch(function(){});
-}
-
-function signIn() {
-  document.getElementById('g-btn').disabled = true;
-  document.getElementById('loading').style.display = 'block';
-  document.getElementById('error').style.display = 'none';
-
-  google.accounts.id.initialize({
-    client_id: CLIENT_ID,
-    callback: handleCredential,
-    auto_select: false
-  });
-  google.accounts.id.prompt(function(notification) {
-    if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-      // Fallback to popup
-      google.accounts.id.renderButton(
-        document.createElement('div'),
-        { theme: 'outline', size: 'large' }
-      );
-      // Use OAuth2 popup directly
-      var popup = window.open(
-        'https://accounts.google.com/o/oauth2/v2/auth?' +
-        'client_id=' + CLIENT_ID +
-        '&redirect_uri=' + encodeURIComponent(window.location.origin + '/login.html') +
-        '&response_type=id_token' +
-        '&scope=openid%20email%20profile' +
-        '&nonce=' + Math.random().toString(36).slice(2),
-        'google-signin', 'width=500,height=600'
-      );
-    }
-  });
-}
-
-function handleCredential(response) {
-  fetch(API + '/auth/google', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ id_token: response.credential })
-  })
-  .then(function(r) { return r.json(); })
-  .then(function(d) {
-    document.getElementById('loading').style.display = 'none';
-    if (d.success) {
-      localStorage.setItem('bda_inq_token', d.token);
-      localStorage.setItem('bda_inq_user', JSON.stringify({ email: d.email, name: d.name, role: d.role }));
-      window.location.href = 'https://inquiries.bluedoorarchitects.com/';
-    } else {
-      showError(d.error || 'Login failed. You may not have access.');
-      document.getElementById('g-btn').disabled = false;
-    }
-  })
-  .catch(function(e) {
-    document.getElementById('loading').style.display = 'none';
-    showError('Connection error. Please try again.');
-    document.getElementById('g-btn').disabled = false;
-  });
+    .then(function(r){ return r.json(); })
+    .then(function(d){ if (d.email) window.location.href = API + '/'; })
+    .catch(function(){});
 }
 
 function showError(msg) {
   var el = document.getElementById('error');
   el.textContent = msg;
   el.style.display = 'block';
+  document.getElementById('loading').style.display = 'none';
 }
 
-// Initialize Google Sign-In when script loads
-window.addEventListener('load', function() {
-  if (window.google && google.accounts) {
-    google.accounts.id.initialize({
-      client_id: CLIENT_ID,
-      callback: handleCredential,
-      auto_select: true,
-      cancel_on_tap_outside: false
-    });
-    google.accounts.id.renderButton(document.getElementById('g-btn').parentElement, {
-      type: 'standard', theme: 'outline', size: 'large', width: 300
-    });
-    google.accounts.id.prompt();
+function handleCredential(response) {
+  document.getElementById('loading').style.display = 'block';
+  document.getElementById('error').style.display = 'none';
+  fetch(API + '/auth/google', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id_token: response.credential })
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(d){
+    document.getElementById('loading').style.display = 'none';
+    if (d.success) {
+      localStorage.setItem('bda_inq_token', d.token);
+      localStorage.setItem('bda_inq_user', JSON.stringify({ email: d.email, name: d.name, role: d.role }));
+      window.location.href = API + '/';
+    } else {
+      showError(d.error || 'Login failed. You may not have access to this app.');
+    }
+  })
+  .catch(function(){ showError('Connection error. Please try again.'); });
+}
+
+// Wait for Google GSI to load then render button
+function initGoogle() {
+  if (!window.google || !google.accounts) {
+    setTimeout(initGoogle, 200);
+    return;
   }
-});
+  google.accounts.id.initialize({
+    client_id: CLIENT_ID,
+    callback: handleCredential,
+    ux_mode: 'popup',
+    auto_select: false
+  });
+  google.accounts.id.renderButton(
+    document.getElementById('g-btn-wrap'),
+    {
+      type: 'standard',
+      theme: 'outline',
+      size: 'large',
+      text: 'signin_with',
+      shape: 'rectangular',
+      width: 280
+    }
+  );
+}
+
+window.addEventListener('load', initGoogle);
 </script>
 </body>
 </html>
