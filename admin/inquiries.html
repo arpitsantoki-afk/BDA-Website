@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="theme-color" content="#1b1c1e"/>
-<link rel="manifest" href="/manifest.json"/>
+<link rel="manifest" href="https://inquiries.bluedoorarchitects.com/manifest.json"/>
 <title>Inquiries — Blue Door Architects</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -247,7 +247,7 @@ input[type=checkbox]{accent-color:var(--gold);width:14px;height:14px;cursor:poin
     <button onclick="loadAll()" class="hdr-back" style="background:none;border:1px solid var(--border);cursor:pointer;margin-left:8px" title="Refresh">↻ Sync</button>
     <button onclick="toggleDebug()" class="hdr-back" style="background:none;border:1px solid var(--border);cursor:pointer;margin-left:4px" title="Debug">⚙</button>
     <button id="install-btn" onclick="installApp()" class="hdr-back" style="display:none;background:none;border:1px solid rgba(201,169,110,0.3);color:var(--gold);cursor:pointer">⬇ Install</button>
-    <a id="users-link" href="/users.html" class="hdr-back" style="display:none;align-items:center">👥 Users</a>
+    <a id="users-link" href="https://inquiries.bluedoorarchitects.com/users.html" class="hdr-back" style="display:none;align-items:center">👥 Users</a>
     <span id="user-name" style="font-size:11px;color:var(--muted);padding:0 4px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></span>
     <button onclick="logout()" class="hdr-back" style="background:none;border:1px solid var(--border);cursor:pointer">Sign out</button>
   </header>
@@ -369,11 +369,11 @@ var panelInquiry = null;
 // ── Auth ──
 function init() {
   ghToken = localStorage.getItem('bda_inq_token');
-  if (!ghToken) { window.location.href = '/login.html'; return; }
+  if (!ghToken) { window.location.href = 'https://inquiries.bluedoorarchitects.com/login.html'; return; }
   fetch(API + '/auth/me', { headers: { 'X-Session-Token': ghToken } })
     .then(function(r) { return r.json(); })
     .then(function(d) {
-      if (!d.email) { window.location.href = '/login.html'; return; }
+      if (!d.email) { window.location.href = 'https://inquiries.bluedoorarchitects.com/login.html'; return; }
       currentUser = d;
       if (d.role === 'super_admin') {
         var ul = document.getElementById('users-link');
@@ -385,7 +385,7 @@ function init() {
       document.getElementById('app').style.display = 'block';
       loadAll();
     })
-    .catch(function() { window.location.href = '/login.html'; });
+    .catch(function() { window.location.href = 'https://inquiries.bluedoorarchitects.com/login.html'; });
 }
 
 function logout() {
@@ -393,7 +393,7 @@ function logout() {
     .finally(function() {
       localStorage.removeItem('bda_inq_token');
       localStorage.removeItem('bda_inq_user');
-      window.location.href = '/login.html';
+      window.location.href = 'https://inquiries.bluedoorarchitects.com/login.html';
     });
 }
 
@@ -780,7 +780,7 @@ function installApp() {
 }
 // Register service worker
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js').catch(function(){});
+  navigator.serviceWorker.register('https://inquiries.bluedoorarchitects.com/sw.js').catch(function(){});
 }
 window.addEventListener('DOMContentLoaded', init);
 </script>
