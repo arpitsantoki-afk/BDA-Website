@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="theme-color" content="#131416"/>
+<title>BDA Inquiries — Users</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#131416;--surface:#1c1e21;--surface2:#242628;--border:rgba(255,255,255,0.08);--text:#e8e6e1;--muted:rgba(255,255,255,0.4);--gold:#c9a96e;--gold2:rgba(201,169,110,0.12);--red:#e07878;--green:#6dbf8a;--radius:8px}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:13px}
+.hdr{background:var(--surface);border-bottom:1px solid var(--border);padding:0 20px;display:flex;align-items:center;gap:12px;height:52px;position:sticky;top:0;z-index:100}
+.hdr-logo{font-family:Georgia,serif;font-size:13px;letter-spacing:0.14em;color:var(--gold)}
+.hdr-sep{color:var(--border)}
+.hdr-title{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted)}
+.hdr-back{margin-left:auto;font-size:11px;color:var(--muted);text-decoration:none;padding:6px 12px;border:1px solid var(--border);border-radius:6px}
+.hdr-back:hover{color:var(--text)}
+.container{max-width:700px;margin:0 auto;padding:24px 20px}
+.section-title{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.add-form{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:24px}
+.form-row{display:flex;gap:10px;flex-wrap:wrap}
+.inp{flex:1;min-width:160px;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:9px 12px;border-radius:6px;font-size:13px;outline:none}
+.inp:focus{border-color:rgba(201,169,110,0.4)}
+.sel{background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:9px 12px;border-radius:6px;font-size:13px;outline:none}
+.btn{padding:9px 16px;border-radius:6px;border:none;cursor:pointer;font-size:12px;letter-spacing:0.06em;font-weight:500;transition:opacity .15s}
+.btn-primary{background:var(--gold);color:#131416}
+.btn-primary:hover{opacity:0.88}
+.btn-danger{background:rgba(224,120,120,0.15);color:var(--red);border:1px solid rgba(224,120,120,0.2)}
+.btn-danger:hover{opacity:0.8}
+.users-list{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.user-row{display:flex;align-items:center;padding:14px 16px;border-bottom:1px solid var(--border);gap:12px}
+.user-row:last-child{border-bottom:none}
+.user-avatar{width:36px;height:36px;border-radius:50%;background:var(--gold2);display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;color:var(--gold);font-size:14px;flex-shrink:0}
+.user-info{flex:1;min-width:0}
+.user-name{font-weight:500;color:var(--text);margin-bottom:2px}
+.user-email{font-size:11px;color:var(--muted)}
+.user-meta{font-size:10px;color:rgba(255,255,255,0.2);margin-top:2px}
+.badge{display:inline-block;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;padding:2px 8px;border-radius:10px;border:1px solid}
+.badge-super{color:var(--gold);border-color:rgba(201,169,110,0.3);background:var(--gold2)}
+.badge-admin{color:var(--green);border-color:rgba(109,191,138,0.3);background:rgba(109,191,138,0.08)}
+.badge-inactive{color:var(--muted);border-color:var(--border);background:transparent}
+.user-actions{display:flex;gap:6px;flex-shrink:0}
+.act{font-size:10px;padding:4px 10px;border-radius:4px;border:1px solid var(--border);background:none;color:var(--muted);cursor:pointer;transition:all .15s}
+.act:hover{color:var(--text);border-color:rgba(255,255,255,0.2)}
+.act.danger:hover{color:var(--red);border-color:rgba(224,120,120,0.3)}
+.empty{text-align:center;padding:40px;color:var(--muted);font-size:12px}
+.msg{padding:10px 14px;border-radius:6px;font-size:12px;margin-bottom:16px;display:none}
+.msg-ok{background:rgba(109,191,138,0.1);border:1px solid rgba(109,191,138,0.2);color:var(--green)}
+.msg-err{background:rgba(224,120,120,0.1);border:1px solid rgba(224,120,120,0.2);color:var(--red)}
+#auth-wall{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:999}
+.auth-box{text-align:center}.auth-box p{font-size:12px;color:var(--muted);margin-bottom:20px}
+.auth-box a{display:inline-block;background:var(--gold);color:#131416;padding:10px 24px;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;border-radius:6px}
+@media(max-width:600px){.form-row{flex-direction:column}.user-row{flex-wrap:wrap}.user-actions{width:100%;justify-content:flex-end}}
+</style>
+</head>
+<body>
+<div id="auth-wall">
+  <div class="auth-box">
+    <p>Super admin access required.</p>
+    <a href="/login.html">Sign In</a>
+  </div>
+</div>
+
+<div id="app" style="display:none">
+  <header class="hdr">
+    <span class="hdr-logo">BDA</span>
+    <span class="hdr-sep">|</span>
+    <span class="hdr-title">User Management</span>
+    <a href="/" class="hdr-back">← Inquiries</a>
+  </header>
+
+  <div class="container">
+    <div id="msg" class="msg"></div>
+
+    <div class="section-title">Add New User</div>
+    <div class="add-form">
+      <div class="form-row">
+        <input class="inp" id="add-email" type="email" placeholder="Email address"/>
+        <input class="inp" id="add-name" type="text" placeholder="Full name"/>
+        <select class="sel" id="add-role">
+          <option value="admin">Admin</option>
+        </select>
+        <button class="btn btn-primary" onclick="addUser()">Add User</button>
+      </div>
+    </div>
+
+    <div class="section-title">Team Members</div>
+    <div class="users-list" id="users-list">
+      <div class="empty">Loading…</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const API = 'https://inquiries.bluedoorarchitects.com';
+var token = localStorage.getItem('bda_inq_token');
+var me = null;
+
+function init() {
+  if (!token) { document.getElementById('auth-wall').style.display='flex'; return; }
+  fetch(API + '/auth/me', { headers: { 'X-Session-Token': token } })
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      if (!d.email) { window.location.href = '/login.html'; return; }
+      if (d.role !== 'super_admin') { window.location.href = '/'; return; }
+      me = d;
+      document.getElementById('auth-wall').style.display = 'none';
+      document.getElementById('app').style.display = 'block';
+      loadUsers();
+    })
+    .catch(function() { window.location.href = '/login.html'; });
+}
+
+function loadUsers() {
+  fetch(API + '/users', { headers: { 'X-Session-Token': token } })
+    .then(function(r) { return r.json(); })
+    .then(function(d) { renderUsers(d.users || []); })
+    .catch(function(e) { showMsg('Error loading users: ' + e.message, true); });
+}
+
+function renderUsers(users) {
+  var el = document.getElementById('users-list');
+  if (!users.length) { el.innerHTML = '<div class="empty">No users yet.</div>'; return; }
+  el.innerHTML = users.map(function(u) {
+    var isSuperAdmin = u.email === 'info.unikraft@gmail.com';
+    var initial = (u.name || u.email).charAt(0).toUpperCase();
+    var badgeClass = isSuperAdmin ? 'badge-super' : (u.active ? 'badge-admin' : 'badge-inactive');
+    var badgeText = isSuperAdmin ? 'Super Admin' : (u.active ? 'Admin' : 'Inactive');
+    return '<div class="user-row">'
+      + '<div class="user-avatar">'+initial+'</div>'
+      + '<div class="user-info">'
+        + '<div class="user-name">'+esc(u.name||u.email)+' <span class="badge '+badgeClass+'">'+badgeText+'</span></div>'
+        + '<div class="user-email">'+esc(u.email)+'</div>'
+        + (u.added_at ? '<div class="user-meta">Added '+u.added_at.slice(0,10)+(u.added_by?' by '+u.added_by:'')+'</div>' : '')
+      + '</div>'
+      + (!isSuperAdmin ? '<div class="user-actions">'
+        + '<button class="act" onclick="toggleActive(\''+u.email+'\','+(u.active?'false':'true')+')">'+(u.active?'Disable':'Enable')+'</button>'
+        + '<button class="act danger" onclick="deleteUser(\''+u.email+'\')">Remove</button>'
+      + '</div>' : '')
+      + '</div>';
+  }).join('');
+}
+
+function addUser() {
+  var email = document.getElementById('add-email').value.trim();
+  var name  = document.getElementById('add-name').value.trim();
+  var role  = document.getElementById('add-role').value;
+  if (!email) { showMsg('Email is required.', true); return; }
+  fetch(API + '/users', {
+    method: 'POST',
+    headers: { 'X-Session-Token': token, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: email, name: name, role: role })
+  }).then(function(r) { return r.json(); })
+  .then(function(d) {
+    if (d.success) {
+      showMsg('User added successfully.', false);
+      document.getElementById('add-email').value = '';
+      document.getElementById('add-name').value = '';
+      loadUsers();
+    } else { showMsg(d.error || 'Failed to add user.', true); }
+  }).catch(function(e) { showMsg('Error: ' + e.message, true); });
+}
+
+function toggleActive(email, active) {
+  fetch(API + '/users', {
+    method: 'PATCH',
+    headers: { 'X-Session-Token': token, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: email, active: active })
+  }).then(function() { loadUsers(); });
+}
+
+function deleteUser(email) {
+  if (!confirm('Remove ' + email + '? They will lose access immediately.')) return;
+  fetch(API + '/users', {
+    method: 'DELETE',
+    headers: { 'X-Session-Token': token, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: email })
+  }).then(function(r) { return r.json(); })
+  .then(function(d) {
+    if (d.success) { showMsg('User removed.', false); loadUsers(); }
+    else { showMsg(d.error || 'Failed.', true); }
+  });
+}
+
+function showMsg(msg, isErr) {
+  var el = document.getElementById('msg');
+  el.className = 'msg ' + (isErr ? 'msg-err' : 'msg-ok');
+  el.textContent = msg;
+  el.style.display = 'block';
+  setTimeout(function() { el.style.display = 'none'; }, 4000);
+}
+
+function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
