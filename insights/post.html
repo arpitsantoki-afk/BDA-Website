@@ -73,9 +73,27 @@ function renderBody(text){
   paras.forEach(function(para){
     para = para.trim();
     if(!para) return;
-    if(para.indexOf('## ')===0) out += '<h2>'+para.slice(3)+'</h2>';
-    else if(para.indexOf('# ')===0) out += '<h2>'+para.slice(2)+'</h2>';
-    else out += '<p>'+para.replace(/\n/g,'<br/>')+'</p>';
+    // Headings
+    if(para.indexOf('### ')===0) { out += '<h3>'+para.slice(4)+'</h3>'; return; }
+    if(para.indexOf('## ')===0)  { out += '<h2>'+para.slice(3)+'</h2>'; return; }
+    if(para.indexOf('# ')===0)   { out += '<h2>'+para.slice(2)+'</h2>'; return; }
+    // Markdown image: ![alt](url "title")
+    var imgMatch = para.match(/^!\[([^\]]*)\]\(([^\s)]+)(?:\s+"[^"]*")?\)$/);
+    if(imgMatch) {
+      var alt = imgMatch[1];
+      var src = imgMatch[2];
+      // Convert relative /images/ paths to raw GitHub URL
+      if(src.startsWith('/')) src = 'https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main' + src;
+      out += '<figure><img src="'+src+'" alt="'+alt+'" style="width:100%;border-radius:2px;margin:8px 0"/>'
+           + (alt ? '<figcaption>'+alt+'</figcaption>' : '')
+           + '</figure>';
+      return;
+    }
+    // Bold **text**
+    para = para.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    // Italic *text*
+    para = para.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+    out += '<p>'+para.replace(/\n/g,'<br/>')+'</p>';
   });
   return out;
 }
