@@ -204,6 +204,7 @@ collections:
           - { label: "Philosophy Point 3 — Text", name: "phil_3_text", widget: "text" }
           - { label: "Studio Image", name: "studio_image", widget: "image", hint: "Portrait image shown alongside the philosophy points" }
           # ── AUTHOR (shown at bottom of every Insight post) ──
+          - { label: "Author Photo", name: "author_image", widget: "image", hint: "Photo shown in the Author section at the bottom of every Insights post" }
           - { label: "Author Name", name: "author_name", widget: "string", hint: "e.g. Riddhi Patel Santoki" }
           - { label: "Author Title", name: "author_title", widget: "string", hint: "e.g. Principal Architect, Blue Door Architects" }
           - { label: "Author Bio", name: "author_bio", widget: "text", hint: "Short intro shown at the bottom of every Insights post" }
