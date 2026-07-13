@@ -28,6 +28,11 @@ body{background:var(--warm);color:var(--ink);font-family:'Jost',sans-serif;font-
 .post-body-wrap{font-size:0.9rem;line-height:1.95;color:var(--ink)}
 .post-body-wrap p{margin-bottom:1.5rem}
 .post-body-wrap h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.7rem;margin:2.5rem 0 1rem;line-height:1.2}
+.author-block{display:flex;align-items:flex-start;gap:20px;padding:2rem 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);margin:2.5rem 0}
+.author-photo{width:64px;height:64px;border-radius:50%;object-fit:cover;flex-shrink:0;background:#e8e3db}
+.author-name{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.05rem;color:var(--ink);margin-bottom:2px}
+.author-title{font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--mid);margin-bottom:8px}
+.author-bio{font-size:0.82rem;line-height:1.75;color:var(--mid)}
 .post-cta-block{margin-top:4rem;padding:2.5rem;background:var(--ink);color:var(--warm)}
 .post-cta-block .cta-h{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.6rem;margin-bottom:0.75rem}
 .post-cta-block p{font-size:0.83rem;line-height:1.75;margin-bottom:1.5rem;opacity:0.75}
@@ -115,6 +120,24 @@ if(!slug){
     })
     .catch(function(){ document.getElementById('post-h1').textContent = 'Post not found.'; });
 }
+
+// Load author from studio.json
+fetch('https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/studio.json?t=' + Date.now())
+  .then(function(r){ return r.json(); })
+  .then(function(s){
+    var block = document.getElementById('author-block');
+    if (!block) return;
+    if (s.author_name)  document.getElementById('author-name').textContent  = s.author_name;
+    if (s.author_title) document.getElementById('author-title').textContent = s.author_title;
+    if (s.author_bio)   document.getElementById('author-bio').textContent   = s.author_bio;
+    if (s.studio_image) {
+      var src = s.studio_image.startsWith('/') ? 'https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main' + s.studio_image : s.studio_image;
+      document.getElementById('author-photo').src = src;
+      document.getElementById('author-photo').alt = s.author_name || '';
+    }
+    block.style.display = 'flex';
+  })
+  .catch(function(){});
 </script>
 <div id="footer-slot"></div>
 <script src="/components/nav-footer.js"></script>
