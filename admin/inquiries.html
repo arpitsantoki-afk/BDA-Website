@@ -129,6 +129,20 @@ input[type=checkbox]{accent-color:var(--gold);width:14px;height:14px;cursor:poin
 .layout{height:calc(100vh - 48px)}
 #debug-panel.open{display:block!important}
 
+/* ── New Inquiry Panel ── */
+.new-inq-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:300;display:none;align-items:center;justify-content:center;padding:20px}
+.new-inq-overlay.open{display:flex}
+.new-inq-panel{background:var(--surface);border:1px solid var(--border);border-radius:8px;width:100%;max-width:480px;overflow:hidden}
+.new-inq-hdr{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.new-inq-hdr h3{font-size:13px;font-weight:500}
+.new-inq-body{padding:20px;display:flex;flex-direction:column;gap:12px}
+.new-inq-row{display:flex;gap:10px}
+.new-inq-label{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.new-inq-input{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:9px 12px;border-radius:6px;font-size:13px;font-family:var(--font);outline:none;resize:vertical}
+.new-inq-input:focus{border-color:rgba(201,169,110,0.4)}
+.new-inq-footer{padding:16px 20px;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end}
+.tag-manual{font-size:9px;letter-spacing:0.1em;text-transform:uppercase;padding:2px 7px;border-radius:10px;border:1px solid rgba(120,171,224,0.3);background:rgba(120,171,224,0.08);color:#78abe0;margin-left:6px}
+
 /* ═══════════ MOBILE RESPONSIVE ═══════════ */
 @media (max-width: 768px) {
   body{font-size:13px}
@@ -303,6 +317,7 @@ input[type=checkbox]{accent-color:var(--gold);width:14px;height:14px;cursor:poin
         <span class="date-sep">to</span>
         <input class="date-input" type="date" id="date-to" onchange="renderTable()"/>
         <button class="btn" onclick="clearDates()">Clear</button>
+        <button class="btn primary" onclick="openNewInquiry()" style="margin-right:auto">+ New Inquiry</button>
         <div class="ml-auto" style="display:flex;gap:8px;align-items:center">
           <span class="sel-count" id="sel-count"></span>
           <button class="btn" id="btn-export" onclick="exportExcel()" disabled>Export Excel</button>
@@ -334,6 +349,45 @@ input[type=checkbox]{accent-color:var(--gold);width:14px;height:14px;cursor:poin
         <div id="empty" class="empty" style="display:none">No inquiries found.</div>
       </div>
     </main>
+  </div>
+</div>
+
+<!-- New Inquiry Panel -->
+<div class="new-inq-overlay" id="new-inq-overlay" onclick="closeNewInqOnOverlay(event)">
+  <div class="new-inq-panel">
+    <div class="new-inq-hdr">
+      <h3>Add Manual Inquiry <span class="tag-manual">Manual</span></h3>
+      <button class="panel-close" onclick="closeNewInquiry()">×</button>
+    </div>
+    <div class="new-inq-body">
+      <div class="new-inq-row">
+        <div style="flex:1">
+          <div class="new-inq-label">First Name *</div>
+          <input class="new-inq-input" id="ni-firstname" type="text" placeholder="First name"/>
+        </div>
+        <div style="flex:1">
+          <div class="new-inq-label">Last Name</div>
+          <input class="new-inq-input" id="ni-lastname" type="text" placeholder="Last name"/>
+        </div>
+      </div>
+      <div>
+        <div class="new-inq-label">Email</div>
+        <input class="new-inq-input" id="ni-email" type="email" placeholder="email@example.com"/>
+      </div>
+      <div>
+        <div class="new-inq-label">Phone *</div>
+        <input class="new-inq-input" id="ni-phone" type="tel" placeholder="+91 00000 00000"/>
+      </div>
+      <div>
+        <div class="new-inq-label">About the Project *</div>
+        <textarea class="new-inq-input" id="ni-message" rows="4" placeholder="Project location, type, scope…"></textarea>
+      </div>
+      <div id="ni-error" style="display:none;font-size:12px;color:var(--red);padding:8px 12px;background:rgba(224,92,92,0.08);border-radius:4px;border:1px solid rgba(224,92,92,0.2)"></div>
+    </div>
+    <div class="new-inq-footer">
+      <button class="btn" onclick="closeNewInquiry()">Cancel</button>
+      <button class="btn primary" id="ni-submit-btn" onclick="submitNewInquiry()">Save Inquiry</button>
+    </div>
   </div>
 </div>
 
@@ -752,6 +806,69 @@ function closePanelOnOverlay(e) { if (e.target === document.getElementById('pane
 
 // ── Helpers ──
 function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// ── New Manual Inquiry ──
+function openNewInquiry() {
+  ['ni-firstname','ni-lastname','ni-email','ni-phone','ni-message'].forEach(function(id){
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('ni-error').style.display = 'none';
+  document.getElementById('ni-submit-btn').disabled = false;
+  document.getElementById('new-inq-overlay').classList.add('open');
+}
+
+function closeNewInquiry() {
+  document.getElementById('new-inq-overlay').classList.remove('open');
+}
+
+function closeNewInqOnOverlay(e) {
+  if (e.target === document.getElementById('new-inq-overlay')) closeNewInquiry();
+}
+
+function submitNewInquiry() {
+  var firstName = document.getElementById('ni-firstname').value.trim();
+  var lastName  = document.getElementById('ni-lastname').value.trim();
+  var email     = document.getElementById('ni-email').value.trim();
+  var phone     = document.getElementById('ni-phone').value.trim();
+  var message   = document.getElementById('ni-message').value.trim();
+
+  if (!firstName) { showNiError('First name is required.'); return; }
+  if (!phone)     { showNiError('Phone is required.'); return; }
+  if (!message)   { showNiError('Project description is required.'); return; }
+
+  var name = firstName + (lastName ? ' ' + lastName : '');
+  var btn = document.getElementById('ni-submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Saving…';
+
+  fetch(API + '/inquiry', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'X-Session-Token': ghToken },
+    body: JSON.stringify({ name: name, email: email || '—', phone: phone, message: message })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(d) {
+    if (d.success) {
+      closeNewInquiry();
+      loadAll(); // refresh
+    } else {
+      showNiError(d.error || 'Failed to save. Please try again.');
+      btn.disabled = false;
+      btn.textContent = 'Save Inquiry';
+    }
+  })
+  .catch(function(e) {
+    showNiError('Connection error: ' + e.message);
+    btn.disabled = false;
+    btn.textContent = 'Save Inquiry';
+  });
+}
+
+function showNiError(msg) {
+  var el = document.getElementById('ni-error');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
 function showError(msg) { var el=document.getElementById('error'); el.textContent=msg; el.style.display='block'; }
 
 function dbg(msg) {
