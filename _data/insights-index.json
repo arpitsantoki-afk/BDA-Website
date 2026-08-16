@@ -1,10 +1,7 @@
 {
-  "enabled": false,
+  "enabled": true,
   "posts": [
     "miyawaki-forest-sector-7a-gandhinagar",
-    "neem-tree-the-palm-landscape-sargasan",
-    "shades-of-white-design-process",
-    "five-questions-before-you-hire-an-architect",
-    "why-solid-wood-furniture-is-worth-it"
+    "neem-tree-the-palm-landscape-sargasan"
   ]
 }
