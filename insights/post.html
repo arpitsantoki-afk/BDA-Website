@@ -68,6 +68,18 @@ body{background:var(--warm);color:var(--ink);font-family:'Jost',sans-serif;font-
 </style>
 </head>
 <body>
+<input type="checkbox" id="nav-toggle" style="display:none" aria-hidden="true"/>
+<div class="nav-overlay">
+  <a href="https://www.bluedoorarchitects.com/#projects" onclick="document.getElementById('nav-toggle').checked=false;">Work</a>
+  <a href="https://www.bluedoorarchitects.com/#services" onclick="document.getElementById('nav-toggle').checked=false;">Services</a>
+  <a href="https://www.bluedoorarchitects.com/#unikraft" onclick="document.getElementById('nav-toggle').checked=false;">Unikraft</a>
+  <a href="https://www.bluedoorarchitects.com/#production" onclick="document.getElementById('nav-toggle').checked=false;">Manufacturing</a>
+  <a href="https://www.bluedoorarchitects.com/#philosophy" onclick="document.getElementById('nav-toggle').checked=false;">Studio</a>
+  <a href="https://www.bluedoorarchitects.com/#publications" onclick="document.getElementById('nav-toggle').checked=false;">Press</a>
+  <a href="/insights/" onclick="document.getElementById('nav-toggle').checked=false;">Insights</a>
+  <a href="https://www.bluedoorarchitects.com/#contact" class="accent" onclick="document.getElementById('nav-toggle').checked=false;">Begin a Project</a>
+  <a href="https://www.instagram.com/bluedoor_architects/" target="_blank" rel="noopener" style="font-size:0.65rem;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.35);display:inline-flex;align-items:center;gap:8px;margin-top:8px">Instagram</a>
+</div>
 <div class="post-page-body">
   <img class="post-hero" id="post-hero" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" style="background:#e8e3db"/>
   <div class="post-wrap">
