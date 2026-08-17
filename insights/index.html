@@ -32,9 +32,21 @@ body{background:var(--warm);color:var(--ink);font-family:'Jost',sans-serif;font-
 .ins-excerpt{font-size:0.8rem;line-height:1.75;color:var(--mid);margin-bottom:0.75rem}
 .ins-read{font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold)}
 .ins-loading{text-align:center;padding:6rem;font-size:0.85rem;color:var(--mid);letter-spacing:0.08em;grid-column:1/-1}
+@media(max-width:1024px){
+  .ins-grid-page{grid-template-columns:repeat(2,1fr);padding:1.5rem 1.5rem 5rem}
+}
 @media(max-width:768px){
-  .ins-page-header{padding:3rem 1.25rem 1.5rem}
-  .ins-grid-page{grid-template-columns:1fr;padding:1.5rem 1.25rem 4rem}
+  .ins-page-body{padding-top:64px}
+  .ins-page-header{padding:2rem 1.25rem 1rem}
+  .ins-page-header h1{font-size:2.2rem}
+  .ins-grid-page{grid-template-columns:1fr;padding:1.25rem 1.25rem 4rem;gap:2.5rem}
+  .ins-card-body{padding:1rem 0 1.5rem}
+  .ins-title{font-size:1.2rem}
+  .ins-excerpt{font-size:0.78rem}
+}
+@media(max-width:420px){
+  .ins-page-header{padding:1.5rem 1rem 0.75rem}
+  .ins-grid-page{padding:1rem 1rem 3rem}
 }
 </style>
 </head>
