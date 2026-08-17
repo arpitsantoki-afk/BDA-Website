@@ -132,9 +132,9 @@ function renderBody(text){
     para = para.trim();
     if(!para) return;
     // Headings
-    if(para.indexOf('### ')===0) { out += '<h3>'+para.slice(4)+'</h3>'; return; }
-    if(para.indexOf('## ')===0)  { out += '<h2>'+para.slice(3)+'</h2>'; return; }
-    if(para.indexOf('# ')===0)   { out += '<h2>'+para.slice(2)+'</h2>'; return; }
+    if(para.indexOf('### ')===0) { out += '<h3>'+para.slice(4).replace(/\*\*/g,'')+'</h3>'; return; }
+    if(para.indexOf('## ')===0)  { out += '<h2>'+para.slice(3).replace(/\*\*/g,'')+'</h2>'; return; }
+    if(para.indexOf('# ')===0)   { out += '<h2>'+para.slice(2).replace(/\*\*/g,'')+'</h2>'; return; }
     // Markdown image: ![alt](url "title")
     var imgMatch = para.match(/^!\[([^\]]*)\]\(([^\s)]+)(?:\s+"[^"]*")?\)$/);
     if(imgMatch) {
