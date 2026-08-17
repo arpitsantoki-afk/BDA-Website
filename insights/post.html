@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title id="page-title">Insights — Blue Door Architects</title>
 <meta name="description" id="page-desc" content="Design thinking and project stories from Blue Door Architects."/>
+<meta property="og:title" id="og-title" content="Insights — Blue Door Architects"/>
+<meta property="og:description" id="og-desc" content="Design thinking and project stories from Blue Door Architects."/>
+<meta property="og:image" id="og-image" content="https://www.bluedoorarchitects.com/og-image.jpg"/>
+<meta property="og:type" content="article"/>
+<meta property="og:site_name" content="Blue Door Architects"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" id="tw-title" content="Insights — Blue Door Architects"/>
+<meta name="twitter:image" id="tw-image" content="https://www.bluedoorarchitects.com/og-image.jpg"/>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
 <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -162,6 +170,22 @@ if(!slug){
       document.getElementById('post-h1').textContent = post.title;
       document.getElementById('post-exc').textContent = post.excerpt || '';
       document.getElementById('post-body').innerHTML = renderBody(post.body);
+
+      // Update page title and OG tags for social sharing
+      var postTitle = post.title + ' — Blue Door Architects';
+      var postExcerpt = post.excerpt || post.title;
+      var postImg = post.cover_image
+        ? (post.cover_image.startsWith('/') ? 'https://www.bluedoorarchitects.com' + post.cover_image : post.cover_image)
+        : 'https://www.bluedoorarchitects.com/og-image.jpg';
+
+      document.title = postTitle;
+      var setMeta = function(id, val) { var el = document.getElementById(id); if(el) el.setAttribute('content', val); };
+      setMeta('page-desc',  postExcerpt);
+      setMeta('og-title',   postTitle);
+      setMeta('og-desc',    postExcerpt);
+      setMeta('og-image',   postImg);
+      setMeta('tw-title',   postTitle);
+      setMeta('tw-image',   postImg);
     })
     .catch(function(){ document.getElementById('post-h1').textContent = 'Post not found.'; });
 }
