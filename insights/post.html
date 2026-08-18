@@ -155,7 +155,7 @@ function renderBody(text){
   });
   return out;
 }
-var slug = decodeURIComponent(window.location.hash.slice(1));
+var slug = new URLSearchParams(window.location.search).get('s') || decodeURIComponent(window.location.hash.slice(1));
 if(!slug){
   document.getElementById('post-h1').textContent = 'Post not found.';
 } else {
