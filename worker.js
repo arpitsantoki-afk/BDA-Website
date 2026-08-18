@@ -179,9 +179,7 @@ export default {
     if (path === '/insights/post' || path === '/insights/post.html') {
       const ua = request.headers.get('user-agent') || '';
       if (isSocialCrawler(ua)) {
-        const slug = url.hash
-          ? url.hash.slice(1)
-          : url.searchParams.get('slug') || '';
+        const slug = url.searchParams.get('s') || url.searchParams.get('slug') || '';
         if (slug) {
           const ogResponse = await handlePostOG(slug);
           if (ogResponse) return ogResponse;
