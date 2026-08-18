@@ -95,7 +95,7 @@ function fmtD(d){
   var p=d.split('-'); return m[parseInt(p[1],10)-1]+' '+p[0];
 }
 function renderCard(post) {
-  var url = '/insights/post.html#' + encodeURIComponent(post.slug);
+  var url = '/insights/post.html?s=' + encodeURIComponent(post.slug);
   return '<a href="'+url+'" class="ins-card">' +
     '<img class="ins-cover" src="'+imgU(post.cover_image)+'" alt="'+post.title+'" loading="lazy"/>' +
     '<div class="ins-card-body">' +
