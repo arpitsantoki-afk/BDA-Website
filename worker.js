@@ -117,6 +117,54 @@ function corsHeaders() {
   };
 }
 
+// Social crawler user agents
+const SOCIAL_CRAWLERS = ['whatsapp', 'facebookexternalhit', 'twitterbot', 'linkedinbot', 'telegrambot', 'slackbot', 'discordbot', 'googlebot'];
+
+function isSocialCrawler(ua) {
+  if (!ua) return false;
+  const lower = ua.toLowerCase();
+  return SOCIAL_CRAWLERS.some(bot => lower.includes(bot));
+}
+
+async function handlePostOG(slug) {
+  try {
+    const r = await fetch(`https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/insights/${slug}.json`);
+    if (!r.ok) return null;
+    const post = await r.json();
+
+    const title = (post.title || 'Insights') + ' — Blue Door Architects';
+    const desc  = post.excerpt || post.title || 'Design thinking and project stories from Blue Door Architects.';
+    const img   = post.cover_image
+      ? (post.cover_image.startsWith('/') ? 'https://www.bluedoorarchitects.com' + post.cover_image : post.cover_image)
+      : 'https://www.bluedoorarchitects.com/og-image.jpg';
+    const url   = `https://www.bluedoorarchitects.com/insights/post#${slug}`;
+
+    return new Response(`<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>${title}</title>
+<meta name="description" content="${desc}"/>
+<meta property="og:title" content="${title}"/>
+<meta property="og:description" content="${desc}"/>
+<meta property="og:image" content="${img}"/>
+<meta property="og:url" content="${url}"/>
+<meta property="og:type" content="article"/>
+<meta property="og:site_name" content="Blue Door Architects"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="${title}"/>
+<meta name="twitter:description" content="${desc}"/>
+<meta name="twitter:image" content="${img}"/>
+<meta http-equiv="refresh" content="0; url=${url}"/>
+<link rel="canonical" href="${url}"/>
+</head>
+<body><a href="${url}">${title}</a></body>
+</html>`, {
+      headers: { 'Content-Type': 'text/html;charset=utf-8', 'Cache-Control': 'public,max-age=3600' }
+    });
+  } catch(e) { return null; }
+}
+
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
@@ -126,6 +174,20 @@ export default {
     if (path === "/api/test") return json({ ok: true, path, method: request.method, assets: !!env.ASSETS, db: !!env.DB });
     if (path === "/api/inquiry")   return handleInquiry(request, env);
     if (path === "/api/inquiries") return handleInquiries(request, env);
+
+    // Social crawler OG handler for insight posts
+    if (path === '/insights/post' || path === '/insights/post.html') {
+      const ua = request.headers.get('user-agent') || '';
+      if (isSocialCrawler(ua)) {
+        const slug = url.hash
+          ? url.hash.slice(1)
+          : url.searchParams.get('slug') || '';
+        if (slug) {
+          const ogResponse = await handlePostOG(slug);
+          if (ogResponse) return ogResponse;
+        }
+      }
+    }
 
     // Pass everything else to static assets
     if (env.ASSETS) return env.ASSETS.fetch(request);
