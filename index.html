@@ -803,7 +803,6 @@ nav#mainnav.nav-scrolled .nav-links a{color:var(--ink)}
         <div id="form-inner">
           <h3 role="heading" aria-level="3">Start the Conversation</h3>
           <p>The more context you share, the better we can prepare for our first meeting.</p>
-          <!-- netlify attribute enables Netlify Forms — submissions emailed to you -->
           <form name="enquiry" id="enquiry-form">
             <input type="hidden" name="access_key" value="072310a8-f9f4-4894-9fdc-dd3072db2002"/>
             <input type="hidden" name="subject" value="New Enquiry — Blue Door Architects"/>
@@ -1200,7 +1199,7 @@ setTimeout(function(){
 // ═══════════════════════════════════════════════
 // CONTACT FORM
 // ═══════════════════════════════════════════════
-  // Contact form — Netlify Forms handles delivery to your email automatically
+  // Contact form
   var enquiryForm = document.getElementById('enquiry-form');
   if (enquiryForm) {
     enquiryForm.addEventListener('submit', function(e) {
