@@ -1,0 +1,16 @@
+{
+  "name": "The Palm Unity",
+  "featured": true,
+  "order": 1,
+  "cover_image": "/images/uploads/the-palm-unity-nameplate-water-feature-arrival-court-kudasan-gandhinagar-blue-door-architects.webp",
+  "location": "Kudasan, Gandhinagar",
+  "images": [
+    "/images/uploads/the-palm-unity-residential-tower-facade-night-view-kudasan-gandhinagar-blue-door-architects.webp",
+    "/images/uploads/the-palm-unity-entrance-lobby-zen-lantern-chandelier-kudasan-gandhinagar-blue-door-architects.webp",
+    "/images/uploads/the-palm-unity-nameplate-water-feature-arrival-court-kudasan-gandhinagar-blue-door-architects.webp",
+    "/images/uploads/the-palm-unity-side-elevation-drop-off-cobblestone-kudasan-gandhinagar-blue-door-architects.webp"
+  ],
+  "description": "An exclusive residential development in Kudasan, Gandhinagar, conceived around the philosophy of Zen Living. Every element — from the cobblestone arrival court and tranquil water feature to the warm-lit lobby with handcrafted lantern chandelier — is designed to slow down the pace of life and create a sense of calm belonging.",
+  "year": "2025",
+  "category": "Residential"
+}
