@@ -6,8 +6,53 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://www.bluedoorarchitects.com/#projects</loc>
-    <changefreq>weekly</changefreq>
+    <loc>https://www.bluedoorarchitects.com/projects/the-palm-unity</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.bluedoorarchitects.com/projects/dots-and-devotion</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.bluedoorarchitects.com/projects/shades-of-white</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.bluedoorarchitects.com/projects/stillness-in-timber</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.bluedoorarchitects.com/projects/unity-office</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.bluedoorarchitects.com/projects/blush-birch</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.bluedoorarchitects.com/projects/where-stone-breathes</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.bluedoorarchitects.com/projects/silver-square</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.bluedoorarchitects.com/projects/terra-calm</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.bluedoorarchitects.com/projects/olive-oak</loc>
+    <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
@@ -18,21 +63,6 @@
   <url>
     <loc>https://www.bluedoorarchitects.com/#unikraft</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.bluedoorarchitects.com/#production</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.bluedoorarchitects.com/#philosophy</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.bluedoorarchitects.com/#publications</loc>
-    <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>

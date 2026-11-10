@@ -117,13 +117,110 @@ function corsHeaders() {
   };
 }
 
-// Social crawler user agents
-const SOCIAL_CRAWLERS = ['whatsapp', 'facebookexternalhit', 'twitterbot', 'linkedinbot', 'telegrambot', 'slackbot', 'discordbot', 'googlebot'];
+// Search engine + social crawler user agents
+const SOCIAL_CRAWLERS = ['whatsapp', 'facebookexternalhit', 'twitterbot', 'linkedinbot', 'telegrambot', 'slackbot', 'discordbot', 'googlebot', 'bingbot', 'baiduspider', 'yandexbot', 'duckduckbot', 'applebot', 'ahrefsbot', 'semrushbot', 'msnbot'];
 
 function isSocialCrawler(ua) {
   if (!ua) return false;
   const lower = ua.toLowerCase();
   return SOCIAL_CRAWLERS.some(bot => lower.includes(bot));
+}
+
+async function handleProjectPage(slug, isCrawler) {
+  try {
+    const r = await fetch(`https://raw.githubusercontent.com/arpitsantoki-afk/BDA-Website/main/_data/projects/${slug}.json`);
+    if (!r.ok) return null;
+    const p = await r.json();
+
+    const title = (p.name || 'Project') + ' — Blue Door Architects';
+    const desc  = p.description
+      ? p.description.slice(0, 160).replace(/"/g, '&quot;')
+      : `${p.name} — ${p.category || 'Architecture'} project by Blue Door Architects in ${p.location || 'India'}.`;
+    const img   = p.cover_image
+      ? (p.cover_image.startsWith('/') ? 'https://www.bluedoorarchitects.com' + p.cover_image : p.cover_image)
+      : 'https://www.bluedoorarchitects.com/og-image.jpg';
+    const canonicalUrl = `https://www.bluedoorarchitects.com/projects/${slug}`;
+    const spaUrl       = `https://www.bluedoorarchitects.com/#project-${slug}`;
+
+    // All images for the gallery (use images or gallery field)
+    const galleryImages = (p.gallery || p.images || []).map(src =>
+      src.startsWith('/') ? 'https://www.bluedoorarchitects.com' + src : src
+    );
+
+    // JSON-LD structured data
+    const jsonLd = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      "name": p.name,
+      "description": p.description || desc,
+      "url": canonicalUrl,
+      "image": galleryImages.length ? galleryImages : [img],
+      "dateCreated": p.year ? p.year + '-01-01' : undefined,
+      "locationCreated": p.location ? { "@type": "Place", "name": p.location + ', India' } : undefined,
+      "creator": {
+        "@type": "Organization",
+        "name": "Blue Door Architects",
+        "url": "https://www.bluedoorarchitects.com"
+      },
+      "genre": p.category || "Architecture"
+    });
+
+    // For crawlers: full pre-rendered HTML with gallery thumbnails
+    // For regular users hitting /projects/slug directly: redirect to SPA with hash
+    if (!isCrawler) {
+      return new Response(null, {
+        status: 302,
+        headers: {
+          'Location': spaUrl,
+          'Cache-Control': 'no-store'
+        }
+      });
+    }
+
+    // Build a simple gallery HTML for crawlers to index
+    const galleryHtml = galleryImages.slice(0, 8).map(src =>
+      `<img src="${src}" alt="${p.name} — Blue Door Architects" loading="lazy" style="max-width:100%;height:auto;display:block;margin:8px 0;">`
+    ).join('\n');
+
+    return new Response(`<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>${title}</title>
+<meta name="description" content="${desc}"/>
+<link rel="canonical" href="${canonicalUrl}"/>
+<meta property="og:title" content="${title}"/>
+<meta property="og:description" content="${desc}"/>
+<meta property="og:image" content="${img}"/>
+<meta property="og:url" content="${canonicalUrl}"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Blue Door Architects"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="${title}"/>
+<meta name="twitter:description" content="${desc}"/>
+<meta name="twitter:image" content="${img}"/>
+<script type="application/ld+json">${jsonLd}</script>
+</head>
+<body>
+<header><a href="https://www.bluedoorarchitects.com">Blue Door Architects</a></header>
+<main>
+<h1>${p.name}</h1>
+${p.location ? '<p><strong>Location:</strong> ' + p.location + '</p>' : ''}
+${p.year     ? '<p><strong>Year:</strong> '     + p.year     + '</p>' : ''}
+${p.category ? '<p><strong>Category:</strong> ' + p.category + '</p>' : ''}
+${p.description ? '<p>' + p.description.replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</p>' : ''}
+${galleryHtml}
+<p><a href="${spaUrl}">View full project on Blue Door Architects</a></p>
+</main>
+</body>
+</html>`, {
+      headers: {
+        'Content-Type': 'text/html;charset=utf-8',
+        'Cache-Control': 'public,max-age=3600'
+      }
+    });
+  } catch(e) { return null; }
 }
 
 async function handlePostOG(slug) {
@@ -174,6 +271,18 @@ export default {
     if (path === "/api/test") return json({ ok: true, path, method: request.method, assets: !!env.ASSETS, db: !!env.DB });
     if (path === "/api/inquiry")   return handleInquiry(request, env);
     if (path === "/api/inquiries") return handleInquiries(request, env);
+
+    // Project pages — /projects/[slug]
+    // Crawlers get pre-rendered HTML; regular users get redirected to SPA
+    const projectMatch = path.match(/^\/projects\/([a-z0-9-]+)\/?$/);
+    if (projectMatch) {
+      const slug = projectMatch[1];
+      const ua = request.headers.get('user-agent') || '';
+      const crawler = isSocialCrawler(ua);
+      const response = await handleProjectPage(slug, crawler);
+      if (response) return response;
+      // slug not found — fall through to SPA
+    }
 
     // Social crawler OG handler for insight posts
     if (path === '/insights/post' || path === '/insights/post.html') {
