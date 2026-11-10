@@ -1,7 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "bda-website",
-  "main": "worker.js",
   "compatibility_date": "2026-06-12",
   "observability": { "enabled": true },
   "assets": {

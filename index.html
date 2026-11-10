@@ -70,6 +70,15 @@
   if (window.location.hash && window.location.hash.includes('access_token')) {
     document.location.href = '/admin/';
   }
+  // If loaded via /projects/[slug] (SPA fallback), extract slug for modal auto-open
+  (function() {
+    var m = window.location.pathname.match(/^\/projects\/([a-z0-9-]+)\/?$/);
+    if (m) {
+      window._autoOpenProject = m[1];
+      // Clean up the URL to the root so the page looks normal
+      window.history.replaceState({}, '', '/?project=' + m[1]);
+    }
+  })();
 </script>
 
 <style>
@@ -1098,8 +1107,8 @@ function renderProjects() {
   });
   if (window._ro) { grid.querySelectorAll('.pj').forEach(function(el){ window._ro.observe(el); }); }
 
-  // Auto-open project modal if ?project=slug is in the URL (from /projects/slug redirect)
-  var _autoSlug = (new URLSearchParams(window.location.search)).get('project');
+  // Auto-open project modal if arriving via /projects/[slug] or ?project=slug
+  var _autoSlug = window._autoOpenProject || (new URLSearchParams(window.location.search)).get('project');
   if (_autoSlug) {
     var _autoProject = allProjects.find(function(p){ return p._slug === _autoSlug; });
     if (_autoProject) {
