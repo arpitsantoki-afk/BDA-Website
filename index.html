@@ -1318,6 +1318,8 @@ function openProjModal(slug, title, subtitle, location, year, type, cover, desc)
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
   document.getElementById('pm-panel').scrollTop = 0;
+  // Push project URL to browser history
+  if (slug) history.pushState({ project: slug }, '', '/projects/' + slug);
 
   if (slug) {
     fetch(_DATA + slug + '.json')
@@ -1347,6 +1349,10 @@ function closeProjModal() {
   var modal = document.getElementById('proj-modal');
   if (modal) modal.classList.remove('open');
   document.body.style.overflow = '';
+  // Restore URL when modal closes
+  if (window.location.pathname.startsWith('/projects/')) {
+    history.pushState({}, '', '/');
+  }
 }
 
 document.addEventListener('keydown', function(e) {
