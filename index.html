@@ -1099,23 +1099,20 @@ function renderProjects() {
   if (window._ro) { grid.querySelectorAll('.pj').forEach(function(el){ window._ro.observe(el); }); }
 
   // Auto-open project modal if ?project=slug is in the URL (from /projects/slug redirect)
-  var _urlParams = new URLSearchParams(window.location.search);
-  var _autoSlug = _urlParams.get('project');
+  var _autoSlug = (new URLSearchParams(window.location.search)).get('project');
   if (_autoSlug) {
     var _autoProject = allProjects.find(function(p){ return p._slug === _autoSlug; });
     if (_autoProject) {
-      setTimeout(function() {
-        openProjModal(
-          _autoProject._slug,
-          _autoProject.name        || '',
-          _autoProject.subtitle    || '',
-          _autoProject.location    || '',
-          _autoProject.year        || '',
-          _autoProject.category    || '',
-          _autoProject.cover_image || '',
-          _autoProject.description || ''
-        );
-      }, 100);
+      openProjModal(
+        _autoProject._slug,
+        _autoProject.name        || '',
+        _autoProject.subtitle    || '',
+        _autoProject.location    || '',
+        _autoProject.year        || '',
+        _autoProject.category    || '',
+        _autoProject.cover_image || '',
+        _autoProject.description || ''
+      );
     }
   }
 }
