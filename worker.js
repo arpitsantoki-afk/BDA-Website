@@ -140,7 +140,7 @@ async function handleProjectPage(slug, isCrawler) {
       ? (p.cover_image.startsWith('/') ? 'https://www.bluedoorarchitects.com' + p.cover_image : p.cover_image)
       : 'https://www.bluedoorarchitects.com/og-image.jpg';
     const canonicalUrl = `https://www.bluedoorarchitects.com/projects/${slug}`;
-    const spaUrl       = `https://www.bluedoorarchitects.com/#project-${slug}`;
+    const spaUrl       = `https://www.bluedoorarchitects.com/?project=${slug}`;
 
     // All images for the gallery (use images or gallery field)
     const galleryImages = (p.gallery || p.images || []).map(src =>
@@ -171,7 +171,7 @@ async function handleProjectPage(slug, isCrawler) {
       return new Response(null, {
         status: 302,
         headers: {
-          'Location': spaUrl,
+          'Location': 'https://www.bluedoorarchitects.com/?project=' + slug,
           'Cache-Control': 'no-store'
         }
       });
