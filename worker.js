@@ -273,15 +273,25 @@ export default {
     if (path === "/api/inquiries") return handleInquiries(request, env);
 
     // Project pages — /projects/[slug]
-    // Crawlers get pre-rendered HTML; regular users get redirected to SPA
+    // Crawlers get pre-rendered HTML; regular users get instant redirect to SPA
     const projectMatch = path.match(/^\/projects\/([a-z0-9-]+)\/?$/);
     if (projectMatch) {
       const slug = projectMatch[1];
       const ua = request.headers.get('user-agent') || '';
-      const crawler = isSocialCrawler(ua);
-      const response = await handleProjectPage(slug, crawler);
-      if (response) return response;
-      // slug not found — fall through to SPA
+      if (isSocialCrawler(ua)) {
+        // Crawlers: fetch project data and serve pre-rendered HTML
+        const response = await handleProjectPage(slug, true);
+        if (response) return response;
+      } else {
+        // Regular users: instant redirect — no GitHub fetch needed
+        return new Response(null, {
+          status: 302,
+          headers: {
+            'Location': 'https://www.bluedoorarchitects.com/?project=' + slug,
+            'Cache-Control': 'no-store'
+          }
+        });
+      }
     }
 
     // Social crawler OG handler for insight posts
